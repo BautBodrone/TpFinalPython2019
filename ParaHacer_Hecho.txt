@@ -1,9 +1,10 @@
 Hecho:
 	GUI Configuracion
 	GUI Sopa de letras (completar)
-
-A hacer:
 	GUI Main
+	Adaptar GUI Configuracion para Import
+	Adaptar GUI Sopa de letras para Import
+A hacer:
 	Generacion de archivos
 	Edicion de archivos
 	Funcionamiento grilla sopa de letras
@@ -16,5 +17,4 @@ A hacer:
 					reporte pattern.txt
 					palabras.json/csv (checkear)
 					usuarios.json]
-	Adaptar GUI Configuracion para Import
-	Adaptar GUI Sopa de letras para Import
+
