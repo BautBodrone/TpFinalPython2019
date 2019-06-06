@@ -6,9 +6,15 @@ Hecho:
 	Adaptar GUI Sopa de letras para Import
 A hacer:
 	Generacion de archivos
-	Edicion de archivos
-	Funcionamiento grilla sopa de letras
-	Checkeo wikidiccionario
+	Edicion de archivos [	editorconfig.py
+				editorreportes.py
+				editorsensores.py]
+	Funcionamiento grilla sopa de letras [	calcular tamaño
+						generar grilla, insertando palabras y rellenando con letras aleatorias
+						seleccion y checkeo de palabra]
+	Checkeo wikidiccionario	[	existe la palabra?
+					tipo de palabra
+					descripcion de palabra]
 	Checkeo pattern.es
 	Checkeo datos de sensores
 	Actualizacion de archivos [	datos_sensores.csv
@@ -17,4 +23,5 @@ A hacer:
 					reporte pattern.txt
 					palabras.json/csv (checkear)
 					usuarios.json]
+	Manejo de exceptions
 
