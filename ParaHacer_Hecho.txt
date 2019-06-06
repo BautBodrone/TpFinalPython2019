@@ -16,4 +16,5 @@ A hacer:
 					reporte pattern.txt
 					palabras.json/csv (checkear)
 					usuarios.json]
-
+	Adaptar GUI Configuracion para Import
+	Adaptar GUI Sopa de letras para Import
