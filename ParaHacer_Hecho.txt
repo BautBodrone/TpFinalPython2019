@@ -1,27 +1,99 @@
-Hecho:
-	GUI Configuracion
-	GUI Sopa de letras (completar)
-	GUI Main
-	Adaptar GUI Configuracion para Import
-	Adaptar GUI Sopa de letras para Import
-A hacer:
-	Generacion de archivos
-	Edicion de archivos [	editorconfig.py
-				editorreportes.py
-				editorsensores.py]
-	Funcionamiento grilla sopa de letras [	calcular tamaño
-						generar grilla, insertando palabras y rellenando con letras aleatorias
-						seleccion y checkeo de palabra]
-	Checkeo wikidiccionario	[	existe la palabra?
-					tipo de palabra
-					descripcion de palabra]
-	Checkeo pattern.es
-	Checkeo datos de sensores
-	Actualizacion de archivos [	datos_sensores.csv
-					config.json
-					reporte wiki.txt
-					reporte pattern.txt
-					palabras.json/csv (checkear)
-					usuarios.json]
-	Manejo de exceptions
+HECHO:
+	MAIN [
+		GUI
+	]
+	
+	CONFIGURACIÓN [
+		GUI
+	]
+	
+	JUEGO [
+		Grilla
+	]
 
+	
+POR HACER:
+	ARCHIVOS [
+		Manejo de excepciones
+		Generación de archivos
+		Edición de archivos [
+			editorconfig.py
+			editorreportes.py
+			editorsensores.py
+		]
+	]
+	
+	MAIN []
+	
+	CONFIGURACIÓN [
+		Clase Usuario
+		Validación de Usuario-Contraseña
+		Usuario por defecto
+		
+		Palabras [
+			Añadir [
+				Wikcionario	[
+					¿Existe la palabra?
+					Tipo de palabra
+					descripcion de palabra
+				]
+				Pattern.es [
+					¿Existe la palabra?
+					Tipo de palabra
+					descripcion de palabra
+				]
+				Wikcionario + Pattern [
+					¿Coincide el tipo de palabra?
+					Reportar
+				]
+			]
+			Borrar [
+			
+			]
+		]
+		Usuarios [
+			Añadir [
+				GUI
+				
+			]
+			Borrar [
+			
+			]
+		]
+		Ayudas []
+		Diseño []
+		Tipografia [
+			Funcionalidad
+			GUI
+		]
+		Oficina [
+			Funcionalidad
+			GUI
+		]
+		
+	]
+	
+	JUEGO [
+		Grilla [
+			Generar grilla [
+				Calcular tamaño
+				Insertar palabras
+				Selección de palabras
+			]
+			Chequeo de palabras
+			Confirmar victoria
+		]
+	]
+	
+	
+
+	
+	Datos de sensores []
+	Actualizacion de archivos [
+		datos_sensores.csv
+		config.json
+		reporte wiki.txt
+		reporte pattern.txt
+		palabras.json/csv (checkear)
+		usuarios.json
+	]
