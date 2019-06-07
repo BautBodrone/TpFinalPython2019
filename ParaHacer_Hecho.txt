@@ -97,3 +97,14 @@ POR HACER:
 		palabras.json/csv (checkear)
 		usuarios.json
 	]
+	
+	MULTIMEDIA [
+		Imágenes [
+			Logo
+			Icono
+			Botones
+		]
+		Sonidos [
+		
+		]
+	]
