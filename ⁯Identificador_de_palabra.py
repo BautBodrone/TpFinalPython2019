@@ -12,6 +12,7 @@ def identificador (palabra): ##palabra = gato para testeo
     match = False
     wik = False
     patt = False
+    lis = []
 
     try:
         art = engine.search(palabra)
@@ -43,6 +44,9 @@ def identificador (palabra): ##palabra = gato para testeo
                 lis = [[palabra, "Adjetivo"]]
         elif (("NN" in patt_es) and ("Sustantivo" in tag)) or (("VB" in patt_es) and ("verbo" in tag)) or (("JJ" in patt_es) and ("Adjetivo" in tag)):
             match = True
+            
+     if (match==False) and (patt==True):
+        reporte = "La palabra "+palabra+" no fue enconmtrada en pattern.es" ##para reporte
 
     return lis
 
