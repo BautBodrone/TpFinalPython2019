@@ -1,15 +1,12 @@
 class Usuario:
 
-    nombre = "default"
-    contrasena = "default"
-    sustantivos = {}
-    adjetivos = {}
-    verbos = {}
-    config = {}
-
-    def __init__(self, nombre, contrasena):
+    def __init__(self, nombre = "default", contrasena = "default"):
         self.nombre = nombre
         self.contrasena = contrasena
+        sustantivos = {}
+        adjetivos = {}
+        verbos = {}
+        config = {}
 
     def setnombre(self, nombre):
         self.nombre = nombre
