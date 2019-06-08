@@ -6,7 +6,15 @@ class Usuario:
         self.sustantivos = {}
         self.adjetivos = {}
         self.verbos = {}
-        self.config = {}
+        self.config = {"nombre": nombre,
+                       "contrasena": contrasena,
+                       "config_colores": (),
+                       "ayudas": False,
+                       "orientacion": False,
+                       "cantpalabras": (),
+                       "maymin": False,
+                       "tipografia": "arial 10"
+                       }
 
     def setnombre(self, nombre):
         self.nombre = nombre
@@ -53,3 +61,5 @@ class Usuario:
 
     def getconfig(self):
         return self.config
+
+usuario1 = Usuario()
