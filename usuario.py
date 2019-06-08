@@ -3,10 +3,10 @@ class Usuario:
     def __init__(self, nombre = "default", contrasena = "default"):
         self.nombre = nombre
         self.contrasena = contrasena
-        sustantivos = {}
-        adjetivos = {}
-        verbos = {}
-        config = {}
+        self.sustantivos = {}
+        self.adjetivos = {}
+        self.verbos = {}
+        self.config = {}
 
     def setnombre(self, nombre):
         self.nombre = nombre
