@@ -1,263 +1,317 @@
-import PySimpleGUI as sg    
+import PySimpleGUI as sg
 
 def abrir_configuracion():
-    botones_por_defecto = [
-        sg.Button('Confirmar'),
-        sg.Button('Por defecto'),
-        sg.Button('Cancelar', button_color=('white', 'red'))
-    ]
-    columna_izquierda = [
-        [
-            sg.Button("Usuarios", size=(22, 1), key="usuarios",)
-        ],
-        [
-            sg.Button("Lista de palabras", size=(22, 1), key="lista_de_palabras",)
-        ],
-        [
-            sg.Button('Cantidad de palabras', size=(22,1), key='cantidad')
-        ],
-        [
-            sg.Button("Ayudas", size=(22, 1), key="ayudas",)
-        ],
-        [
-            sg.Button("Diseño del juego", size=(22, 1), key="diseño",)
-        ],
-        [
-            sg.Button("Oficina", size=(22, 1), key="oficina",)],
-        [
+    #COLUMNA IZQUIERDA
+    def columna_izquierda(opciones):
+        lista = []
+        for opcion in opciones:
+            lista.append([sg.Button(opcion.capitalize().replace("_"," "), size=(22, 1), key=opcion)])
+
+        columna_izquierda = lista + [[
             sg.Button("Guardar", size=(10, 1), key="GRAN_Guardar",),
             sg.Button("Salir", size=(10, 1), key="salir",)
+        ]] 
+
+        return columna_izquierda
+
+    #USUARIOS
+    def columna_derecha_usuarios():
+        columna_derecha_usuarios = [
+            [
+                sg.Combo(
+                    values=[None],
+                    key='usuario_actual'
+                )
+            ],
+            [
+                sg.Button('Seleccionar', key='boton_confirmar'),
+                sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar')
+            ]
         ]
-    ]
+        return columna_derecha_usuarios
 
-    #LISTA DE PALABRAS: Columna derecha
-    columna_derecha_palabras = [
-        [
-            sg.Text("Lista de palabras")
-        ],
-        [
-            sg.Table(
-                values=[['Casa','Sustantivo','{}'.format(len("Casa"))]],
-                headings=['Palabra', 'Tipo', 'Longitud'],
-                enable_events=True,
-                key='tabla_de_palabras',
-                justification='center',
-                
-            )
-        ],
-        [
-            sg.Button("Añadir", key="añadir"),
-            sg.Button("Borrar", key="borrar"),
-            sg.Button("Guardar", key="guardar_palabra")
+    #LISTA DE PALABRAS
+    def columna_derecha_lista_de_palabras(lista_de_palabras):
+        columna_derecha_lista_de_palabras = [
+            [
+                sg.Text("Lista de palabras")
+            ],
+            [
+                sg.Table(
+                    values=lista_de_palabras,
+                    headings=['Palabra', 'Tipo', 'Longitud'],
+                    enable_events=True,
+                    key='tabla_de_palabras',
+                    justification='center',
+                    
+                )
+            ],
+            [
+                sg.Button('Añadir', key='boton_confirmar'),
+                sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar'),
+            ]
         ]
-    ]
 
-    columna_derecha_usuarios = [
-        [
-            sg.Combo(values=[None])
-        ],
-        [
-            sg.OK()
+        return columna_derecha_lista_de_palabras
+
+    #CANTIDAD DE PALABRAS
+    def columna_derecha_cantidad_de_palabras(botones_por_defecto):
+        cantidad_frame = [
+            [
+                sg.Text("Sustantivos", size=(10,1), justification='right'),
+                sg.Slider(range=(1,5),orientation="h", size=(10,20), key='cantidad_sustantivos')
+            ],
+            [
+                sg.Text("Adjetivos", size=(10,1), justification='right'),
+                sg.Slider(range=(1,5),orientation="h", size=(10,20), key='cantidad_adjetivos')
+            ],
+            [
+                sg.Text("Verbos", size=(10,1), justification='right'),
+                sg.Slider(range=(1,5),orientation="h", size=(10,20),key='cantidad_verbos')
+            ]
         ]
-    ]
-
-    #CANTIDAD DE PALABRAS: Columna derecha
-    cantidad_frame = [
-        [
-            sg.Text("Sustantivos", size=(10,1), justification='right'),
-            sg.Slider(range=(1,5),orientation="h", size=(10,20))
-        ],
-        [
-            sg.Text("Adjetivos", size=(10,1), justification='right'),
-            sg.Slider(range=(1,5),orientation="h", size=(10,20))
-        ],
-        [
-            sg.Text("Verbos", size=(10,1), justification='right'),
-            sg.Slider(range=(1,5),orientation="h", size=(10,20))
-        ]
-    ]
-    columna_derecha_cantidad = [
-        [
-            sg.Frame('Cantidad de palabras por tipo', cantidad_frame)
-        ],
-
-        botones_por_defecto
-    ]
-
-    #AYUDAS: Columna derecha
-    ayudas_frame_habilitar = [
-        [
-            sg.Radio("Habilitar","rad1",default = True, size=(20,1)),
-        ],
-        [
-            sg.Radio("Deshabilitar","rad1")
-        ]
-    ] 
-
-    ayudas_frame_tipo = [
-        [
-            sg.Radio("Lista de palabras", "rad2", default = True, size=(20,1)),
-        ],
-        [
-            sg.Radio("Descripcion", "rad2")
-        ]
-    ]
-
-    columna_derecha_ayudas = [
-        [
-            sg.Frame('¿Habilitar ayudas?', ayudas_frame_habilitar)
-        ],
-        [
-            sg.Frame('Seleccione el tipo de ayuda',ayudas_frame_tipo)
-        ],
-        botones_por_defecto
-    ]
-
-    #DISEÑO DEL JUEGO: Columna derecha (ayudas, orientación, colores, cantidad de palabras, mayusculas)
-    colores_frame = [
-        [
-            sg.ColorChooserButton("Sustantivos", size=(14,1)),
-        ],
-        [
-            sg.ColorChooserButton("Adjetivos", size=(14,1)),
-        ],
-        [
-            sg.ColorChooserButton("Verbos", size=(14,1))
-        ],
-    ]
     
-    orientacion_frame = [
-        [
-            sg.Radio("Horizontal","orientacion",default=True),
-        ],
-        [
-            sg.Radio("Vertical","orientacion")
+        columna_derecha_cantidad_de_palabras = [
+            [
+                sg.Frame('Cantidad de palabras por tipo', cantidad_frame)
+            ],
+
+            botones_por_defecto
         ]
-    ]
 
-    maymin_frame = [
-        [
-            sg.Radio("Mayusculas","maymin",default=True),
-        ],
-        [
-            sg.Radio("Minusculas","maymin")
-        ]
-    ]
-
-    tipografia_frame = [
-        [
-            sg.Combo(values=["arial","helvetica"])
-        ]
-    ]
-
-    orientacion_maymin_column = [
-        [
-            sg.Frame("Seleccionar orientación", orientacion_frame),
-        ],
-        [
-            sg.Frame("Mayusculas/Minusculas", maymin_frame)
-        ],
-    ]
-
-    color_tipografia_frame = [
-        [
-            sg.Frame('Seleccionar tipografia', tipografia_frame)
-        ],
-        [
-            sg.Frame("Seleccionar colores", colores_frame),
-        ],
-    ]
-
-
-    #DISEÑO: Columna derecha
-    columna_derecha_diseño = [
-        [
-            sg.Column(orientacion_maymin_column),
-            sg.Column(color_tipografia_frame)
-        ],
-        botones_por_defecto
-    ]
-
-    #OFICINA: Columna derecha
-    oficinas = ["Oficina 1","Oficina 2"]
-    oficina_frame = [
-        [
-            sg.Combo(values=oficinas)
-        ],
-        [
-            sg.Button('Seleccionar'),
-            sg.Button('Agregar'),
-            sg.Button('Borrar')
-        ]
-    ]
-
-    columna_derecha_oficina = [
-        [
-            sg.Frame('Seleccione la oficina', oficina_frame)
-        ]
-    ]
-
+        return columna_derecha_cantidad_de_palabras
     
-    
-    #LAYOUT CONFIGURACIÓN
-    layout = [
-        [
-            sg.Text("Sopa de Letras", font="arial 40")
-        ],
-        [
-            sg.T('')
-        ],
-        [
-            sg.Column(columna_izquierda),
-            
-            sg.Column(columna_derecha_usuarios, visible=False, key='columna_derecha_usuarios'),
-            sg.Column(columna_derecha_palabras, visible=True, key='columna_derecha_palabras'),
-            sg.Column(columna_derecha_cantidad, visible=False, key='columna_derecha_cantidad'),
-            sg.Column(columna_derecha_ayudas, visible=False, key='columna_derecha_ayudas'),
-            sg.Column(columna_derecha_diseño, visible=False, key='columna_derecha_diseño'),
-            sg.Column(columna_derecha_oficina, visible=False, key='columna_derecha_oficina')
+    #AYUDAS
+    def columna_derecha_ayudas(botones_por_defecto):
+        ayudas_frame_habilitar = [
+            [
+                sg.Radio("Habilitar", "habilitar_ayudas",default = True, size=(20,1), key='habilitar_ayudas'),
+            ],
+            [
+                sg.Radio("Deshabilitar", "habilitar_ayudas",)
+            ]
+        ] 
+        ayudas_frame_tipo = [
+            [
+                sg.Radio("Lista de palabras", "tipo_de_ayudas", default = True, size=(20,1), key='ayuda_palabras'),
+            ],
+            [
+                sg.Radio("Descripcion", "tipo_de_ayudas")
+            ]
         ]
-    ]
+        columna_derecha_ayudas = [
+            [
+                sg.Frame('¿Habilitar ayudas?', ayudas_frame_habilitar)
+            ],
+            [
+                sg.Frame('Seleccione el tipo de ayuda',ayudas_frame_tipo)
+            ],
+            botones_por_defecto
+        ]
+        return columna_derecha_ayudas
+    
+    #DISEÑO DEL JUEGO (ayudas, orientación, colores, cantidad de palabras, mayusculas)
+    def columna_derecha_diseño_del_juego(botones_por_defecto):
+        colores_frame = [
+            [
+                sg.ColorChooserButton("Sustantivos", size=(14,1), key='color_sustantivos'),
+            ],
+            [
+                sg.ColorChooserButton("Adjetivos", size=(14,1), key='color_adjetivos'),
+            ],
+            [
+                sg.ColorChooserButton("Verbos", size=(14,1), key='color_verbos')
+            ],
+        ]
+        
+        orientacion_frame = [
+            [
+                sg.Radio("Horizontal","orientacion",default=True, key='orientacion_horizontal'),
+            ],
+            [
+                sg.Radio("Vertical","orientacion")
+            ]
+        ]
 
-    def actualizar_columna_derecha(columna_actual):
-        window.Element('columna_derecha_usuarios').Update(visible=False),
-        window.Element('columna_derecha_palabras').Update(visible=False),
-        window.Element('columna_derecha_cantidad').Update(visible=False),
-        window.Element('columna_derecha_ayudas').Update(visible=False),
-        window.Element('columna_derecha_diseño').Update(visible=False),
-        window.Element('columna_derecha_oficina').Update(visible=False)
+        maymin_frame = [
+            [
+                sg.Radio("Mayusculas","maymin",default=True, key='mayusculas'),
+            ],
+            [
+                sg.Radio("Minusculas","maymin")
+            ]
+        ]
+
+        tipografia_frame = [
+            [
+                sg.Combo(values=["arial","helvetica"], key='tipografia')
+            ]
+        ]
+
+        orientacion_maymin_column = [
+            [
+                sg.Frame("Seleccionar orientación", orientacion_frame),
+            ],
+            [
+                sg.Frame("Mayusculas/Minusculas", maymin_frame)
+            ],
+        ]
+
+        color_tipografia_frame = [
+            [
+                sg.Frame('Seleccionar tipografia', tipografia_frame)
+            ],
+            [
+                sg.Frame("Seleccionar colores", colores_frame),
+            ],
+        ]
+
+        columna_derecha_diseño_del_juego = [
+            [
+                sg.Column(orientacion_maymin_column),
+                sg.Column(color_tipografia_frame)
+            ],
+            botones_por_defecto
+        ]
+
+        return columna_derecha_diseño_del_juego
+
+    #OFICINA
+    def columna_derecha_oficina(oficinas):
+        oficina_frame = [
+            [
+                sg.Combo(values=oficinas)
+            ],
+            [
+                sg.Button('Seleccionar'),
+                sg.Button('Agregar'),
+                sg.Button('Borrar')
+            ]
+        ]
+
+        columna_derecha_oficina = [
+            [
+                sg.Frame('Seleccione la oficina', oficina_frame)
+            ]
+        ]
+
+        return columna_derecha_oficina
+
+    #ACTUALIZAR COLUMNA DERECHA
+    def actualizar_columna_derecha(columna_actual, lista_de_opciones):
+        for opcion in lista_de_opciones:
+            window.Element('columna_derecha_'+opcion).Update(visible=False)
 
         window.Element('columna_derecha_'+columna_actual).Update(visible=True)
+    
+
+    #"PROGRAMA PRINCIPAL"
+    botones_por_defecto = [
+       sg.Button('Confirmar', key='boton_confirmar'),
+        sg.Button('Por defecto', key='boton_por_defecto'),
+        sg.Button('Cancelar', button_color=('white', 'red'), key='boton_cancelar')
+    ]
+
+    lista_de_opciones = [
+        'usuarios',
+        'lista_de_palabras',
+        'cantidad_de_palabras',
+        'ayudas',
+        'diseño_del_juego',
+        'oficina'
+    ]
+
+    #Variables auxiliares
+    lista_de_palabras = [
+        ['Casa','Sustantivo','{}'.format(len("Casa"))]
+    ]
+
+    oficinas = ["Oficina 1","Oficina 2"]
+
+    #LAYOUT
+    layout = [
+        [   #Título
+            sg.Text("Sopa de Letras", font="arial 40"),
+        ],
+        [
+            sg.T(''),
+        ],
+        [
+            #COLUMNA IZQUIERDA
+            sg.Column(
+                columna_izquierda(lista_de_opciones)
+            ),
+
+            #COLUMNA DERECHA
+            sg.Column(
+                columna_derecha_usuarios(),
+                visible=False,
+                key='columna_derecha_usuarios'
+            ),
+            sg.Column(#Empieza activa por defecto
+                columna_derecha_lista_de_palabras(lista_de_palabras),
+                visible=True,
+                key='columna_derecha_lista_de_palabras'
+            ),
+            sg.Column(
+                columna_derecha_cantidad_de_palabras(botones_por_defecto),
+                visible=False,
+                key='columna_derecha_cantidad_de_palabras'
+            ),
+            sg.Column(
+                columna_derecha_ayudas(botones_por_defecto),
+                visible=False,
+                key='columna_derecha_ayudas'
+            ),
+            sg.Column(
+                columna_derecha_diseño_del_juego(botones_por_defecto),
+                visible=False,
+                key='columna_derecha_diseño_del_juego'
+            ),
+            sg.Column(
+                columna_derecha_oficina(oficinas),
+                visible=False,
+                key='columna_derecha_oficina'
+            ),
+        ]
+    ]
 
     #Ejecucion y lectura de ventana de configuracion
     
-    window = sg.Window("UI").Layout(layout)
+    window = sg.Window("Configuración").Layout(layout)
+
+    opcion_actual=lista_de_opciones[1]
     
     while True:
         event, values = window.Read()
-        print(event,values)
         
         if event is None or event == 'salir':
             window.Close()
             break
 
-        if event == "lista_de_palabras":
-            actualizar_columna_derecha('palabras')
+        if event in lista_de_opciones:
+            opcion_actual = event
+            actualizar_columna_derecha(event, lista_de_opciones)
 
-        if event == "cantidad":
-            actualizar_columna_derecha('cantidad')
+        if event == 'boton_confirmar':
+            print(opcion_actual)
+            print(event)
+            for key in values.keys():
+                print(str(key) + ': ', values[key])
 
-        if event == "ayudas":
-            actualizar_columna_derecha('ayudas')
+        if event == 'boton_por_defecto':
+            print(opcion_actual)
+            print(event)
+            for key in values.keys():
+                print(str(key) + ': ', values[key])
 
-        if event == "usuarios":
-            actualizar_columna_derecha('usuarios')
-            
-        if event == "diseño":
-            actualizar_columna_derecha('diseño')
-            
-        if event == "oficina":
-            actualizar_columna_derecha('oficina')
+        if event == 'boton_cancelar':
+            print(opcion_actual)
+            print(event)
+            for key in values.keys():
+                print(str(key) + ': ', values[key])
+
+        
 
 if __name__ == '__main__':
     abrir_configuracion()
