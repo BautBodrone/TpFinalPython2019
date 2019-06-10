@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import json
 
 def abrir_configuracion():
     #COLUMNA IZQUIERDA
@@ -177,7 +178,12 @@ def abrir_configuracion():
         return columna_derecha_diseño_del_juego
 
     #OFICINA
-    def columna_derecha_oficina(oficinas):
+    def columna_derecha_oficina():
+        arc = open("dato-oficinas.json", "r", encoding="utf-8")
+        data = json.load(arc)
+        oficinas = []
+        for key in data:
+            oficinas.append(key)
         oficina_frame = [
             [
                 sg.Combo(values=oficinas)
@@ -226,7 +232,6 @@ def abrir_configuracion():
         ['Casa','Sustantivo','{}'.format(len("Casa"))]
     ]
 
-    oficinas = ["Oficina 1","Oficina 2"]
 
     #LAYOUT
     layout = [
