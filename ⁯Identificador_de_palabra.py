@@ -39,11 +39,11 @@ def identificador (palabra): ##palabra = gato para testeo
         if wik==True:
             definicion = sg.PopupGetText("Palabra No Encontrada en wiki", "Ingrese definicion") ## para guardar en archivo local
             if ("NN" in patt_es):
-                lis = [[palabra, "Sustantivo"]]
+                lis = [[palabra, "Sustantivo", definicion]]
             elif ("VB" in patt_es):
-                lis = [[palabra, "Verbo"]]
+                lis = [[palabra, "Verbo", definicion]]
             elif ("JJ" in patt_es):
-                lis = [[palabra, "Adjetivo"]]
+                lis = [[palabra, "Adjetivo", definicion]]
         elif (("NN" in patt_es) and ("Sustantivo" in tag)) or (("VB" in patt_es) and ("verbo" in tag)) or (("JJ" in patt_es) and ("Adjetivo" in tag)):
             match = True
             
