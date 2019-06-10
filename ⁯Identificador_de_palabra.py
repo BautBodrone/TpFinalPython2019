@@ -22,9 +22,11 @@ def identificador (palabra): ##palabra = gato para testeo
 
     if section != "error":
         lis = section[3]
+        descr = section[3].string
+        descr = (((descr.split("2"))[0].split("1"))[1]).split("*")[0]
         if ("Sustantivo" in lis.title) or ("Adjetivo" in lis.title) or ("Verbo" in lis.title):
             tag = lis.title
-            lis = [[palabra, tag]]
+            lis = [[palabra, tag, descr]]
             wik = True
             print(lis)
     try:
