@@ -2,21 +2,22 @@ import Usuario
 import PySimpleGUI as sg
 import json
 
+
 def abrir_configuracion(usuario):
-    #COLUMNA IZQUIERDA
+    # COLUMNA IZQUIERDA
     def columna_izquierda(opciones):
         lista = []
         for opcion in opciones:
-            lista.append([sg.Button(opcion.capitalize().replace("_"," "), size=(22, 1), key=opcion)])
+            lista.append([sg.Button(opcion.capitalize().replace("_", " "), size=(22, 1), key=opcion)])
 
         columna_izquierda = lista + [[
-            sg.Button("Guardar", size=(10, 1), key="GRAN_Guardar",),
-            sg.Button("Salir", size=(10, 1), key="salir",)
+            sg.Button("Guardar", size=(10, 1), key="GRAN_Guardar", ),
+            sg.Button("Salir", size=(10, 1), key="salir", )
         ]]
 
         return columna_izquierda
 
-    #USUARIOS
+    # USUARIOS
     def columna_derecha_usuarios():
         columna_derecha_usuarios = [
             [
@@ -32,15 +33,17 @@ def abrir_configuracion(usuario):
         ]
         return columna_derecha_usuarios
 
-    #LISTA DE PALABRAS
+    # LISTA DE PALABRAS
     def columna_derecha_lista_de_palabras(dicsus, dicadj, dicver):
 
         def generarlistade(dic, tipo):
-            return list(map(lambda palabra:[palabra, tipo, len(palabra)], dic.keys()))
+            return list(map(lambda palabra: [palabra, tipo, len(palabra)], dic.keys()))
 
         lista_de_palabras = generarlistade(dicsus, "Sustantivo")
-        lista_de_palabras.append(generarlistade(dicadj, "Adjetivo"))
-        lista_de_palabras.append(generarlistade(dicver, "Verbo"))
+        lista_de_palabras += generarlistade(dicadj, "Adjetivo")
+        lista_de_palabras += generarlistade(dicver, "Verbo")
+
+        print(lista_de_palabras)
 
         columna_derecha_lista_de_palabras = [
             [
@@ -64,20 +67,20 @@ def abrir_configuracion(usuario):
 
         return columna_derecha_lista_de_palabras
 
-    #CANTIDAD DE PALABRAS
+    # CANTIDAD DE PALABRAS
     def columna_derecha_cantidad_de_palabras(botones_por_defecto):
         cantidad_frame = [
             [
-                sg.Text("Sustantivos", size=(10,1), justification='right'),
-                sg.Slider(range=(1,5),orientation="h", size=(10,20), key='cantidad_sustantivos')
+                sg.Text("Sustantivos", size=(10, 1), justification='right'),
+                sg.Slider(range=(1, 5), orientation="h", size=(10, 20), key='cantidad_sustantivos')
             ],
             [
-                sg.Text("Adjetivos", size=(10,1), justification='right'),
-                sg.Slider(range=(1,5),orientation="h", size=(10,20), key='cantidad_adjetivos')
+                sg.Text("Adjetivos", size=(10, 1), justification='right'),
+                sg.Slider(range=(1, 5), orientation="h", size=(10, 20), key='cantidad_adjetivos')
             ],
             [
-                sg.Text("Verbos", size=(10,1), justification='right'),
-                sg.Slider(range=(1,5),orientation="h", size=(10,20),key='cantidad_verbos')
+                sg.Text("Verbos", size=(10, 1), justification='right'),
+                sg.Slider(range=(1, 5), orientation="h", size=(10, 20), key='cantidad_verbos')
             ]
         ]
 
@@ -91,19 +94,19 @@ def abrir_configuracion(usuario):
 
         return columna_derecha_cantidad_de_palabras
 
-    #AYUDAS
+    # AYUDAS
     def columna_derecha_ayudas(botones_por_defecto):
         ayudas_frame_habilitar = [
             [
-                sg.Radio("Habilitar", "habilitar_ayudas",default = True, size=(20,1), key='habilitar_ayudas'),
+                sg.Radio("Habilitar", "habilitar_ayudas", default=True, size=(20, 1), key='habilitar_ayudas'),
             ],
             [
-                sg.Radio("Deshabilitar", "habilitar_ayudas",)
+                sg.Radio("Deshabilitar", "habilitar_ayudas", )
             ]
         ]
         ayudas_frame_tipo = [
             [
-                sg.Radio("Lista de palabras", "tipo_de_ayudas", default = True, size=(20,1), key='ayuda_palabras'),
+                sg.Radio("Lista de palabras", "tipo_de_ayudas", default=True, size=(20, 1), key='ayuda_palabras'),
             ],
             [
                 sg.Radio("Descripcion", "tipo_de_ayudas")
@@ -114,47 +117,47 @@ def abrir_configuracion(usuario):
                 sg.Frame('¿Habilitar ayudas?', ayudas_frame_habilitar)
             ],
             [
-                sg.Frame('Seleccione el tipo de ayuda',ayudas_frame_tipo)
+                sg.Frame('Seleccione el tipo de ayuda', ayudas_frame_tipo)
             ],
             botones_por_defecto
         ]
         return columna_derecha_ayudas
 
-    #DISEÑO DEL JUEGO (ayudas, orientación, colores, cantidad de palabras, mayusculas)
+    # DISEÑO DEL JUEGO (ayudas, orientación, colores, cantidad de palabras, mayusculas)
     def columna_derecha_diseño_del_juego(botones_por_defecto):
         colores_frame = [
             [
-                sg.ColorChooserButton("Sustantivos", size=(14,1), key='color_sustantivos'),
+                sg.ColorChooserButton("Sustantivos", size=(14, 1), key='color_sustantivos'),
             ],
             [
-                sg.ColorChooserButton("Adjetivos", size=(14,1), key='color_adjetivos'),
+                sg.ColorChooserButton("Adjetivos", size=(14, 1), key='color_adjetivos'),
             ],
             [
-                sg.ColorChooserButton("Verbos", size=(14,1), key='color_verbos')
+                sg.ColorChooserButton("Verbos", size=(14, 1), key='color_verbos')
             ],
         ]
 
         orientacion_frame = [
             [
-                sg.Radio("Horizontal","orientacion",default=True, key='orientacion_horizontal'),
+                sg.Radio("Horizontal", "orientacion", default=True, key='orientacion_horizontal'),
             ],
             [
-                sg.Radio("Vertical","orientacion")
+                sg.Radio("Vertical", "orientacion")
             ]
         ]
 
         maymin_frame = [
             [
-                sg.Radio("Mayusculas","maymin",default=True, key='mayusculas'),
+                sg.Radio("Mayusculas", "maymin", default=True, key='mayusculas'),
             ],
             [
-                sg.Radio("Minusculas","maymin")
+                sg.Radio("Minusculas", "maymin")
             ]
         ]
 
         tipografia_frame = [
             [
-                sg.Combo(values=["arial","helvetica"], key='tipografia')
+                sg.Combo(values=["arial", "helvetica"], key='tipografia')
             ]
         ]
 
@@ -186,7 +189,7 @@ def abrir_configuracion(usuario):
 
         return columna_derecha_diseño_del_juego
 
-    #OFICINA
+    # OFICINA
     def columna_derecha_oficina():
         arc = open("dato-oficinas.json", "r", encoding="utf-8")
         data = json.load(arc)
@@ -212,17 +215,16 @@ def abrir_configuracion(usuario):
 
         return columna_derecha_oficina
 
-    #ACTUALIZAR COLUMNA DERECHA
+    # ACTUALIZAR COLUMNA DERECHA
     def actualizar_columna_derecha(columna_actual, lista_de_opciones):
         for opcion in lista_de_opciones:
-            window.Element('columna_derecha_'+opcion).Update(visible=False)
+            window.Element('columna_derecha_' + opcion).Update(visible=False)
 
-        window.Element('columna_derecha_'+columna_actual).Update(visible=True)
+        window.Element('columna_derecha_' + columna_actual).Update(visible=True)
 
-
-    #"PROGRAMA PRINCIPAL"
+    # "PROGRAMA PRINCIPAL"
     botones_por_defecto = [
-       sg.Button('Confirmar', key='boton_confirmar'),
+        sg.Button('Confirmar', key='boton_confirmar'),
         sg.Button('Por defecto', key='boton_por_defecto'),
         sg.Button('Cancelar', button_color=('white', 'red'), key='boton_cancelar')
     ]
@@ -236,34 +238,33 @@ def abrir_configuracion(usuario):
         'oficina'
     ]
 
-    #Variables auxiliares
+    # Variables auxiliares
     lista_de_palabras = [
-        ['Casa','Sustantivo','{}'.format(len("Casa"))]
+        ['Casa', 'Sustantivo', '{}'.format(len("Casa"))]
     ]
 
-
-    #LAYOUT
+    # LAYOUT
     layout = [
-        [   #Título
+        [  # Título
             sg.Text("Sopa de Letras", font="arial 40"),
         ],
         [
             sg.T(''),
         ],
         [
-            #COLUMNA IZQUIERDA
+            # COLUMNA IZQUIERDA
             sg.Column(
                 columna_izquierda(lista_de_opciones)
             ),
 
-            #COLUMNA DERECHA
+            # COLUMNA DERECHA
             sg.Column(
                 columna_derecha_usuarios(),
                 visible=False,
                 key='columna_derecha_usuarios'
             ),
-            sg.Column(#Empieza activa por defecto
-                columna_derecha_lista_de_palabras(lista_de_palabras),
+            sg.Column(  # Empieza activa por defecto
+                columna_derecha_lista_de_palabras(usuario.getsustantivos(),usuario.getadjetivos(),usuario.getverbos()),
                 visible=True,
                 key='columna_derecha_lista_de_palabras'
             ),
@@ -283,18 +284,18 @@ def abrir_configuracion(usuario):
                 key='columna_derecha_diseño_del_juego'
             ),
             sg.Column(
-                columna_derecha_oficina(oficinas),
+                columna_derecha_oficina(),
                 visible=False,
                 key='columna_derecha_oficina'
             ),
         ]
     ]
 
-    #Ejecucion y lectura de ventana de configuracion
+    # Ejecucion y lectura de ventana de configuracion
 
     window = sg.Window("Configuración").Layout(layout)
 
-    opcion_actual=lista_de_opciones[1]
+    opcion_actual = lista_de_opciones[1]
 
     while True:
         event, values = window.Read()
@@ -327,7 +328,5 @@ def abrir_configuracion(usuario):
                 print(str(key) + ': ', values[key])
 
 
-
 if __name__ == '__main__':
-    abrir_configuracion()
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+    abrir_configuracion(usuario)
