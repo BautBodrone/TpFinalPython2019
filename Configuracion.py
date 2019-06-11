@@ -1,8 +1,8 @@
-import Usuario as user
+import Usuario
 import PySimpleGUI as sg
 import json
 
-def abrir_configuracion():
+def abrir_configuracion(usuario):
     #COLUMNA IZQUIERDA
     def columna_izquierda(opciones):
         lista = []
@@ -33,7 +33,15 @@ def abrir_configuracion():
         return columna_derecha_usuarios
 
     #LISTA DE PALABRAS
-    def columna_derecha_lista_de_palabras(lista_de_palabras):
+    def columna_derecha_lista_de_palabras(dicsus, dicadj, dicver):
+
+        def generarlistade(dic, tipo):
+            return list(map(lambda palabra:[palabra, tipo, len(palabra)], dic.keys()))
+
+        lista_de_palabras = generarlistade(dicsus, "Sustantivo")
+        lista_de_palabras.append(generarlistade(dicadj, "Adjetivo"))
+        lista_de_palabras.append(generarlistade(dicver, "Verbo"))
+
         columna_derecha_lista_de_palabras = [
             [
                 sg.Text("Lista de palabras")
@@ -290,6 +298,7 @@ def abrir_configuracion():
 
     while True:
         event, values = window.Read()
+        config_aux = usuario.getconfig()
 
         if event is None or event == 'salir':
             window.Close()
