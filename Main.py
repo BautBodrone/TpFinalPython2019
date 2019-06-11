@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import Configuracion as config
 import Juego as juego
+from Usuario import Usuario
 
 sg.ChangeLookAndFeel('Kayak')
 
@@ -33,6 +34,8 @@ window = sg.Window(#Propiedades
                     
                 ).Layout(layout)
 
+usuario = Usuario()
+
 while True:
     event, values = window.Read()
 
@@ -41,7 +44,7 @@ while True:
 
     if event == "config":
         window.Disappear()
-        config.abrir_configuracion()
+        config.abrir_configuracion(usuario)
         window.Reappear()
         
     if event == "jugar":
