@@ -4,9 +4,9 @@ class Usuario:
         '''El inicializador de la clase Usuario recibe un nombre y una contrasena, a la vez que automaticamente genera un diccionario vacio para cada tipo de palabra, y una configuracion default'''
         self.nombre = nombre
         self.contrasena = contrasena
-        self.sustantivos = {}
-        self.adjetivos = {}
-        self.verbos = {}
+        self.sustantivos = {'casa':'desc'}
+        self.adjetivos = {'feo':'desc'}
+        self.verbos = {'correr':'desc'}
         self.config = {"nombre": nombre,
                        "contrasena": contrasena,
                        "config_colores": (),
