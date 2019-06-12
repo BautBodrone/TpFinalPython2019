@@ -32,8 +32,8 @@ def abrir_configuracion():
                 )
             ],
             [
-                sg.Button('Añadir', key='boton_confirmar'),
-                sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar'),
+                sg.Button('Añadir', key='agregar_palabra'),
+                sg.Button('Borrar', button_color=('white', 'red'), key='borrar_palabra'),
             ]
         ]
 
@@ -174,8 +174,8 @@ def abrir_configuracion():
                 sg.Frame('Seleccione la oficina', oficina_frame)
             ],
             [
-                sg.Button('Agregar', key='boton_confirmar'),
-                sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar')
+                sg.Button('Agregar', key='agregar_oficina'),
+                sg.Button('Borrar', button_color=('white', 'red'), key='borrar_oficina')
             ]
         ]
 
@@ -203,7 +203,7 @@ def abrir_configuracion():
         'cantidad_de_palabras',
         'ayudas',
         'diseño_del_juego',
-        'oficina'
+        'oficina',
     ]
 
     #Variables importantes
@@ -299,6 +299,13 @@ def abrir_configuracion():
                 print('> oficina: añadir')
                 #oficina
                 
+        if event == 'agregar_palabra':
+            print('SE AGREGA PALABRA')
+
+
+        if event == 'borrar_palabra':
+                print('SE BORRA LA PALABRA')
+
 
         if event == 'boton_por_defecto':
             print(opcion_actual)
