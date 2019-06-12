@@ -1,6 +1,6 @@
 import json
 
-class Config:
+class Configuracion:
     def __init__(
             self,
             sustantivos = {
@@ -50,7 +50,7 @@ def obtener_configuracion():
     try:
         archivo_configuracion = open('/configuracion/usuario.txt', 'r')
     except:
-        configuracion = Config()
+        configuracion = Configuracion()
     else:
         print('')
 
