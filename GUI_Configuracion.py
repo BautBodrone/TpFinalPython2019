@@ -32,8 +32,8 @@ def abrir_configuracion():
                 )
             ],
             [
-                sg.Button('Añadir', key='agregar_palabra'),
-                sg.Button('Borrar', button_color=('white', 'red'), key='borrar_palabra'),
+                sg.Button('Añadir', key='boton_confirmar'),
+                sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar'),
             ]
         ]
 
@@ -211,8 +211,6 @@ def abrir_configuracion():
 
     #EJEMPLO AGREGAR PALABRA
     print(configuracion.lista_de_palabras)
-    configuracion.agregar_sustantivo('test','test')
-    print(configuracion.lista_de_palabras)
 
     #Variables auxiliares
     oficinas = ["Oficina 1","Oficina 2"]
@@ -264,7 +262,7 @@ def abrir_configuracion():
     
     window = sg.Window("Configuración").Layout(layout)
 
-    opcion_actual=lista_de_opciones[1]
+    opcion_actual=lista_de_opciones[0]
     
     while True:
         event, values = window.Read()
@@ -277,48 +275,80 @@ def abrir_configuracion():
             opcion_actual = event
             actualizar_columna_derecha(event, lista_de_opciones)
 
+
         if event == 'boton_confirmar':
             print(opcion_actual)
             print(event)
-            for key in values.keys():
-                print(str(key) + ': ', values[key])
+
+            if opcion_actual == 'lista_de_palabras':
+                print('> lista_de_palabras: Añadir')
+                #agregar_palabra()
 
             if opcion_actual == 'cantidad_de_palabras':
-                print('> cantidad_de_palabras()')
+                print('> cantidad_de_palabras: Confirmar')
                 #cantidad_de_palabras()
 
             if opcion_actual == 'ayudas':
-                print('> ayudas()')
+                print('> ayudas: Confirmar')
                 #ayudas()
 
             if opcion_actual == 'diseño_del_juego':
-                print('> diseño_del_juego()')
+                print('> diseño_del_juego: Confirmar')
                 #diseño_del_juego()
 
             if opcion_actual == 'oficina':
-                print('> oficina: añadir')
+                print('> oficina: Agregar')
                 #oficina
-                
-        if event == 'agregar_palabra':
-            print('SE AGREGA PALABRA')
-
-
-        if event == 'borrar_palabra':
-            print('SE BORRA LA PALABRA')
 
 
         if event == 'boton_por_defecto':
             print(opcion_actual)
             print(event)
-            for key in values.keys():
-                print(str(key) + ': ', values[key])
 
+            if opcion_actual == 'lista_de_palabras':
+                print('> lista_de_palabras: Por defecto')
+                #agregar_palabra()
+
+            if opcion_actual == 'cantidad_de_palabras':
+                print('> cantidad_de_palabras: Por defecto')
+                #cantidad_de_palabras()
+
+            if opcion_actual == 'ayudas':
+                print('> ayudas: Por defecto')
+                #ayudas()
+
+            if opcion_actual == 'diseño_del_juego':
+                print('> diseño_del_juego: Por defecto')
+                #diseño_del_juego()
+
+            if opcion_actual == 'oficina':
+                print('> oficina: Por defecto')
+                #oficina
+
+            
         if event == 'boton_cancelar':
             print(opcion_actual)
             print(event)
-            for key in values.keys():
-                print(str(key) + ': ', values[key])
 
+            if opcion_actual == 'lista_de_palabras':
+                print('> lista_de_palabras: Borrar')
+                #agregar_palabra()
+
+            if opcion_actual == 'cantidad_de_palabras':
+                print('> cantidad_de_palabras: Cancelar')
+                #cantidad_de_palabras()
+
+            if opcion_actual == 'ayudas':
+                print('> ayudas: Cancelar')
+                #ayudas()
+
+            if opcion_actual == 'diseño_del_juego':
+                print('> diseño_del_juego: Cancelar')
+                #diseño_del_juego()
+
+            if opcion_actual == 'oficina':
+                print('> oficina: Borrar')
+                #oficina
         
 
 if __name__ == '__main__':
