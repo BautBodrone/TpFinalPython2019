@@ -55,7 +55,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         lis_pos = -1
         ori = config.orientacion ##falta implementar orientacion en la config
         if ori is True: ##horizontal
-            for x in range(N):
+            for y in range(N):
                 linea = []
                 go = random.choice([True, False])
                 if go is True:
@@ -63,9 +63,9 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                     start = random.randrange(0, (N-len_pal))
                     pos_agregado = 0
                     lis_pos = + 1
-                for y in range(N):
+                for x in range(N):
                     if go is True:
-                        if(y >= start)and(y < (start+len_pal)):
+                        if(x >= start)and(x < (start+len_pal)):
                             letra = lis_palabras[pos_agregado]
                             pos_agregado = + 1
                         else:
@@ -87,7 +87,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                     )
                 matriz.append(linea)
         else:##no probado
-            for x in range(N):
+            for y in range(N):
                 linea = []
                 go = random.choice([True, False])
                 if go is True:
@@ -95,9 +95,9 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                     start = random.randrange(0, (N - len_pal))
                     pos_agregado = 0
                     lis_pos = + 1
-                for y in range(N):
+                for x in range(N):
                     if go is True:
-                        if (x >= start) and (x < (start + len_pal)):
+                        if (y >= start) and (y < (start + len_pal)):
                             letra = lis_palabras[pos_agregado]
                             pos_agregado = + 1
                         else:
