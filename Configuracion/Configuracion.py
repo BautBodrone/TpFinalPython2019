@@ -1,5 +1,10 @@
 import json
 
+class ConfigEncoder(json.JSONEncoder):
+    def default(self, obj):
+        return obj.__dict__
+    
+
 class Configuracion:
     def __init__(
             self,
@@ -62,12 +67,34 @@ class Configuracion:
         elif palabra in self.verbos.keys():
             del self.verbos[palabra]
 
+    def to_dict(self):
+        return self.__dict__
+
 def obtener_configuracion():
-    try:
-        archivo_configuracion = open('/configuracion/usuario.txt', 'r')
-    except:
+    def generar_configuracion():
         configuracion = Configuracion()
+        archivo_configuracion = open('configuracion/config.json', 'w+')
+        serializar = json.dump(configuracion, archivo_configuracion, cls=ConfigEncoder, indent=4)
+        print(serializar)
+
+        return configuracion
+        
+    try:
+        archivo_configuracion = open('configuracion/config.json', 'r')
+    except:
+        configuracion = generar_configuracion()
+        
+        
     else:
-        print('')
+        try:
+            print('sin except')
+            configuracion = json.loads(archivo_configuracion)
+        except:
+            print('segunda except')
+            configuracion = generar_configuracion()
+            
+        
+    print('CONFIGURACION:')
+    print(configuracion)
 
     return configuracion
