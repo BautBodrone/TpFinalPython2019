@@ -1,0 +1,42 @@
+{
+    "sustantivos": {
+        "casa": "desc"
+    },
+    "adjetivos": {
+        "alto": "desc"
+    },
+    "verbos": {
+        "correr": "desc"
+    },
+    "_lista_de_palabras": [
+        [
+            "casa",
+            "Sustantivo",
+            4
+        ],
+        [
+            "alto",
+            "Adjetivo",
+            4
+        ],
+        [
+            "correr",
+            "Verbo",
+            6
+        ]
+    ],
+    "cantidad_de_palabras": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "ayudas": true,
+    "tipo_ayuda": true,
+    "mayusculas": true,
+    "colores": [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF"
+    ],
+    "oficina": null
+}
