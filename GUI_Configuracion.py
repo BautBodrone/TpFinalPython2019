@@ -304,7 +304,7 @@ def abrir_configuracion():
 
 
         if event == 'borrar_palabra':
-                print('SE BORRA LA PALABRA')
+            print('SE BORRA LA PALABRA')
 
 
         if event == 'boton_por_defecto':
