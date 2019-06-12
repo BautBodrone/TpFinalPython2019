@@ -16,15 +16,7 @@ def abrir_configuracion():
         return columna_izquierda
 
     #LISTA DE PALABRAS
-    def columna_derecha_lista_de_palabras(sustantivos, adjetivos, verbos):
-
-        def generarlistade(dic, tipo):
-            return list(map(lambda palabra: [palabra, tipo, len(palabra)], dic.keys()))
-
-        lista_de_palabras = generarlistade(sustantivos, "Sustantivo")
-        lista_de_palabras += generarlistade(adjetivos, "Adjetivo")
-        lista_de_palabras += generarlistade(verbos, "Verbo")
-
+    def columna_derecha_lista_de_palabras(lista_de_palabras):
         columna_derecha_lista_de_palabras = [
             [
                 sg.Text("Lista de palabras")
@@ -217,6 +209,11 @@ def abrir_configuracion():
     #Variables importantes
     configuracion = Configuracion.obtener_configuracion()
 
+    #EJEMPLO AGREGAR PALABRA
+    print(configuracion.lista_de_palabras)
+    configuracion.agregar_sustantivo('test','test')
+    print(configuracion.lista_de_palabras)
+
     #Variables auxiliares
     oficinas = ["Oficina 1","Oficina 2"]
 
@@ -236,7 +233,7 @@ def abrir_configuracion():
 
             #COLUMNA DERECHA
             sg.Column(#Empieza activa por defecto
-                columna_derecha_lista_de_palabras(configuracion.sustantivos, configuracion.adjetivos, configuracion.verbos),
+                columna_derecha_lista_de_palabras(configuracion.lista_de_palabras),
                 visible=True,
                 key='columna_derecha_lista_de_palabras'
             ),

@@ -22,12 +22,27 @@ class Configuracion:
         self.sustantivos = sustantivos
         self.adjetivos = adjetivos
         self.verbos = verbos
+        self._lista_de_palabras = self._generar_lista_de_palabras(self.sustantivos, self.adjetivos, self.verbos)
         self.cantidad_de_palabras = cantidad_de_palabras
         self.ayudas = ayudas
         self.tipo_ayuda = tipo_ayuda
         self.mayusculas = mayusculas
         self.colores = colores
         self.oficina = oficina
+
+    @property
+    def lista_de_palabras(self):
+        return self._generar_lista_de_palabras(self.sustantivos, self.adjetivos, self.verbos)
+
+    def _generar_lista_de_palabras(self, sustantivos, adjetivos, verbos):
+        def generar_lista_de(dic, tipo):
+            return list(map(lambda palabra: [palabra, tipo, len(palabra)], dic.keys()))
+
+        lista_de_palabras = generar_lista_de(sustantivos, "Sustantivo")
+        lista_de_palabras += generar_lista_de(adjetivos, "Adjetivo")
+        lista_de_palabras += generar_lista_de(verbos, "Verbo")
+
+        return lista_de_palabras
 
     def agregar_sustantivo(self, palabra, descripcion):
         self.sustantivos[palabra] = descripcion
@@ -37,6 +52,7 @@ class Configuracion:
 
     def agregar_verbo(self, palabra, descripcion):
         self.verbos[palabra] = descripcion
+
 
     def borrar_palabra(self, palabra):
         if palabra in self.sustantivos.keys():
