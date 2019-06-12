@@ -1,4 +1,4 @@
-HECHO:
+﻿HECHO:
 	MAIN [
 		GUI
 	]
@@ -51,14 +51,6 @@ POR HACER:
 			
 			]
 		]
-		Usuarios [
-			Añadir [
-				GUI
-				
-			]
-			Borrar [
-			
-			]
 		]
 		Ayudas []
 		Diseño []
