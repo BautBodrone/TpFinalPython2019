@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
-import GUI_Configuracion as configuracion
-import Juego as juego
+import GUI_Configuracion as gui_configuracion
+import JuegoTest as juego
+import Configuracion.Configuracion as Configuracion
 
 sg.ChangeLookAndFeel('Kayak')
 
@@ -41,10 +42,10 @@ while True:
 
     if event == "config":
         window.Disappear()
-        configuracion.abrir_configuracion()
+        gui_configuracion.abrir_configuracion()
         window.Reappear()
         
     if event == "jugar":
         window.Disappear()
-        juego.ventanajuego()
+        juego.ventanajuego(Configuracion.obtener_configuracion())
         window.Reappear()
