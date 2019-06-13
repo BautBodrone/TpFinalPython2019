@@ -44,25 +44,28 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
 
     def generar_matriz(N, lis_palabras):
         '''Genera una matriz de N filas y N columnas'''
-        solo_palabras = list(map(lambda x: x[0], lis_palabras))
+        solo_palabras = list(map(lambda x: x[0], lis_palabras))##hace una lista solo con las palabras
         matriz = []
         N = N + random.randint(1, 2) #para que la palabra mas grande no quede siempre pegada a los bordes
-        lis_pos = -1
+        lis_pos = 0
         ori = config.orientacion
         if ori is True: ##horizontal
-            for x in range(N):
+            for y in range(N):
                 linea = []
-                go = random.choice([True, False])
-                if go is True:
+                go= False
+                if lis_pos<len(solo_palabras):
+                    go = random.choice([True, False])
+                if (go is True) and (lis_pos < len(solo_palabras)):
                     len_pal = len(solo_palabras[lis_pos])
                     start = random.randrange(0, (N-len_pal))
                     pos_agregado = 0
-                    lis_pos = + 1
-                for y in range(N):
+                for x in range(N):
                     if go is True:
                         if(x >= start)and(x < (start+len_pal)):
-                            letra = solo_palabras[pos_agregado]
-                            pos_agregado = + 1
+                            print(pos_agregado)
+                            letra = solo_palabras[lis_pos][pos_agregado]
+                            print(letra)
+                            pos_agregado = pos_agregado + 1
                         else:
                             letra = chr(random.randint(ord('a'), ord('z')))
                     else:
@@ -81,6 +84,8 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                         ),
                     )
                 matriz.append(linea)
+                if go is True:
+                    lis_pos = lis_pos + 1
         else:##no probado
             for y in range(N):
                 linea = []
@@ -160,7 +165,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         print(event, values)
         if color is None:
             actual = 'adjetivos'
-            color = 'red'
+            color = config.colores[1]
 
         if event == 'cancelar':
             presionadas = cancelar_seleccion(presionadas)
@@ -170,13 +175,13 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
             if not (event == actual):
                 if event == 'adjetivos':
                     actual = 'adjetivos'
-                    color = 'red'
+                    color = config.colores[1]
                 elif event == 'sustantivos':
-                    color = 'silver'
+                    color = config.colores[0]
                     actual = 'sustantivos'
                 else:
                     actual = 'verbos'
-                    color = 'yellow'
+                    color = config.colores[2]
 
                 presionadas = cancelar_seleccion(presionadas)
 
