@@ -1,10 +1,8 @@
-from random import shuffle
+import PySimpleGUI as sg
+import random
 import Configuracion.Configuracion as Configuracion
 
 def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
-    import PySimpleGUI as sg
-    import random
-
     def salir(e):
         return e is None
 
@@ -14,33 +12,33 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         return []
 
     def max_palabra(lis_palabra):
-        #palabras = list(map(lambda x: x[0], lis_palabra))
         max = 0
-        print(lis_palabra)
+        print('lista_palabras', lis_palabra)
         for i in lis_palabra:
             if len(i[0])>max:
                 max = len(i[0])
         return max
 
-    def shuffle_pal (lis, tempo, tipo):
-        shuffle(tempo)
-        for x in tempo.keys():
+    def shuffle_pal(lista, palabras, cantidad):
+        temporal = list(palabras.keys())
+        random.shuffle(temporal)
+        print(temporal)
+        for i in range(cantidad):
             try:
-                lis.append([x, tempo[x]])
+                lista.append([temporal[i], palabras[temporal[i]]])
             except IndexError:
                 pass
 
     def generar_lis_palabras(config):
-        lis = []
-        cant_pal = config.cantidad_de_palabras
-        sus = int(cant_pal[0])
-        adj = int(cant_pal[1])
-        verb = int(cant_pal[2])
-        shuffle_pal(lis, config.sustantivos, sus)
-        shuffle_pal(lis, config.adjetivos, adj)
-        shuffle_pal(lis, config.verbos, verb)
-        shuffle(lis)
-        return lis
+        lista = []
+        cant_sustantivos, cant_adjetivos, cant_verbos = config.cantidad_de_palabras
+        
+        shuffle_pal(lista, config.sustantivos, cant_sustantivos)
+        shuffle_pal(lista, config.adjetivos, cant_adjetivos)
+        shuffle_pal(lista, config.verbos, cant_verbos)
+        
+        random.shuffle(lista)
+        return lista
 
     def generar_matriz(N, lis_palabras):
         '''Genera una matriz de N filas y N columnas'''
@@ -48,8 +46,8 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         matriz = []
         N = N + random.randint(1, 2) #para que la palabra mas grande no quede siempre pegada a los bordes
         lis_pos = 0
-        ori = config.orientacion
-        if ori is True: ##horizontal
+        orientacion = config.orientacion
+        if orientacion: ##horizontal
             for y in range(N):
                 linea = []
                 go= False
@@ -62,9 +60,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                 for x in range(N):
                     if go is True:
                         if(x >= start)and(x < (start+len_pal)):
-                            print(pos_agregado)
                             letra = solo_palabras[lis_pos][pos_agregado]
-                            print(letra)
                             pos_agregado = pos_agregado + 1
                         else:
                             letra = chr(random.randint(ord('a'), ord('z')))
@@ -80,7 +76,8 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                             # Diseño
                             font='Courier 10',
                             size=(4, 2) if N <= 12 else (2, 1),
-                            button_color=('black', 'white')
+                            button_color=('black', 'white'),
+                            pad=(0,0)
                         ),
                     )
                 matriz.append(linea)
@@ -120,8 +117,6 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                 matriz.append(linea)
         return matriz
 
-    config = Configuracion.obtener_configuracion()
-    print(config.get_colores())
     lis_palabras = generar_lis_palabras(config)
     num = max_palabra(lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
@@ -198,4 +193,4 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
 
 
 if __name__ == '__main__':
-    ventanajuego()
+    ventanajuego(Configuracion.obtener_configuracion())

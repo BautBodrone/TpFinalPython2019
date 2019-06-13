@@ -17,7 +17,7 @@ class Configuracion:
             verbos = {
                 'verbo':'por defecto'
             },
-            cantidad_de_palabras = (1.0,1.0,1.0),
+            cantidad_de_palabras = (3,2,1),
             ayudas = True,
             tipo_ayudas = True,
             mayusculas = True,
@@ -88,8 +88,6 @@ def obtener_configuracion():
         archivo_configuracion = open('configuracion/config.json', 'r')
     except:
         configuracion = generar_configuracion()
-        
-        
     else:
         try:
             print('sin except')
@@ -109,9 +107,5 @@ def obtener_configuracion():
         except:
             print('segunda except')
             configuracion = generar_configuracion()
-            
-            
-        
-    print('CONFIGURACION: ',configuracion)
 
     return configuracion

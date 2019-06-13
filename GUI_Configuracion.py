@@ -24,7 +24,7 @@ def abrir_configuracion():
             [
                 sg.Table(
                     values=lista_de_palabras,
-                    headings=['Palabra', 'Tipo', 'Longitud'],
+                    headings=['Palabra', 'Tipo'],
                     enable_events=True,
                     key='lista_de_palabras_seleccionada',
                     justification='center',

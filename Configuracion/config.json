@@ -11,33 +11,30 @@
     "_lista_de_palabras": [
         [
             "sustantivo",
-            "Sustantivo",
-            10
+            "Sustantivo"
         ],
         [
             "adjetivo",
-            "Adjetivo",
-            8
+            "Adjetivo"
         ],
         [
             "verbo",
-            "Verbo",
-            5
+            "Verbo"
         ]
     ],
     "cantidad_de_palabras": [
-        1.0,
-        1.0,
-        1.0
+        3,
+        2,
+        1
     ],
     "ayudas": true,
     "tipo_ayudas": true,
     "mayusculas": true,
     "orientacion": true,
+    "oficina": null,
     "colores": [
         "#FF0000",
         "#00FF00",
         "#0000FF"
-    ],
-    "oficina": null
+    ]
 }
