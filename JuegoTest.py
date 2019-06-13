@@ -1,4 +1,5 @@
 from random import shuffle
+import Configuracion.Configuracion as Configuracion
 
 def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
     import PySimpleGUI as sg
@@ -13,12 +14,21 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         return []
 
     def max_palabra(lis_palabra):
-        palabras = list(map(lambda x: x[0], lis_palabra))
+        #palabras = list(map(lambda x: x[0], lis_palabra))
         max = 0
+        print(lis_palabra)
         for i in lis_palabra:
-            if len(i)>max:
-                max = len(i)
+            if len(i[0])>max:
+                max = len(i[0])
         return max
+
+    def shuffle_pal (lis, tempo, tipo):
+        shuffle(tempo)
+        for x in tempo.keys():
+            try:
+                lis.append([x, tempo[x]])
+            except IndexError:
+                pass
 
     def generar_lis_palabras(config):
         lis = []
@@ -26,46 +36,29 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         sus = int(cant_pal[0])
         adj = int(cant_pal[1])
         verb = int(cant_pal[2])
-        tempo = config.sustantivos
-        shuffle(tempo)
-        for x in tempo.keys():
-            try:
-                lis.append(tempo[x])
-            except IndexError:
-                pass
-        tempo = config.adjetivos
-        shuffle(tempo)
-        for x in tempo.keys():
-            try:
-                lis.append(tempo[x])
-            except IndexError:
-                pass
-        tempo = config.verbos
-        shuffle(tempo)
-        for x in tempo.keys():
-            try:
-                lis.append(tempo[x])
-            except IndexError:
-                pass
-        return shuffle(lis)
+        shuffle_pal(lis, config.sustantivos, sus)
+        shuffle_pal(lis, config.adjetivos, adj)
+        shuffle_pal(lis, config.verbos, verb)
+        shuffle(lis)
+        return lis
 
     def generar_matriz(N, lis_palabras):
         '''Genera una matriz de N filas y N columnas'''
         solo_palabras = list(map(lambda x: x[0], lis_palabras))
         matriz = []
-        N = N + random.randrange(0, 2) #para que la palabra mas grande no quede siempre pegada a los bordes
+        N = N + random.randint(1, 2) #para que la palabra mas grande no quede siempre pegada a los bordes
         lis_pos = -1
         ori = config.orientacion
         if ori is True: ##horizontal
-            for y in range(N):
+            for x in range(N):
                 linea = []
                 go = random.choice([True, False])
                 if go is True:
                     len_pal = len(solo_palabras[lis_pos])
-                    start = random.randrange(0, (len_pal-N))
+                    start = random.randrange(0, (N-len_pal))
                     pos_agregado = 0
                     lis_pos = + 1
-                for x in range(N):
+                for y in range(N):
                     if go is True:
                         if(x >= start)and(x < (start+len_pal)):
                             letra = solo_palabras[pos_agregado]
@@ -122,9 +115,10 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                 matriz.append(linea)
         return matriz
 
-    lis_palabras = config.lista_de_palabras
+    config = Configuracion.obtener_configuracion()
+    print(config.get_colores())
+    lis_palabras = generar_lis_palabras(config)
     num = max_palabra(lis_palabras)
-    print(num, lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
     columna_derecha = matriz
     columna_izquierda = [
