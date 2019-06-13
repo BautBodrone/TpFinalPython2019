@@ -25,31 +25,30 @@ def identificador (palabra): ##palabra = gato para testeo
         descr = section[3].string
         descr = (((descr.split("2"))[0].split("1"))[1]).split("*")[0]
         if ("Sustantivo" in lis.title) or ("Adjetivo" in lis.title) or ("Verbo" in lis.title):
-            tag = lis.title
+            tag = lis.title.split(" ")[0]
             lis = [[palabra, tag, descr]]
             wik = True
             print(lis)
     try:
-        patt_es = parse(str(palabra), tokenize=False, tags=True, chunks=False)
+        patt_es = parse(str(palabra), tokenize=False, tags=True, chunks=False).split("/")[1]
         patt = True
     except AttributeError: ##puse esto para poner algo ya que no se que error puede tirar
         patt_es = "error"
 
     if patt_es != "error":
-        if wik==True:
+        if wik == False:
             definicion = sg.PopupGetText("Palabra No Encontrada en wiki", "Ingrese definicion") ## para guardar en archivo local
-            if ("NN" in patt_es):
+            if ("NN" is patt_es):
                 lis = [[palabra, "Sustantivo", definicion]]
-            elif ("VB" in patt_es):
+            elif ("VB" is patt_es):
                 lis = [[palabra, "Verbo", definicion]]
-            elif ("JJ" in patt_es):
+            elif ("JJ" is patt_es):
                 lis = [[palabra, "Adjetivo", definicion]]
-        elif (("NN" in patt_es) and ("Sustantivo" in tag)) or (("VB" in patt_es) and ("verbo" in tag)) or (("JJ" in patt_es) and ("Adjetivo" in tag)):
+        elif (("NN" is patt_es) and ("Sustantivo" is tag)) or (("VB" is patt_es) and ("Verbo" is tag)) or (("JJ" is patt_es) and ("Adjetivo" is tag)):
             match = True
-            
-     if (match==False) and (patt==True):
-        reporte = "La palabra "+palabra+" no fue enconmtrada en pattern.es" ##para reporte
+    if (match == False) and (patt == True):
+         reporte = "La palabra "+palabra+" no fue enconmtrada en pattern.es" ##para reporte
 
     return lis
 
-identificador("Gato")
+identificador("gato")
