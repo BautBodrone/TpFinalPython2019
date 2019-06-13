@@ -21,6 +21,7 @@ class Configuracion:
             ayudas = True,
             tipo_ayuda = True,
             mayusculas = True,
+            orientacion = True,
             colores = ('#FF0000', '#00FF00', '#0000FF'),
             oficina = None
         ):
@@ -32,6 +33,7 @@ class Configuracion:
         self.ayudas = ayudas
         self.tipo_ayuda = tipo_ayuda
         self.mayusculas = mayusculas
+        self.orientacion = orientacion
         self.colores = colores
         self.oficina = oficina
 
