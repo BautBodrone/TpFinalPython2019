@@ -33,6 +33,7 @@
     "ayudas": true,
     "tipo_ayuda": true,
     "mayusculas": true,
+    "orientacion": true,
     "colores": [
         "#FF0000",
         "#00FF00",
