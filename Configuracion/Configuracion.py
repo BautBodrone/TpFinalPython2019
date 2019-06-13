@@ -22,7 +22,7 @@ class Configuracion:
             tipo_ayudas = True,
             mayusculas = True,
             orientacion = True,
-            colores = ('#FF0000', '#00FF00', '#0000FF'),
+            colores = ['#FF0000','#00FF00','#0000FF'],
             oficina = None
         ):
         self.sustantivos = sustantivos
@@ -34,8 +34,8 @@ class Configuracion:
         self.tipo_ayudas = tipo_ayudas
         self.mayusculas = mayusculas
         self.orientacion = orientacion
-        self.colores = colores
         self.oficina = oficina
+        self.colores = colores
 
     @property
     def lista_de_palabras(self):
@@ -43,7 +43,7 @@ class Configuracion:
 
     def _generar_lista_de_palabras(self, sustantivos, adjetivos, verbos):
         def generar_lista_de(dic, tipo):
-            return list(map(lambda palabra: [palabra, tipo, len(palabra)], dic.keys()))
+            return list(map(lambda palabra: [palabra, tipo], dic.keys()))
 
         lista_de_palabras = generar_lista_de(sustantivos, "Sustantivo")
         lista_de_palabras += generar_lista_de(adjetivos, "Adjetivo")
@@ -72,6 +72,9 @@ class Configuracion:
     def to_dict(self):
         return self.__dict__
 
+    def get_colores(self):
+        return self.colores
+
 def obtener_configuracion():
     def generar_configuracion():
         configuracion = Configuracion()
@@ -92,15 +95,16 @@ def obtener_configuracion():
             print('sin except')
             c = json.load(archivo_configuracion)
             print('config: ', c)
-            configuracion = Configuracion(  c['sustantivos'],
-                                            c['adjetivos'],
-                                            c['verbos'],
-                                            c['cantidad_de_palabras'],
-                                            c['ayudas'],
-                                            c['tipo_ayudas'],
-                                            c['mayusculas'],
-                                            c['colores'],
-                                            c['oficina']
+            configuracion = Configuracion(  sustantivos=c['sustantivos'],
+                                            adjetivos=c['adjetivos'],
+                                            verbos=c['verbos'],
+                                            cantidad_de_palabras=c['cantidad_de_palabras'],
+                                            ayudas=c['ayudas'],
+                                            tipo_ayudas=c['tipo_ayudas'],
+                                            mayusculas=c['mayusculas'],
+                                            orientacion=c["orientacion"],
+                                            colores=c['colores'],
+                                            oficina = c['oficina']
                             )
         except:
             print('segunda except')
