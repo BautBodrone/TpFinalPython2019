@@ -1,28 +1,28 @@
 {
     "sustantivos": {
-        "casa": "desc"
+        "sustantivo": "por defecto"
     },
     "adjetivos": {
-        "alto": "desc"
+        "adjetivo": "por defecto"
     },
     "verbos": {
-        "correr": "desc"
+        "verbo": "por defecto"
     },
     "_lista_de_palabras": [
         [
-            "casa",
+            "sustantivo",
             "Sustantivo",
-            4
+            10
         ],
         [
-            "alto",
+            "adjetivo",
             "Adjetivo",
-            4
+            8
         ],
         [
-            "correr",
+            "verbo",
             "Verbo",
-            6
+            5
         ]
     ],
     "cantidad_de_palabras": [
@@ -31,7 +31,7 @@
         1.0
     ],
     "ayudas": true,
-    "tipo_ayuda": true,
+    "tipo_ayudas": true,
     "mayusculas": true,
     "orientacion": true,
     "colores": [

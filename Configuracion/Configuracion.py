@@ -9,17 +9,17 @@ class Configuracion:
     def __init__(
             self,
             sustantivos = {
-                'casa':'desc'
+                'sustantivo':'por defecto'
             },
             adjetivos = {
-                'alto':'desc'
+                'adjetivo':'por defecto'
             },
             verbos = {
-                'correr':'desc'
+                'verbo':'por defecto'
             },
             cantidad_de_palabras = (1.0,1.0,1.0),
             ayudas = True,
-            tipo_ayuda = True,
+            tipo_ayudas = True,
             mayusculas = True,
             orientacion = True,
             colores = ('#FF0000', '#00FF00', '#0000FF'),
@@ -31,7 +31,7 @@ class Configuracion:
         self._lista_de_palabras = self._generar_lista_de_palabras(self.sustantivos, self.adjetivos, self.verbos)
         self.cantidad_de_palabras = cantidad_de_palabras
         self.ayudas = ayudas
-        self.tipo_ayuda = tipo_ayuda
+        self.tipo_ayudas = tipo_ayudas
         self.mayusculas = mayusculas
         self.orientacion = orientacion
         self.colores = colores
@@ -90,13 +90,24 @@ def obtener_configuracion():
     else:
         try:
             print('sin except')
-            configuracion = json.loads(archivo_configuracion)
+            c = json.load(archivo_configuracion)
+            print('config: ', c)
+            configuracion = Configuracion(  c['sustantivos'],
+                                            c['adjetivos'],
+                                            c['verbos'],
+                                            c['cantidad_de_palabras'],
+                                            c['ayudas'],
+                                            c['tipo_ayudas'],
+                                            c['mayusculas'],
+                                            c['colores'],
+                                            c['oficina']
+                            )
         except:
             print('segunda except')
             configuracion = generar_configuracion()
             
+            
         
-    print('CONFIGURACION:')
-    print(configuracion)
+    print('CONFIGURACION: ',configuracion)
 
     return configuracion
