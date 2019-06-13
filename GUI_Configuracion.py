@@ -26,7 +26,7 @@ def abrir_configuracion():
                     values=lista_de_palabras,
                     headings=['Palabra', 'Tipo', 'Longitud'],
                     enable_events=True,
-                    key='tabla_de_palabras',
+                    key='lista_de_palabras_seleccionada',
                     justification='center',
 
                 )
@@ -174,8 +174,8 @@ def abrir_configuracion():
                 sg.Frame('Seleccione la oficina', oficina_frame)
             ],
             [
-                sg.Button('Agregar', key='agregar_oficina'),
-                sg.Button('Borrar', button_color=('white', 'red'), key='borrar_oficina')
+                sg.Button('Agregar', key='boton_confirmar'),
+                sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar')
             ]
         ]
 
@@ -277,8 +277,8 @@ def abrir_configuracion():
 
 
         if event == 'boton_confirmar':
-            print(opcion_actual)
-            print(event)
+            print('Menú actual: ', opcion_actual)
+            print('Evento actual:', event)
 
             if opcion_actual == 'lista_de_palabras':
                 print('> lista_de_palabras: Añadir')
@@ -332,7 +332,9 @@ def abrir_configuracion():
 
             if opcion_actual == 'lista_de_palabras':
                 print('> lista_de_palabras: Borrar')
-                #agregar_palabra()
+                palabra_seleccionada = values['lista_de_palabras_seleccionada']
+                print('>> lista_de_palabras - palabra seleccionada: ', palabra_seleccionada)
+                #agregar_palabra(palabra_seleccionada)
 
             if opcion_actual == 'cantidad_de_palabras':
                 print('> cantidad_de_palabras: Cancelar')
