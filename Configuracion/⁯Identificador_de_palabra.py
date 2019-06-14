@@ -1,9 +1,10 @@
 from pattern.web import Wiktionary
-from pattern.es import parse
+from pattern.text.es import parse
 import PySimpleGUI as sg
+from datetime import datetime
 
 
-def identificador (palabra): ##palabra = gato para testeo
+def identificador (palabra):
 
     """"Retorno una lista con la palabra y que tipo es para mandarla a la tabla """
 
@@ -28,27 +29,46 @@ def identificador (palabra): ##palabra = gato para testeo
             tag = lis.title.split(" ")[0]
             lis = [[palabra, tag, descr]]
             wik = True
-            print(lis)
+
     try:
-        patt_es = parse(str(palabra), tokenize=False, tags=True, chunks=False).split("/")[1]
+        patt_es = parse(palabra, tokenize=False, tags=True, chunks=False).split("/")[1]
         patt = True
-    except AttributeError: ##puse esto para poner algo ya que no se que error puede tirar
+    except AttributeError:
         patt_es = "error"
 
     if patt_es != "error":
-        if wik == False:
+        print(patt_es)
+        if wik is False:
             definicion = sg.PopupGetText("Palabra No Encontrada en wiki", "Ingrese definicion") ## para guardar en archivo local
-            if ("NN" is patt_es):
+            if "NN" in patt_es:
                 lis = [[palabra, "Sustantivo", definicion]]
-            elif ("VB" is patt_es):
+            elif "VB" in patt_es:
                 lis = [[palabra, "Verbo", definicion]]
-            elif ("JJ" is patt_es):
+            elif "JJ" in patt_es:
                 lis = [[palabra, "Adjetivo", definicion]]
-        elif (("NN" is patt_es) and ("Sustantivo" is tag)) or (("VB" is patt_es) and ("Verbo" is tag)) or (("JJ" is patt_es) and ("Adjetivo" is tag)):
-            match = True
-    if (match == False) and (patt == True):
-         reporte = "La palabra "+palabra+" no fue enconmtrada en pattern.es" ##para reporte
+        if wik is True:
+            if(("NN" in patt_es) and ("Sustantivo" in tag)) or (("VB" in patt_es) and ("Verbo" in tag)) or\
+                    (("JJ" in patt_es) and ("Adjetivo" in tag)):
+                match = True
+        patt = True
+
+    if (wik is False) or (patt is False) or (match is False):
+        file = open("reporte.txt", "a+")
+        fechahora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        reporte = ""
+        if (wik is False) and (patt is True):
+             reporte = "La palabra "+palabra+" no fue encontrada en wiki. "+fechahora
+        elif (wik is True) and (patt is False):
+            reporte = "La palabra "+palabra+" no fue encontrada en pattern.es. "+fechahora
+        elif (wik is False) and (patt is False):
+            reporte = "La palabra "+palabra+" no duen encontrada en ninguno de los dos sitios. "+fechahora
+        elif (match is True):
+            reporte = "La clasificacion de la palabra "+palabra+" no conicide. "+fechahora
+        file.write(reporte)
+        file.write("\n")
+        file.close()
 
     return lis
 
-identificador("gato")
+#if __name__ == '__main__':
+print(identificador("peroquemierdaestapasandoniideacomoestabuscandolaspalabras"))
