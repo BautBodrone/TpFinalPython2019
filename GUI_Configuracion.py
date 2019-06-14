@@ -265,6 +265,12 @@ def abrir_configuracion():
         [sg.InputText(), sg.Button("Ok")]
     ]
 
+    #LAYOUT SEGURO BORRAR
+    ventana_seguro = [
+        [sg.Text("Esta a punto de eliminar una palabra ¿Esta seguro?")],
+        [sg.Button("Borrar", key="boton_confirmar"), sg.Button("Cancelar", key="boton_cancelar")]
+    ]
+
     #Ejecucion y lectura de ventana de configuracion
     
     window = sg.Window("Configuración").Layout(layout)
@@ -348,8 +354,15 @@ def abrir_configuracion():
             if opcion_actual == 'lista_de_palabras':
                 print('> lista_de_palabras: Borrar')
                 palabra_seleccionada = values['lista_de_palabras_seleccionada']
-                print('>> lista_de_palabras - palabra seleccionada: ', palabra_seleccionada)
-                #agregar_palabra(palabra_seleccionada)
+                print('>> lista_de_palabras - palabra seleccionada: ', palabra_seleccionada[0])
+                subwindow = sg.Window("¿Seguro?").Layout(ventana_seguro)
+                boton, seleccion = subwindow.Read()
+                if boton == 'boton_confirmar':
+                    print("Se borro la palabra: ")
+                    #borrar la palabra de la lista
+
+                subwindow.Close()
+
 
             if opcion_actual == 'cantidad_de_palabras':
                 print('> cantidad_de_palabras: Cancelar')
