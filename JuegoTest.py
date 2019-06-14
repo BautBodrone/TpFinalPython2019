@@ -51,7 +51,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
             for y in range(N):
                 linea = []
                 go= False
-                if lis_pos<len(solo_palabras):
+                if lis_pos < len(solo_palabras):
                     go = random.choice([True, False])
                 if (go is True) and (lis_pos < len(solo_palabras)):
                     len_pal = len(solo_palabras[lis_pos])
@@ -87,7 +87,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
             for y in range(N):
                 linea = []
                 go = random.choice([True, False])
-                if go is True:
+                if go:
                     len_pal = len(lis_palabras[lis_pos])
                     start = random.randrange(0, (N - len_pal))
                     pos_agregado = 0

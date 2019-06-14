@@ -31,7 +31,8 @@ def ventanajuego():
                         # Diseño
                         font='Courier 10',
                         size=(4, 2) if N <= 12 else (2, 1),
-                        button_color=('black', 'white')
+                        button_color=('black', 'white'),
+                        pad=(0,0)
                     ),
                 )
             matriz.append(linea)

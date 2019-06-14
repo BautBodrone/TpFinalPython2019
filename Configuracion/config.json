@@ -1,12 +1,24 @@
 {
     "sustantivos": {
-        "sustantivo": "por defecto"
+        "casa": "descripcion",
+        "perro": "descripcion",
+        "comida": "descripcion",
+        "teclado": "descripcion",
+        "cuaderno": "descripcion"
     },
     "adjetivos": {
-        "adjetivo": "por defecto"
+        "alto": "descripcion",
+        "lindo": "descripcion",
+        "chino": "descripcion",
+        "rapido": "descripcion",
+        "puto": "el que lo lee"
     },
     "verbos": {
-        "verbo": "por defecto"
+        "correr": "descripcion",
+        "saltar": "descripcion",
+        "nadar": "descripcion",
+        "volar": "descripcion",
+        "existir": "descripcion"
     },
     "_lista_de_palabras": [
         [
