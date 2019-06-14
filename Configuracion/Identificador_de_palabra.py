@@ -61,7 +61,7 @@ def identificador (palabra):
         elif (wik is True) and (patt is False):
             reporte = "La palabra "+palabra+" no fue encontrada en pattern.es. "+fechahora
         elif (wik is False) and (patt is False):
-            reporte = "La palabra "+palabra+" no duen encontrada en ninguno de los dos sitios. "+fechahora
+            reporte = "La palabra "+palabra+" no fue encontrada en ninguno de los dos sitios. "+fechahora
         elif (match is True):
             reporte = "La clasificacion de la palabra "+palabra+" no conicide. "+fechahora
         file.write(reporte)
@@ -70,5 +70,5 @@ def identificador (palabra):
 
     return lis
 
-#if __name__ == '__main__':
-print(identificador("peroquemierdaestapasandoniideacomoestabuscandolaspalabras"))
+if __name__ == '__main__':
+    identificador("")

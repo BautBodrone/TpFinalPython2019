@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import Configuracion.Configuracion as Configuracion
+import Configuracion.Identificador_de_palabra as Identificador
 
 def abrir_configuracion():
     #COLUMNA IZQUIERDA
@@ -258,6 +259,12 @@ def abrir_configuracion():
         ]
     ]
 
+    #LAYOUT VENTANA LECTURA PALABRA
+    ventana_lectura = [
+        [sg.Text("Ingrese la palabra a añadir")],
+        [sg.InputText(), sg.Button("Ok")]
+    ]
+
     #Ejecucion y lectura de ventana de configuracion
     
     window = sg.Window("Configuración").Layout(layout)
@@ -282,6 +289,14 @@ def abrir_configuracion():
 
             if opcion_actual == 'lista_de_palabras':
                 print('> lista_de_palabras: Añadir')
+                ventana_lectura = [
+                    [sg.Text("Ingrese la palabra a añadir")],
+                    [sg.InputText(), sg.Button("Ok")]
+                ]
+                subwindow = sg.Window("Añadir palabra").Layout(ventana_lectura)
+                boton, palabra = subwindow.Read()
+                Identificador.identificador(palabra[0])
+                subwindow.Close()
                 #agregar_palabra()
 
             if opcion_actual == 'cantidad_de_palabras':
