@@ -9,13 +9,25 @@ class Configuracion:
     def __init__(
             self,
             sustantivos = {
-                'sustantivo':'por defecto'
+                "casa": "descripcion",
+                "perro": "descripcion",
+                "comida": "descripcion",
+                "teclado": "descripcion",
+                "cuaderno": "descripcion"
             },
             adjetivos = {
-                'adjetivo':'por defecto'
+                "alto": "descripcion",
+                "lindo": "descripcion",
+                "chino": "descripcion",
+                "rapido": "descripcion",
+                "puto": "el que lo lee"
             },
             verbos = {
-                'verbo':'por defecto'
+                "correr": "descripcion",
+                "saltar": "descripcion",
+                "nadar": "descripcion",
+                "volar": "descripcion",
+                "existir": "descripcion"
             },
             cantidad_de_palabras = (3,2,1),
             ayudas = True,
@@ -23,7 +35,7 @@ class Configuracion:
             mayusculas = True,
             orientacion = True,
             colores = ['#FF0000','#00FF00','#0000FF'],
-            oficina = None
+            oficinas = ["Oficina 1", "Oficina 2"]
         ):
         self.sustantivos = sustantivos
         self.adjetivos = adjetivos
@@ -34,7 +46,7 @@ class Configuracion:
         self.tipo_ayudas = tipo_ayudas
         self.mayusculas = mayusculas
         self.orientacion = orientacion
-        self.oficina = oficina
+        self.oficinas = oficinas
         self.colores = colores
 
     @property
@@ -51,15 +63,13 @@ class Configuracion:
 
         return lista_de_palabras
 
-    def agregar_sustantivo(self, palabra, descripcion):
-        self.sustantivos[palabra] = descripcion
-
-    def agregar_adjetivo(self, palabra, descripcion):
-        self.adjetivos[palabra] = descripcion
-
-    def agregar_verbo(self, palabra, descripcion):
-        self.verbos[palabra] = descripcion
-
+    def agregar_palabra(self, palabra, tipo, descripcion):
+        if tipo == 'Sustantivo':
+            self.sustantivos[palabra] = descripcion
+        elif tipo == 'Adjetivo':
+            self.adjetivos[palabra] = descripcion
+        elif tipo == 'Verbo':
+            self.verbos[palabra] = descripcion
 
     def borrar_palabra(self, palabra):
         if palabra in self.sustantivos.keys():
@@ -75,37 +85,71 @@ class Configuracion:
     def get_colores(self):
         return self.colores
 
+
 def obtener_configuracion():
     def generar_configuracion():
+        print('Generar configuración por defecto')
         configuracion = Configuracion()
+        print('Configuración por defecto creada')
+        print('Abrir/crear archivo config.json')
         archivo_configuracion = open('configuracion/config.json', 'w+')
-        serializar = json.dump(configuracion, archivo_configuracion, cls=ConfigEncoder, indent=4)
-        print(serializar)
+        print('Archivo abierto/creado con éxito')
+        print('Serializando configuración y guardarla en config.json')
+        json.dump(configuracion, archivo_configuracion, cls=ConfigEncoder, indent=4)
+        print('Configuración serializada y guardada en config.json con éxito')
 
         return configuracion
         
     try:
+        print('Buscando archivo config.json')
         archivo_configuracion = open('configuracion/config.json', 'r')
+        print('Archivo config.json abierto con éxito')
     except:
+        print('No se pudo abrir config.json')
+        print('Generar configuración por defecto')
         configuracion = generar_configuracion()
+        print('Configuración por defecto creada y cargada con éxito')
+
     else:
         try:
-            print('sin except')
+            print('Intentando cargar configuración desde config.json')
             c = json.load(archivo_configuracion)
-            print('config: ', c)
-            configuracion = Configuracion(  sustantivos=c['sustantivos'],
-                                            adjetivos=c['adjetivos'],
-                                            verbos=c['verbos'],
-                                            cantidad_de_palabras=c['cantidad_de_palabras'],
-                                            ayudas=c['ayudas'],
-                                            tipo_ayudas=c['tipo_ayudas'],
-                                            mayusculas=c['mayusculas'],
-                                            orientacion=c["orientacion"],
-                                            colores=c['colores'],
-                                            oficina = c['oficina']
-                            )
+            print('Archivo config.json cargado con éxito')
+            configuracion = Configuracion(
+                sustantivos=c['sustantivos'],
+                adjetivos=c['adjetivos'],
+                verbos=c['verbos'],
+                cantidad_de_palabras=c['cantidad_de_palabras'],
+                ayudas=c['ayudas'],
+                tipo_ayudas=c['tipo_ayudas'],
+                mayusculas=c['mayusculas'],
+                orientacion=c["orientacion"],
+                colores=c['colores'],
+                oficinas = c['oficinas']
+            )
+            print('Objeto Configuración creado con éxito')
+
         except:
-            print('segunda except')
+            print('Un error ocurrió al cargar config.json')
+            print('Generar configuración por defecto')
             configuracion = generar_configuracion()
+            print('Configuración por defecto cargada con éxito')
+
+    print('\n' + '='*30 + '\n')
+    print('Configuración actual: ')
+    configuracion_actual = configuracion.__dict__
+    for key, value in configuracion_actual.items():
+        if type(value) is dict:
+            print('  > ' + str(key) + ': ')
+            for k, v in value.items():
+                print('    > ' + str(k) + ': ' + str(v))
+        elif type(value) is list:
+            print('  > ' + str(key) + ': ')
+            for element in value:
+                print('    > ' + str(element))
+
+        else:
+            print('  > ' + str(key) + ': '  + str(value))
+    print('\n' + '=' * 30 + '\n')
 
     return configuracion

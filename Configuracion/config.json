@@ -22,15 +22,63 @@
     },
     "_lista_de_palabras": [
         [
-            "sustantivo",
+            "casa",
             "Sustantivo"
         ],
         [
-            "adjetivo",
+            "perro",
+            "Sustantivo"
+        ],
+        [
+            "comida",
+            "Sustantivo"
+        ],
+        [
+            "teclado",
+            "Sustantivo"
+        ],
+        [
+            "cuaderno",
+            "Sustantivo"
+        ],
+        [
+            "alto",
             "Adjetivo"
         ],
         [
-            "verbo",
+            "lindo",
+            "Adjetivo"
+        ],
+        [
+            "chino",
+            "Adjetivo"
+        ],
+        [
+            "rapido",
+            "Adjetivo"
+        ],
+        [
+            "puto",
+            "Adjetivo"
+        ],
+        [
+            "correr",
+            "Verbo"
+        ],
+        [
+            "saltar",
+            "Verbo"
+        ],
+        [
+            "nadar",
+            "Verbo"
+        ],
+        [
+            "volar",
+            "Verbo"
+        ],
+        [
+            "existir",
             "Verbo"
         ]
     ],
@@ -43,7 +91,10 @@
     "tipo_ayudas": true,
     "mayusculas": true,
     "orientacion": true,
-    "oficina": null,
+    "oficinas": [
+        "Oficina 1",
+        "Oficina 2"
+    ],
     "colores": [
         "#FF0000",
         "#00FF00",
