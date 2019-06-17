@@ -17,8 +17,6 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         for i in lis_palabra:
             if len(i[0])>max:
                 max = len(i[0])
-        if max<len(lis_palabra):
-            max= len(lis_palabra)
         return max
 
     def shuffle_pal(lista, palabras, cantidad):
@@ -50,22 +48,17 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         lis_pos = 0
         orientacion = config.orientacion
         if orientacion: ##horizontal
-            go = range(0, N)
-            go = sorted(random.sample(go, k=len(solo_palabras)))
             for y in range(N):
                 linea = []
-                entro = False
-                try:
-                    if (go[0] == y) and (lis_pos < len(solo_palabras)):
-                        len_pal = len(solo_palabras[lis_pos])
-                        start = random.randrange(0, (N-len_pal))
-                        pos_agregado = 0
-                        entro = True
-                        del go[0]
-                except IndexError:
-                    pass
+                go= False
+                if lis_pos < len(solo_palabras):
+                    go = random.choice([True, False])
+                if (go is True) and (lis_pos < len(solo_palabras)):
+                    len_pal = len(solo_palabras[lis_pos])
+                    start = random.randrange(0, (N-len_pal))
+                    pos_agregado = 0
                 for x in range(N):
-                    if entro is True:
+                    if go is True:
                         if(x >= start)and(x < (start+len_pal)):
                             letra = solo_palabras[lis_pos][pos_agregado]
                             pos_agregado = pos_agregado + 1
@@ -84,11 +77,11 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                             font='Courier 10',
                             size=(4, 2) if N <= 12 else (2, 1),
                             button_color=('black', 'white'),
-                            pad=(0, 0)
+                            pad=(0,0)
                         ),
                     )
                 matriz.append(linea)
-                if entro is True:
+                if go is True:
                     lis_pos = lis_pos + 1
         else:##no probado
             for y in range(N):
