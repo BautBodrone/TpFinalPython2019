@@ -17,6 +17,8 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         for i in lis_palabra:
             if len(i[0])>max:
                 max = len(i[0])
+        if max<len(lis_palabra):
+            max= len(lis_palabra)
         return max
 
     def shuffle_pal(lista, palabras, cantidad):
