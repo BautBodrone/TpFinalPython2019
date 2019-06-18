@@ -3,7 +3,8 @@ import random
 import Configuracion.Configuracion as Configuracion
 import numpy as np
 
-def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
+
+def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
     def salir(e):
         return e is None
 
@@ -11,6 +12,11 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         for clave in p:
             window.Element(clave).Update(button_color=('black', 'white'))
         return []
+
+    def confirmar_seleccion(p, actual):
+        for i in range (len(lis_palabras)):
+            if (set(p) == set(lis_palabras[i][0]))and(actual == lis_palabras[i][2]):
+                sg.Popup("noiz")
 
     def max_palabra(lis_palabra):
         max = 0
@@ -22,13 +28,12 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
             max= len(lis_palabra)
         return max
 
-    def shuffle_pal(lista, palabras, cantidad):
+    def shuffle_pal(lista, palabras, cantidad, tipo):
         temporal = list(palabras.keys())
         random.shuffle(temporal)
-        print(temporal)
         for i in range(cantidad):
             try:
-                lista.append([temporal[i], palabras[temporal[i]]])
+                lista.append([temporal[i], palabras[temporal[i]], tipo])
             except IndexError:
                 pass
 
@@ -36,18 +41,18 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         lista = []
         cant_sustantivos, cant_adjetivos, cant_verbos = config.cantidad_de_palabras
         
-        shuffle_pal(lista, config.sustantivos, cant_sustantivos)
-        shuffle_pal(lista, config.adjetivos, cant_adjetivos)
-        shuffle_pal(lista, config.verbos, cant_verbos)
+        shuffle_pal(lista, config.sustantivos, cant_sustantivos, "sustantivos")
+        shuffle_pal(lista, config.adjetivos, cant_adjetivos, "adjetivos")
+        shuffle_pal(lista, config.verbos, cant_verbos, "verbos")
         
         random.shuffle(lista)
         return lista
 
     def generar_matriz(N, lis_palabras):
         '''Genera una matriz de N filas y N columnas'''
-        solo_palabras = list(map(lambda x: x[0], lis_palabras))##hace una lista solo con las palabras
+        solo_palabras = list(map(lambda x: x[0], lis_palabras))  # hace una lista solo con las palabras
         matriz = []
-        N = N + random.randint(1, 2) #para que la palabra mas grande no quede siempre pegada a los bordes
+        N = N + random.randint(1, 2)  # para que la palabra mas grande no quede siempre pegada a los bordes
         lis_pos = 0
         orientacion = config.orientacion
         go = range(0, N)
@@ -61,19 +66,21 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                     start = random.randrange(0, (N-len_pal))
                     pos_agregado = 0
                     entro = True
+                    claves = []
                     del go[0]
             except IndexError:
                 pass
             for x in range(N):
                 if entro is True:
                     if(x >= start)and(x < (start+len_pal)):
+                        claves.append(str(y) + ',' + str(x))
                         letra = solo_palabras[lis_pos][pos_agregado]
                         pos_agregado = pos_agregado + 1
                     else:
                         letra = chr(random.randint(ord('a'), ord('z')))
                 else:
                     letra = chr(random.randint(ord('a'), ord('z')))
-                clave = str(x) + ',' + str(y)
+                clave = str(y) + ',' + str(x)
                 linea.append(
                     sg.Submit(  # Propiedades del botón
                         letra,
@@ -89,12 +96,12 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                 )
             matriz.append(linea)
             if entro is True:
+                lis_palabras[lis_pos][0] = claves  # utilizado para buscar si las palabras coiciden con lo clickeado
                 lis_pos = lis_pos + 1
-        if orientacion:
+        if orientacion:  # horizontal
             return matriz
-        else:
+        else:  # vertical
             return np.transpose(matriz)
-
 
     lis_palabras = generar_lis_palabras(config)
     num = max_palabra(lis_palabras)
@@ -119,7 +126,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
             ),
         ],
         [
-            sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
+            sg.Submit("Confirmar", key="confirmar"), sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
         ]
     ]
     layout = [
@@ -136,6 +143,7 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
     color = None
 
     while not salir(event):
+        # print(lis_palabras[0])
         print(event, values)
         if color is None:
             actual = 'adjetivos'
@@ -143,6 +151,9 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
 
         if event == 'cancelar':
             presionadas = cancelar_seleccion(presionadas)
+
+        elif event == "confirmar":
+            confirmar_seleccion(presionadas, actual)
 
         elif event in ('adjetivos', 'sustantivos', 'verbos'):
             print('Tipo: ', event)
@@ -160,12 +171,12 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
                 presionadas = cancelar_seleccion(presionadas)
 
         else:
-            print(presionadas)
             if event in presionadas:
                 presionadas.remove(event)
                 window.Element(event).Update(button_color=('black', 'white'))
             else:
                 presionadas.append(event)
+                print(presionadas)
                 window.Element(event).Update(button_color=('black', color))
 
         event, values = window.Read()
