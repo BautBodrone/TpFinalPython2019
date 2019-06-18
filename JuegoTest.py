@@ -5,6 +5,16 @@ import numpy as np
 
 
 def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
+
+    def confirmar_ganador(cant_p):
+        i = 0
+        for x in range(len(cant_p)):
+            i += cant_pal[x]
+        if i == 0:
+            return True
+        else:
+            return False
+
     def salir(e):
         return e is None
 
@@ -13,10 +23,22 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
             window.Element(clave).Update(button_color=('black', 'white'))
         return []
 
-    def confirmar_seleccion(p, actual):
-        for i in range (len(lis_palabras)):
-            if (set(p) == set(lis_palabras[i][0]))and(actual == lis_palabras[i][2]):
+    def confirmar_seleccion(p, actual, lis, cant_p):
+        for i in range(len(lis)):
+            if (set(p) == set(lis[i][0]))and(actual == lis[i][2]):
                 sg.Popup("noiz")
+                if lis[i][2] == "sustantivos":
+                    lis[i][0] = "#"  # borrado logico
+                    cant_p[0] -= 1
+                    window.Element("cant_sus").Update(value="Sustantivos a encontrar: " + str(cant_p[0]))
+                elif lis[i][2] == "adjetivos":
+                    lis[i][0] = "#"
+                    cant_p[1] -= 1
+                    window.Element("cant_adj").Update(value="Adjetivos a encontrar: " + str(cant_p[1]))
+                else:
+                    lis[i][0] = "#"
+                    cant_p[2] -= 1
+                    window.Element("cant_verb").Update(value="Verbos a encontrar: " + str(cant_p[2]))
 
     def max_palabra(lis_palabra):
         max = 0
@@ -106,8 +128,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     lis_palabras = generar_lis_palabras(config)
     num = max_palabra(lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
-    columna_derecha = matriz
-    columna_izquierda = [
+    columna_izquierda = matriz
+    cant_pal= config.cantidad_de_palabras
+    columna_derecha = [
         [
             sg.Submit(
                 'Sustantivos',
@@ -127,12 +150,22 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         ],
         [
             sg.Submit("Confirmar", key="confirmar"), sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
+        ],
+        [
+            sg.Text("Sustantivos a encontrar: " + str(cant_pal[0]), justification='right', key="cant_sus"),
+        ],
+        [
+            sg.Text("Adjetivos a encontar: " + str(cant_pal[1]), justification='right', key="cant_adj"),
+        ],
+        [
+            sg.Text("Verbos a encontrar: " + str(cant_pal[2]), justification='right', key="cant_verb"),
         ]
     ]
+
     layout = [
         [
-            sg.Column(columna_derecha),
-            sg.Column(columna_izquierda)
+            sg.Column(columna_izquierda),
+            sg.Column(columna_derecha)
         ]
     ]
 
@@ -142,9 +175,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     presionadas = []
     color = None
 
-    while not salir(event):
-        # print(lis_palabras[0])
-        print(event, values)
+    while not salir(event) and (confirmar_ganador(cant_pal) is False):
         if color is None:
             actual = 'adjetivos'
             color = config.colores[1]
@@ -153,7 +184,8 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
             presionadas = cancelar_seleccion(presionadas)
 
         elif event == "confirmar":
-            confirmar_seleccion(presionadas, actual)
+            confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal)
+            presionadas = cancelar_seleccion(presionadas)
 
         elif event in ('adjetivos', 'sustantivos', 'verbos'):
             print('Tipo: ', event)
@@ -179,7 +211,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 print(presionadas)
                 window.Element(event).Update(button_color=('black', color))
 
+
         event, values = window.Read()
+
 
 
 if __name__ == '__main__':
