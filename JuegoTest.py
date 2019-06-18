@@ -175,7 +175,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     presionadas = []
     color = None
 
-    while not salir(event) and (confirmar_ganador(cant_pal) is False):
+    while not salir(event):
         if color is None:
             actual = 'adjetivos'
             color = config.colores[1]
@@ -211,6 +211,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 print(presionadas)
                 window.Element(event).Update(button_color=('black', color))
 
+        if confirmar_ganador(cant_pal):
+            sg.PopupOK("!!!!GANASTE!!!!")
+            break
 
         event, values = window.Read()
 
