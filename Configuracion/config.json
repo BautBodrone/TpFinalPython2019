@@ -90,7 +90,7 @@
     "ayudas": true,
     "tipo_ayudas": true,
     "mayusculas": true,
-    "orientacion": true,
+    "orientacion": false,
     "oficinas": [
         "Oficina 1",
         "Oficina 2"

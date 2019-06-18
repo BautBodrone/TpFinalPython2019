@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import random
 import Configuracion.Configuracion as Configuracion
+import numpy as np
 
 def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
     def salir(e):
@@ -49,80 +50,51 @@ def ventanajuego(config): ## en main juego.ventanajuego(configuracion.Configurac
         N = N + random.randint(1, 2) #para que la palabra mas grande no quede siempre pegada a los bordes
         lis_pos = 0
         orientacion = config.orientacion
-        if orientacion: ##horizontal
-            go = range(0, N)
-            go = sorted(random.sample(go, k=len(solo_palabras)))
-            for y in range(N):
-                linea = []
-                entro = False
-                try:
-                    if (go[0] == y) and (lis_pos < len(solo_palabras)):
-                        len_pal = len(solo_palabras[lis_pos])
-                        start = random.randrange(0, (N-len_pal))
-                        pos_agregado = 0
-                        entro = True
-                        del go[0]
-                except IndexError:
-                    pass
-                for x in range(N):
-                    if entro is True:
-                        if(x >= start)and(x < (start+len_pal)):
-                            letra = solo_palabras[lis_pos][pos_agregado]
-                            pos_agregado = pos_agregado + 1
-                        else:
-                            letra = chr(random.randint(ord('a'), ord('z')))
-                    else:
-                        letra = chr(random.randint(ord('a'), ord('z')))
-                    clave = str(x) + ',' + str(y)
-                    linea.append(
-                        sg.Submit(  # Propiedades del botón
-                            letra,
-                            key=clave,
-                            disabled=False,
-
-                            # Diseño
-                            font='Courier 10',
-                            size=(4, 2) if N <= 12 else (2, 1),
-                            button_color=('black', 'white'),
-                            pad=(0, 0)
-                        ),
-                    )
-                matriz.append(linea)
-                if entro is True:
-                    lis_pos = lis_pos + 1
-        else:##no probado
-            for y in range(N):
-                linea = []
-                go = random.choice([True, False])
-                if go:
-                    len_pal = len(lis_palabras[lis_pos])
-                    start = random.randrange(0, (N - len_pal))
+        go = range(0, N)
+        go = sorted(random.sample(go, k=len(solo_palabras)))
+        for y in range(N):
+            linea = []
+            entro = False
+            try:
+                if (go[0] == y) and (lis_pos < len(solo_palabras)):
+                    len_pal = len(solo_palabras[lis_pos])
+                    start = random.randrange(0, (N-len_pal))
                     pos_agregado = 0
-                    lis_pos = + 1
-                for x in range(N):
-                    if go is True:
-                        if (y >= start) and (y < (start + len_pal)):
-                            letra = lis_palabras[pos_agregado]
-                            pos_agregado = + 1
-                        else:
-                            letra = chr(random.randint(ord('a'), ord('z')))
+                    entro = True
+                    del go[0]
+            except IndexError:
+                pass
+            for x in range(N):
+                if entro is True:
+                    if(x >= start)and(x < (start+len_pal)):
+                        letra = solo_palabras[lis_pos][pos_agregado]
+                        pos_agregado = pos_agregado + 1
                     else:
                         letra = chr(random.randint(ord('a'), ord('z')))
-                    clave = str(x) + ',' + str(y)
-                    linea.append(
-                        sg.Submit(  # Propiedades del botón
-                            letra,
-                            key=clave,
-                            disabled=False,
+                else:
+                    letra = chr(random.randint(ord('a'), ord('z')))
+                clave = str(x) + ',' + str(y)
+                linea.append(
+                    sg.Submit(  # Propiedades del botón
+                        letra,
+                        key=clave,
+                        disabled=False,
 
-                            # Diseño
-                            font='Courier 10',
-                            size=(4, 2) if N <= 12 else (2, 1),
-                            button_color=('black', 'white')
-                        ),
-                    )
-                matriz.append(linea)
-        return matriz
+                        # Diseño
+                        font='Courier 10',
+                        size=(4, 2) if N <= 12 else (2, 1),
+                        button_color=('black', 'white'),
+                        pad=(0, 0)
+                    ),
+                )
+            matriz.append(linea)
+            if entro is True:
+                lis_pos = lis_pos + 1
+        if orientacion:
+            return matriz
+        else:
+            return np.transpose(matriz)
+
 
     lis_palabras = generar_lis_palabras(config)
     num = max_palabra(lis_palabras)
