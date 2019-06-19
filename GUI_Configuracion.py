@@ -155,8 +155,8 @@ def abrir_configuracion():
 
     def actualizar_ayudas(user):
         print(user.ayudas)
-        window.Element('habilitar_ayudas').Update(value=True)
-        window.Element('deshabilitar_ayudas').Update(value=True)
+        window.Element('habilitar_ayudas').Update(True)
+        window.Element('deshabilitar_ayudas').Update(True)
         window.Element('columna_ayudas').Update(
             columna_ayudas(botones_por_defecto, user.ayudas, user.tipo_ayudas)
         )

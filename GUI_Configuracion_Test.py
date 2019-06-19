@@ -49,7 +49,7 @@ def abrir_configuracion():
                     sg.Text("Sustantivos", size=(10, 1), justification='right'),
                     sg.Slider(
                         default_value=valores[0],
-                        range=(1, cantidad_sustantivos), orientation="h",
+                        range=(0, cantidad_sustantivos), orientation="h",
                         size=(10, 20),
                         key='cantidad_sustantivos'
                     )
@@ -58,7 +58,7 @@ def abrir_configuracion():
                     sg.Text("Adjetivos", size=(10, 1), justification='right'),
                     sg.Slider(
                         default_value=valores[1],
-                        range=(1, cantidad_adjetivos), orientation="h",
+                        range=(0, cantidad_adjetivos), orientation="h",
                         size=(10, 20),
                         key='cantidad_adjetivos'
                     )
@@ -67,7 +67,7 @@ def abrir_configuracion():
                     sg.Text("Verbos", size=(10, 1), justification='right'),
                     sg.Slider(
                         default_value=valores[2],
-                        range=(1, cantidad_verbos), orientation="h",
+                        range=(0, cantidad_verbos), orientation="h",
                         size=(10, 20),
                         key='cantidad_verbos'
                     )
@@ -293,11 +293,11 @@ def abrir_configuracion():
         ]
 
         window = sg.Window('Cambios sin guardar').Layout(layout)
-
         event, values = window.Read()
+        window.Close()
 
         guardado = False
-
+        
         if event == 'boton_confirmar':
             guardado = Configuracion.guardar_configuracion(user_config)
             if guardado:
