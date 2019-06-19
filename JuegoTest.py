@@ -70,9 +70,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         random.shuffle(lista)
         return lista
 
-    def generar_matriz(N, lis_palabras):
+    def generar_matriz(N, lis_palabra):
         '''Genera una matriz de N filas y N columnas'''
-        solo_palabras = list(map(lambda x: x[0], lis_palabras))  # hace una lista solo con las palabras
+        solo_palabras = list(map(lambda x: x[0], lis_palabra))  # hace una lista solo con las palabras
         matriz = []
         N = N + random.randint(1, 2)  # para que la palabra mas grande no quede siempre pegada a los bordes
         lis_pos = 0
@@ -118,54 +118,121 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 )
             matriz.append(linea)
             if entro is True:
-                lis_palabras[lis_pos][0] = claves  # utilizado para buscar si las palabras coiciden con lo clickeado
+                lis_palabra[lis_pos][0] = claves  # utilizado para buscar si las palabras coiciden con lo clickeado
                 lis_pos = lis_pos + 1
         if orientacion:  # horizontal
             return matriz
         else:  # vertical
             return np.transpose(matriz)
 
+    def ayuda_frame(configu, lis_a):
+
+        sin_ayuda = [
+            [sg.Text(
+                "Sustantivos a encontrar: " + str(cant_pal[0]),
+                justification='right',
+                key="cant_sus")],
+            [sg.Text(
+                "Adjetivos a encontar: " + str(cant_pal[1]),
+                justification='right',
+                key="cant_adj")],
+            [sg.Text(
+                "Verbos a encontrar: " + str(cant_pal[2]),
+                justification='right',
+                key="cant_verb")],
+            [
+                sg.Submit(
+                    'Sustantivos',
+                    key='sustantivos',
+                    button_color=('black', config.colores[0])
+                ),
+                sg.Submit(
+                    'Adjetivos',
+                    key='adjetivos',
+                    button_color=('black', config.colores[1])
+                ),
+                sg.Submit(
+                    'Verbos',
+                    key='verbos',
+                    button_color=('black', config.colores[2])
+                ),
+            ],
+            [
+                sg.Submit("Confirmar", key="confirmar"), sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
+            ],
+        ]
+
+        pal_frame = [
+            [sg.Listbox(
+                values=list(map(lambda x:x[0], lis_a)),
+                size=(30, 6))],
+            [
+                sg.Submit(
+                    'Sustantivos',
+                    key='sustantivos',
+                    button_color=('black', config.colores[0])
+                ),
+                sg.Submit(
+                    'Adjetivos',
+                    key='adjetivos',
+                    button_color=('black', config.colores[1])
+                ),
+                sg.Submit(
+                    'Verbos',
+                    key='verbos',
+                    button_color=('black', config.colores[2])
+                ),
+            ],
+            [
+                sg.Submit("Confirmar", key="confirmar"), sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
+            ],
+        ]
+
+        descri_frame=[
+            [sg.Listbox(
+                values=list(map(lambda x:x[1], lis_a)),
+                size=(30, 6))],
+            [
+                sg.Submit(
+                    'Sustantivos',
+                    key='sustantivos',
+                    button_color=('black', config.colores[0])
+                ),
+                sg.Submit(
+                    'Adjetivos',
+                    key='adjetivos',
+                    button_color=('black', config.colores[1])
+                ),
+                sg.Submit(
+                    'Verbos',
+                    key='verbos',
+                    button_color=('black', config.colores[2])
+                ),
+            ],
+            [
+                sg.Submit("Confirmar", key="confirmar"), sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
+            ],
+        ]
+
+        if configu.ayudas is False:
+            return sin_ayuda
+        else:
+            if configu.tipo_ayudas:
+                return pal_frame
+            else:
+                return descri_frame
+
     lis_palabras = generar_lis_palabras(config)
+    lis_ayuda = lis_palabras.copy()  # SE PASA POR LA BOLAS QUE COPIA LA LISTA Y NO LA DIR
     num = max_palabra(lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
     columna_izquierda = matriz
-    cant_pal= config.cantidad_de_palabras
-    columna_derecha = [
-        [
-            sg.Submit(
-                'Sustantivos',
-                key='sustantivos',
-                button_color=('black', config.colores[0])
-            ),
-            sg.Submit(
-                'Adjetivos',
-                key='adjetivos',
-                button_color=('black', config.colores[1])
-            ),
-            sg.Submit(
-                'Verbos',
-                key='verbos',
-                button_color=('black', config.colores[2])
-            ),
-        ],
-        [
-            sg.Submit("Confirmar", key="confirmar"), sg.Submit('CANCELAR SELECCIÓN', key='cancelar')
-        ],
-        [
-            sg.Text("Sustantivos a encontrar: " + str(cant_pal[0]), justification='right', key="cant_sus"),
-        ],
-        [
-            sg.Text("Adjetivos a encontar: " + str(cant_pal[1]), justification='right', key="cant_adj"),
-        ],
-        [
-            sg.Text("Verbos a encontrar: " + str(cant_pal[2]), justification='right', key="cant_verb"),
-        ]
-    ]
+    cant_pal = config.cantidad_de_palabras
 
     layout = [
         [
             sg.Column(columna_izquierda),
-            sg.Column(columna_derecha)
+            sg.Column(ayuda_frame(config, lis_ayuda))
         ]
     ]
 
