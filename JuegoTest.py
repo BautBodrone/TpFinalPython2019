@@ -23,22 +23,25 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
             window.Element(clave).Update(button_color=('black', 'white'))
         return []
 
-    def confirmar_seleccion(p, actual, lis, cant_p):
+    def confirmar_seleccion(p, actual, lis, cant_p,configu):
         for i in range(len(lis)):
             if (set(p) == set(lis[i][0]))and(actual == lis[i][2]):
                 sg.Popup("noiz")
                 if lis[i][2] == "sustantivos":
                     lis[i][0] = "#"  # borrado logico
                     cant_p[0] -= 1
-                    window.Element("cant_sus").Update(value="Sustantivos a encontrar: " + str(cant_p[0]))
+                    if configu.ayudas is False:
+                        window.Element("cant_sus").Update(value="Sustantivos a encontrar: " + str(cant_p[0]))
                 elif lis[i][2] == "adjetivos":
                     lis[i][0] = "#"
                     cant_p[1] -= 1
-                    window.Element("cant_adj").Update(value="Adjetivos a encontrar: " + str(cant_p[1]))
+                    if configu.ayudas is False:
+                        window.Element("cant_adj").Update(value="Adjetivos a encontrar: " + str(cant_p[1]))
                 else:
                     lis[i][0] = "#"
                     cant_p[2] -= 1
-                    window.Element("cant_verb").Update(value="Verbos a encontrar: " + str(cant_p[2]))
+                    if configu.ayudas is False:
+                        window.Element("cant_verb").Update(value="Verbos a encontrar: " + str(cant_p[2]))
 
     def max_palabra(lis_palabra):
         max = 0
@@ -60,6 +63,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 pass
 
     def generar_lis_palabras(config):
+        """ Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario"""
         lista = []
         cant_sustantivos, cant_adjetivos, cant_verbos = config.cantidad_de_palabras
         
@@ -227,7 +231,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     num = max_palabra(lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
     columna_izquierda = matriz
-    cant_pal = config.cantidad_de_palabras
+    cant_pal = config.cantidad_de_palabras.copy()
 
     layout = [
         [
@@ -251,7 +255,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
             presionadas = cancelar_seleccion(presionadas)
 
         elif event == "confirmar":
-            confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal)
+            confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal, config)
             presionadas = cancelar_seleccion(presionadas)
 
         elif event in ('adjetivos', 'sustantivos', 'verbos'):
