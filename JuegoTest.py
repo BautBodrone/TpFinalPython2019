@@ -26,7 +26,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     def confirmar_seleccion(p, actual, lis, cant_p,configu):
         for i in range(len(lis)):
             if (set(p) == set(lis[i][0]))and(actual == lis[i][2]):
-                sg.Popup("noiz")
+                sg.Popup("Correcto")
                 if lis[i][2] == "sustantivos":
                     lis[i][0] = "#"  # borrado logico
                     cant_p[0] -= 1
@@ -240,53 +240,65 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         ]
     ]
 
-    window = sg.Window('Sopa de letras').Layout(layout)
-    event, values = window.Read()
 
-    presionadas = []
-    color = None
+    if (config.cantidad_de_palabras != [0, 0, 0]) and (len(config._lista_de_palabras) == 0):
+        window = sg.Window('Sopa de letras').Layout(layout)
+        event, values = window.Read()
 
-    while not salir(event):
-        if color is None:
-            actual = 'adjetivos'
-            color = config.colores[1]
+        presionadas = []
+        color = None
 
-        if event == 'cancelar':
-            presionadas = cancelar_seleccion(presionadas)
 
-        elif event == "confirmar":
-            confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal, config)
-            presionadas = cancelar_seleccion(presionadas)
+        if set(config.cantidad_de_palabras)==[0, 0, 0]:
+            sg.PopupOK("Incremente el numero de palabras")
 
-        elif event in ('adjetivos', 'sustantivos', 'verbos'):
-            print('Tipo: ', event)
-            if not (event == actual):
-                if event == 'adjetivos':
-                    actual = 'adjetivos'
-                    color = config.colores[1]
-                elif event == 'sustantivos':
-                    color = config.colores[0]
-                    actual = 'sustantivos'
-                else:
-                    actual = 'verbos'
-                    color = config.colores[2]
+        while not salir(event):
 
+            if confirmar_ganador(cant_pal):
+                sg.PopupOK("!!!!GANASTE!!!!")
+                break
+
+            if color is None:
+                actual = 'adjetivos'
+                color = config.colores[1]
+
+            if event == 'cancelar':
                 presionadas = cancelar_seleccion(presionadas)
 
-        else:
-            if event in presionadas:
-                presionadas.remove(event)
-                window.Element(event).Update(button_color=('black', 'white'))
+            elif event == "confirmar":
+                confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal, config)
+                presionadas = cancelar_seleccion(presionadas)
+
+            elif event in ('adjetivos', 'sustantivos', 'verbos'):
+                print('Tipo: ', event)
+                if not (event == actual):
+                    if event == 'adjetivos':
+                        actual = 'adjetivos'
+                        color = config.colores[1]
+                    elif event == 'sustantivos':
+                        color = config.colores[0]
+                        actual = 'sustantivos'
+                    else:
+                        actual = 'verbos'
+                        color = config.colores[2]
+
+                    presionadas = cancelar_seleccion(presionadas)
+
             else:
-                presionadas.append(event)
-                print(presionadas)
-                window.Element(event).Update(button_color=('black', color))
+                if event in presionadas:
+                    presionadas.remove(event)
+                    window.Element(event).Update(button_color=('black', 'white'))
+                else:
+                    presionadas.append(event)
+                    print(presionadas)
+                    window.Element(event).Update(button_color=('black', color))
 
-        if confirmar_ganador(cant_pal):
-            sg.PopupOK("!!!!GANASTE!!!!")
-            break
+            event, values = window.Read()
 
-        event, values = window.Read()
+    elif (len(config._lista_de_palabras) == 0):
+        sg.PopupOK("Es necesario por lo menos una palabra para jugar")
+    else:
+        sg.PopupOK("Incremente la cantidad de palabras")
 
 
 
