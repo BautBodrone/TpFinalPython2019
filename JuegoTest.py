@@ -65,7 +65,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     def generar_lis_palabras(config):
         """ Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario"""
         lista = []
-        cant_sustantivos, cant_adjetivos, cant_verbos = config.cantidad_de_palabras
+        cant_sustantivos, cant_adjetivos, cant_verbos = [int(i) for i in config.cantidad_de_palabras]
         
         shuffle_pal(lista, config.sustantivos, cant_sustantivos, "sustantivos")
         shuffle_pal(lista, config.adjetivos, cant_adjetivos, "adjetivos")
@@ -241,7 +241,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     ]
 
 
-    if (config.cantidad_de_palabras != [0, 0, 0]) and (len(config._lista_de_palabras) == 0):
+    if (config.cantidad_de_palabras != [0.0, 0.0, 0.0]) and (len(config._lista_de_palabras) != 0):
         window = sg.Window('Sopa de letras').Layout(layout)
         event, values = window.Read()
 
