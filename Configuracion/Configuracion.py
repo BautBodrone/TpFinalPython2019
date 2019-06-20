@@ -20,16 +20,13 @@ class Configuracion:
                 "lindo": "descripcion",
                 "chino": "descripcion",
                 "rapido": "descripcion",
-                "puto": "el que lo lee"
             },
             verbos = {
                 "correr": "descripcion",
                 "saltar": "descripcion",
-                "nadar": "descripcion",
-                "volar": "descripcion",
-                "existir": "descripcion"
+                "nadar": "descripcion"
             },
-            cantidad_de_palabras = (3,2,1),
+            cantidad_de_palabras = (3,3,3),
             ayudas = True,
             tipo_ayudas = True,
             mayusculas = True,
@@ -101,6 +98,7 @@ def obtener_configuracion():
         return configuracion
         
     try:
+        print('\n# ' + '='*30 + ' #\n')
         print('Buscando archivo config.json')
         archivo_configuracion = open('configuracion/config.json', 'r')
         print('Archivo config.json abierto con éxito')
@@ -153,3 +151,23 @@ def obtener_configuracion():
     print('\n' + '=' * 30 + '\n')
 
     return configuracion
+
+def guardar_configuracion(configuracion):
+    exito = False
+    try:
+        print('\n# ' + '='*30 + ' #\n')
+        print('Abrir/crear archivo config.json')
+        archivo_configuracion = open('configuracion/config.json', 'w+')
+        print('Archivo abierto/creado con éxito')
+        print('Serializar configuración y guardarla en config.json')
+        json.dump(configuracion, archivo_configuracion, cls=ConfigEncoder, indent=4)
+        print('Configuración serializada y guardada en config.json con éxito')
+    except:
+        print('Ocurrió un error')
+        exito = False
+    else:
+        exito = True
+        print('\n# ' + '='*30 + ' #\n')
+
+    return exito
+        
