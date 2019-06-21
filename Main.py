@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import GUI_Configuracion as gui_configuracion
 import JuegoTest as juego
 import Configuracion.Configuracion as Configuracion
+import random
 
 def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = None):
     if bg_secundario is None:
@@ -11,7 +12,7 @@ def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = Non
         
     tema = sg.SetOptions(
         icon=None,
-        button_color=(bg_secundario,'green'),
+        button_color=(text_secundario,bg_secundario),
         progress_meter_color=None,
         text_color=text_primario,
         background_color=bg_primario,
@@ -24,23 +25,27 @@ def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = Non
     )
     return tema
 
-tema('red','green','blue', 'lightgreen')
+temacalor = ['tomato', 'darkred', 'firebrick', 'gold']
+tematemplado = ['palegoldenrod', 'tomato', 'sandybrown', 'seashell']
+temafrio = ['steelblue', 'lightcyan', 'lightslategray', 'lavender']
+temaactual = random.choice((temacalor,tematemplado,temafrio))
+tema(temaactual[0], temaactual[1], temaactual[2], temaactual[3])
 
 layout = [
     [
-        sg.Text("Sopa de Letras", font="arial 40")
+        sg.Text("SOPA DE LETRAS", font=('comic sans ms', '58', 'bold'))
     ],
     [
         sg.T('')
     ],
     [
-        sg.Button("Jugar", font="arial 20", key="jugar"),
+        sg.Button("JUGAR", font=('arial', '20', 'bold'), key="jugar"),
     ],
     [
-        sg.Button("Configuracion", font="arial 20", key="config"),
+        sg.Button("CONFIGURACION", font=('arial', '20', 'bold'), key="config"),
     ],
     [
-        sg.Button("Salir", font="arial 20", key="salir")
+        sg.Button("SALIR", font=('arial', '20', 'bold'), key="salir")
     ]
 ]
 
