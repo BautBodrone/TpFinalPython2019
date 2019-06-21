@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import Configuracion.Configuracion as Configuracion
+import json
 
 
 def abrir_configuracion():
@@ -206,10 +207,14 @@ def abrir_configuracion():
 
             return diseño_del_juego
 
-        def oficinas(oficinas):
+        def oficinas():
+
+            arch = open("dato-oficinas.json", "r")
+            oficinas = json.load(arch)
+
             oficina_frame = [
                 [
-                    sg.Combo(values=oficinas, key='oficina')
+                    sg.Combo(values=[*oficinas], key='oficina')
                 ],
             ]
 
@@ -217,10 +222,6 @@ def abrir_configuracion():
                 [
                     sg.Frame('Seleccione la oficina', oficina_frame)
                 ],
-                [
-                    sg.Button('Agregar', key='boton_confirmar'),
-                    sg.Button('Borrar', button_color=('white', 'red'), key='boton_cancelar')
-                ]
             ]
 
             return columna_oficinas
@@ -261,7 +262,7 @@ def abrir_configuracion():
                 'Arial 10'
             )
         elif opcion == 'oficinas':
-            retorno = oficinas(configuracion.oficinas)
+            retorno = oficinas()
 
         return retorno
 
@@ -441,6 +442,9 @@ def abrir_configuracion():
                     user_config.colores[1] = values['color_adjetivos']
                 if not values['color_verbos'] == '':
                     user_config.colores[2] = values['color_verbos']
+                    
+            if opcion_actual == "oficinas":
+                user_config.oficinas = values["oficina"]
 
                 print(user_config.colores)
 
