@@ -3,7 +3,28 @@ import GUI_Configuracion as gui_configuracion
 import JuegoTest as juego
 import Configuracion.Configuracion as Configuracion
 
-sg.ChangeLookAndFeel('Kayak')
+def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = None):
+    if bg_secundario is None:
+        bg_secundario = bg_primario
+    if text_secundario is None:
+        text_secundario = text_primario
+        
+    tema = sg.SetOptions(
+        icon=None,
+        button_color=(bg_secundario,'green'),
+        progress_meter_color=None,
+        text_color=text_primario,
+        background_color=bg_primario,
+        element_background_color=bg_primario,
+        text_element_background_color=bg_primario,
+        input_elements_background_color=bg_secundario,
+        element_text_color=text_primario,
+        input_text_color=text_primario,
+        scrollbar_color=bg_secundario,
+    )
+    return tema
+
+tema('red','green','blue', 'lightgreen')
 
 layout = [
     [

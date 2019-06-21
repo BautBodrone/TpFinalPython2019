@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 import Configuracion.Configuracion as Configuracion
-
+import Configuracion.Identificador_de_palabra as Identificador
 
 def abrir_configuracion():
     def columna_izquierda(opciones):
@@ -49,7 +49,7 @@ def abrir_configuracion():
                     sg.Text("Sustantivos", size=(10, 1), justification='right'),
                     sg.Slider(
                         default_value=valores[0],
-                        range=(0, cantidad_sustantivos), orientation="h",
+                        range=(0, cantidad_sustantivos if cantidad_sustantivos <= 5 else 5), orientation="h",
                         size=(10, 20),
                         key='cantidad_sustantivos'
                     )
@@ -58,7 +58,7 @@ def abrir_configuracion():
                     sg.Text("Adjetivos", size=(10, 1), justification='right'),
                     sg.Slider(
                         default_value=valores[1],
-                        range=(0, cantidad_adjetivos), orientation="h",
+                        range=(0, cantidad_adjetivos if cantidad_adjetivos <= 5 else 5), orientation="h",
                         size=(10, 20),
                         key='cantidad_adjetivos'
                     )
@@ -67,7 +67,7 @@ def abrir_configuracion():
                     sg.Text("Verbos", size=(10, 1), justification='right'),
                     sg.Slider(
                         default_value=valores[2],
-                        range=(0, cantidad_verbos), orientation="h",
+                        range=(0, cantidad_verbos if cantidad_verbos <= 5 else 5), orientation="h",
                         size=(10, 20),
                         key='cantidad_verbos'
                     )
@@ -372,7 +372,7 @@ def abrir_configuracion():
             sg.PopupOK('No ha seleccionado ninguna palabra')
 
 
-    def layout_principal(lista_de_opciones, opcion_actual, configuracion):
+    def layout_principal(lista_de_opciones, opcion_actual, configuracion):        
         layout = [
             [  # Título
                 sg.Text("Sopa de Letras", font="arial 40"),
@@ -423,6 +423,30 @@ def abrir_configuracion():
         if event == 'boton_confirmar' or event == 'Guardar':
             print(' > Valores:', values)
             guardado = False
+
+            if opcion_actual == 'lista_de_palabras':
+                print('> lista_de_palabras: Añadir')
+
+                layout_ingresar_palabra = [
+                    [sg.Text("Ingrese la palabra a añadir")],
+                    [sg.InputText(), sg.Button("Ok")]
+                ]
+
+                subwindow = sg.Window("Añadir palabra").Layout(layout_ingresar_palabra)
+
+                boton, palabra = subwindow.Read()
+                if not (boton is None or palabra == ''):
+                    nueva_palabra = Identificador.identificador(palabra[0])
+                    if nueva_palabra[1] == 'Sustantivo':
+                        user_config.sustantivos[nueva_palabra[0]] = nueva_palabra[2]
+                    elif nueva_palabra[1] == 'Adjetivo':
+                        user_config.adjetivos[nueva_palabra[0]] = nueva_palabra[2]
+                    elif nueva_palabra[1] == 'Verbo':
+                        user_config.verbos[nueva_palabra[0]] = nueva_palabra[2]
+                    else:
+                        sg.PopupERROR('No se reconoce la palabra.\n La palabra no se pudo añadir a la lista.')
+
+                subwindow.Close()
 
             if opcion_actual == 'cantidad_de_palabras':
                 user_config.cantidad_de_palabras = [values['cantidad_sustantivos'], values['cantidad_adjetivos'], values['cantidad_verbos']]
