@@ -227,7 +227,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 return descri_frame
 
     lis_palabras = generar_lis_palabras(config)
-    lis_ayuda = lis_palabras.copy()  # SE PASA POR LA BOLAS QUE COPIA LA LISTA Y NO LA DIR
+    print("Lis_palabras: ", lis_palabras)
+    lis_ayuda = list(map(lambda x: [x[0], x[1]], lis_palabras)) # SE PASA POR LA BOLAS QUE COPIA LA LISTA Y NO LA DIR
+    print("Lis_ayuda: ", lis_ayuda)
     num = max_palabra(lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
     columna_izquierda = matriz
