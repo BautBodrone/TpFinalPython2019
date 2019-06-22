@@ -1,8 +1,9 @@
 import PySimpleGUI as sg
 import GUI_Configuracion as gui_configuracion
-import JuegoTest as juego
+import Juego as juego
 import Configuracion.Configuracion as Configuracion
-import random
+import Promedio_temperatura as Promedio
+
 
 def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = None):
     if bg_secundario is None:
@@ -25,10 +26,8 @@ def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = Non
     )
     return tema
 
-temacalor = ['tomato', 'darkred', 'firebrick', 'gold']
-tematemplado = ['palegoldenrod', 'tomato', 'sandybrown', 'seashell']
-temafrio = ['steelblue', 'lightcyan', 'lightslategray', 'lavender']
-temaactual = random.choice((temacalor,tematemplado,temafrio))
+
+temaactual = Promedio.promedio(Configuracion.obtener_configuracion().oficinas)
 tema(temaactual[0], temaactual[1], temaactual[2], temaactual[3])
 
 layout = [
