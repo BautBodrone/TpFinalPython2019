@@ -111,6 +111,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 inicio = posiciones[y][0]
                 palabra = posiciones[y][1]
                 tipo = posiciones[y][2]
+                
                 claves_palabra = []
                 posicion_letra = 0
             else:  # La línea no contiene una palabra
@@ -122,39 +123,26 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 if (x < inicio) or (x >= inicio + len(palabra)):
                     letra = chr(random.randint(ord('a'), ord('z')))
                     clave = str(y) + ',' + str(x)
-                    
-                    linea.append(
-                        sg.Submit(  # Propiedades del botón
-                            letra,
-                            key=clave,
-                            disabled=False,
-
-                            # Diseño
-                            font='Courier 10',
-                            size=(4, 2) if N <= 12 else (2, 1),
-                            button_color=('black', 'white'),
-                            pad=(0, 0)
-                        ),
-                    )
                 else: # Colocar letra de la palabra
                     letra = palabra[posicion_letra]
                     posicion_letra += 1
                     clave = str(y) + ',' + str(x)
                     claves_palabra.append(clave)
 
-                    linea.append(
-                        sg.Submit(  # Propiedades del botón
-                            letra,
-                            key=clave,
-                            disabled=False,
+                linea.append(
+                    sg.Submit(  # Propiedades del botón
+                        letra,
+                        key=clave,
+                        disabled=False,
 
-                            # Diseño
-                            font='Courier 10',
-                            size=(4, 2) if N <= 12 else (2, 1),
-                            button_color=('black', 'white'),
-                            pad=(0, 0)
-                        ),
-                    )
+                        # Diseño
+                        font='Courier 10',
+                        size=(4, 2) if N <= 12 else (2, 1),
+                        button_color=('black', 'white'),
+                        pad=(0, 0)
+                    ),
+                )
+                
             matriz.append(linea)
             if palabra != '':
                 lista_claves_palabra.append([claves_palabra, tipo])
