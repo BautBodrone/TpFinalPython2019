@@ -20,7 +20,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
     def confirmar_seleccion(p, actual, lista, cantidad_de_palabras):
         '''Confirma si las casillas seleccionadas corresponden a una palabra en la lista de palabras'''         
-        # Lis es una lista de listas; cada lista de lis contiene:
+        # Lista es una lista de listas; cada lista de lista contiene:
         # [Lista de claves, tipo] de una palabra.
         # p es una lista de claves, actual es el tipo seleccionado.
 
