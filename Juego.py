@@ -10,7 +10,7 @@ import numpy as np
 
 def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
 
-    def cancelar_seleccion(p, correcto = False):
+    def cancelar_seleccion(p, correcto=False):
         for clave in p:
             if not correcto:
                 window.Element(clave).Update(button_color=('black', 'white'))
@@ -18,7 +18,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 window.Element(clave).Update(disabled=True)
         return []
 
-    def confirmar_seleccion(p, actual, lis, cantidad_de_palabras):
+    def confirmar_seleccion(p, actual, lista, cantidad_de_palabras):
         '''Confirma si las casillas seleccionadas corresponden a una palabra en la lista de palabras'''         
         # Lis es una lista de listas; cada lista de lis contiene:
         # [Lista de claves, tipo] de una palabra.
@@ -27,10 +27,10 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         # Por lo tanto, si se cumple la siguiente condición,
         # podemos afirmar sin dudas que la palabra es correcta
 
-        if [p, actual] in lis:
+        if [p, actual] in lista:
             correcto = True
 
-            lis.remove([p, actual])
+            lista.remove([p, actual])
 
             if actual == 'sustantivos':
                 cantidad_de_palabras[0] -= 1
@@ -41,8 +41,6 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         else:
             correcto = False
 
-        
-        print(correcto)
         return cantidad_de_palabras, correcto
 
     def max_palabra(lis_palabra):
@@ -55,7 +53,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 
         if max < len(lis_palabra):
             max = len(lis_palabra)
-            
+
         return max + random.randint(1, 2) # Para que la palabra más larga no quede pegada a los bordes
 
     def shuffle_pal(lista, palabras, cantidad, tipo):
@@ -116,6 +114,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 claves_palabra = []
                 posicion_letra = 0
             else:  # La línea no contiene una palabra
+                # Defino el inicio fuera de la matriz, y así llenará todas las casillas con letras al azar
                 inicio = N
                 palabra = ''
                 
@@ -246,7 +245,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 return descri_frame
 
     #Comprueba si hay suficientes palabras para la ejecución
-    if (config.cantidad_de_palabras != [0.0, 0.0, 0.0]) and (len(config._lista_de_palabras) != 0):
+    if (config.cantidad_de_palabras != [0.0, 0.0, 0.0]) and (len(config.lista_de_palabras) != 0):
 
         # VARIABLES IMPORTANTES
 
@@ -301,8 +300,10 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     if actual == 'verbos':
                         window.Element('cant_verb').Update("Verbos a encontrar: " + str(cantidad_de_palabras[2]))
 
-                # Ganaste
-                if not lista_claves_palabra: #Si no quedan elementos en lista_claves_palabra es que encontraste todas
+                # GANASTE
+                # Si no quedan elementos en lista_claves_palabra es que encontraste todas
+
+                if not lista_claves_palabra:
                     sg.PopupOK("!!!!GANASTE!!!!")
                     window.Close()
                     break
@@ -330,7 +331,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     presionadas.append(event)
                     window.Element(event).Update(button_color=('black', color))
 
-    elif (len(config.lista_de_palabras) == 0):
+    elif len(config.lista_de_palabras) == 0:
         sg.PopupOK("Es necesario por lo menos una palabra para jugar")
     else:
         sg.PopupOK("Incremente la cantidad de palabras")
