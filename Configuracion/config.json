@@ -32,10 +32,10 @@
         1.0,
         1.0
     ],
-    "ayudas": true,
-    "tipo_ayudas": false,
+    "ayudas": false,
+    "tipo_ayudas": true,
     "mayusculas": true,
-    "orientacion": true,
+    "orientacion": false,
     "oficina_actual": "oficina2",
     "oficinas": [
         "oficina1",
