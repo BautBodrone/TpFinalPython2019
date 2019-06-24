@@ -1,7 +1,11 @@
+# AUTORES:
+# Bodrone, Bautista
+# Galati Martínez, Juan Cruz
+# Zambrano Taus, Alejandro
+
 import PySimpleGUI as sg
 import random
 import numpy as np
-
 
 def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
 

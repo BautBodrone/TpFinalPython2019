@@ -10,15 +10,12 @@
         "alto": "descripcion",
         "lindo": "descripcion",
         "chino": "descripcion",
-        "rapido": "descripcion",
-        "puto": "el que lo lee"
+        "rapido": "descripcion"
     },
     "verbos": {
         "correr": "descripcion",
         "saltar": "descripcion",
-        "nadar": "descripcion",
-        "volar": "descripcion",
-        "existir": "descripcion"
+        "nadar": "descripcion"
     },
     "_lista_de_palabras": [
         [
@@ -58,10 +55,6 @@
             "Adjetivo"
         ],
         [
-            "puto",
-            "Adjetivo"
-        ],
-        [
             "correr",
             "Verbo"
         ],
@@ -72,26 +65,22 @@
         [
             "nadar",
             "Verbo"
-        ],
-        [
-            "volar",
-            "Verbo"
-        ],
-        [
-            "existir",
-            "Verbo"
         ]
     ],
     "cantidad_de_palabras": [
-        3.0,
-        3.0,
-        1.0
+        3,
+        3,
+        3
     ],
-    "ayudas": false,
+    "ayudas": true,
     "tipo_ayudas": true,
     "mayusculas": true,
     "orientacion": true,
-    "oficinas": "oficina2",
+    "oficina_actual": "oficina2",
+    "oficinas": [
+        "oficina1",
+        "oficina2"
+    ],
     "colores": [
         "#FF0000",
         "#00FF00",

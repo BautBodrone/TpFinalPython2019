@@ -13,7 +13,6 @@ def promedio (n_oficina):
 
     arch = open("dato-oficinas.json", "r")
     oficinas = json.load(arch)
-    print(n_oficina)
 
     promedio = 0
     oficina = oficinas[n_oficina]

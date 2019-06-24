@@ -41,11 +41,11 @@ def identificador (palabra):
         if wik is False:
             definicion = sg.PopupGetText("Palabra No Encontrada en wiki", "Ingrese definicion") ## para guardar en archivo local
             if "NN" in patt_es:
-                lis = [[palabra, "Sustantivo", definicion]]
+                lis = [palabra, "Sustantivo", definicion]
             elif "VB" in patt_es:
-                lis = [[palabra, "Verbo", definicion]]
+                lis = [palabra, "Verbo", definicion]
             elif "JJ" in patt_es:
-                lis = [[palabra, "Adjetivo", definicion]]
+                lis = [palabra, "Adjetivo", definicion]
         if wik is True:
             if(("NN" in patt_es) and ("Sustantivo" in tag)) or (("VB" in patt_es) and ("Verbo" in tag)) or\
                     (("JJ" in patt_es) and ("Adjetivo" in tag)):

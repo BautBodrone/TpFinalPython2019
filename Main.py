@@ -1,11 +1,18 @@
+# AUTORES:
+# Bodrone, Bautista
+# Galati Martínez, Juan Cruz
+# Zambrano Taus, Alejandro
+
 import PySimpleGUI as sg
 import GUI_Configuracion as gui_configuracion
-import Juego as juego
 import Configuracion.Configuracion as Configuracion
-import Promedio_temperatura as Promedio
+import Juego as juego
+import Ambiente.Promedio_temperatura as Promedio
 
+'''Menú principal e inicio del programa. Desde acá se llama a todos los demás módulos'''
 
 def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = None):
+    '''Modifica los colores de Interfaz Gráfica de Usuario en todo el programa'''
     if bg_secundario is None:
         bg_secundario = bg_primario
     if text_secundario is None:
@@ -26,10 +33,11 @@ def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = Non
     )
     return tema
 
-
-temaactual = Promedio.promedio(Configuracion.obtener_configuracion().oficinas)
+# DEFINIR TEMA
+temaactual = Promedio.promedio(Configuracion.obtener_configuracion().oficina_actual)
 tema(temaactual[0], temaactual[1], temaactual[2], temaactual[3])
 
+# DEFINIR INTERFAZ GRÁFICA
 layout = [
     [
         sg.Text("SOPA DE LETRAS", font=('comic sans ms', '58', 'bold'))
@@ -51,14 +59,10 @@ layout = [
 window = sg.Window(#Propiedades
                     "Título",
                     resizable=False,
-                                        
-                    
-                    #Diseño
-                    size=(800,600),
-                    #no_titlebar=True
-                    
+                    size=(800,600)                    
                 ).Layout(layout)
-
+                
+# BUCLE DE EJECUCIÓN DEL MENÚ PRINCIPAL
 while True:
     event, values = window.Read()
 
