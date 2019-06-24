@@ -3,9 +3,9 @@
 # Galati Martínez, Juan Cruz
 # Zambrano Taus, Alejandro
 
+import json
 import PySimpleGUI as sg
 import Configuracion.Configuracion as Configuracion
-import json
 import Configuracion.Identificador_de_palabra as Identificador
 
 def abrir_configuracion():
@@ -526,7 +526,7 @@ def abrir_configuracion():
                     user_config.orientacion = default_config.orientacion
                     user_config.mayusculas = default_config.mayusculas
 
-                sg.PopupOK('Valores por defecto reestablecidos, presione el botón Confirmar para aplicar los cambios.')
+                sg.PopupOK('Valores por defecto reestablecidos.')
 
         # Para todas las opciones excepto Lista de palabras, no hace nada. Lista de palabras: Borrar palabra.
         if event == 'boton_cancelar':
@@ -546,3 +546,6 @@ def abrir_configuracion():
                 sg.PopupOK('Un error ocurrió mientras intentábamos guardar la configuración. No se guardaron los cambios')
 
         window.Close()
+
+if __name__ == '__main__':
+    abrir_configuracion()

@@ -9,19 +9,18 @@ import numpy as np
 
 
 def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
+    '''Función que ejecuta el juego.
+    Recibe la configuración del usuario desde el Main.
 
-    def cancelar_seleccion(p, correcto=False):
-        for clave in p:
-            if not correcto:
-                window.Element(clave).Update(button_color=('black', 'white'))
-            else:
-                window.Element(clave).Update(disabled=True)
-        return []
+    Contiene todas las funciones para generar la GUI y ejecutar el juego de principio a fin.'''
 
+    # CASILLAS SELECCIONADAS 
     def confirmar_seleccion(p, actual, lista, cantidad_de_palabras):
-        '''Confirma si las casillas seleccionadas corresponden a una palabra en la lista de palabras'''         
-        # Lista es una lista de listas; cada lista de lista contiene:
-        # [Lista de claves, tipo] de una palabra.
+        '''Confirma si las casillas seleccionadas corresponden a
+        una palabra en la lista de palabras.
+        Retorna la cantidad de palabras por tipo restantes por encontrar y si la palabra seleccionada es correcta o no.'''         
+        # Lista es una lista de listas.
+        # Cada lista de lista contiene: [Lista de claves, tipo] de una palabra.
         # p es una lista de claves, actual es el tipo seleccionado.
 
         # Por lo tanto, si se cumple la siguiente condición,
@@ -43,30 +42,33 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
         return cantidad_de_palabras, correcto
 
-    def max_palabra(lis_palabra):
-        '''Define la cantidad de casillas de la Matriz.
-        Como mínimo será de la cantidad de palabras a colocar'''
-        max = 0
-        for palabra in lis_palabra:
-            if len(palabra[0]) > max:
-                max = len(palabra[0])
-                
-        if max < len(lis_palabra):
-            max = len(lis_palabra)
+    def cancelar_seleccion(p, correcto=False):
+        '''Vacía la lista de casillas presionadas si no hay ninguna palabra confirmada como correcta.
+        Si hay una palabra confirmada, actualiza sus botones para que se bloqueen.
+        En todo caso, retorna una lista vacía.
+        '''
+        for clave in p:
+            if not correcto:
+                window.Element(clave).Update(button_color=('black', 'white'))
+            else:
+                window.Element(clave).Update(disabled=True)
+        return []
 
-        return max + random.randint(1, 2) # Para que la palabra más larga no quede pegada a los bordes
-
-    def shuffle_pal(lista, palabras, cantidad, tipo):
-        temporal = list(palabras.keys())
-        random.shuffle(temporal)
-        for i in range(cantidad):
-            try:
-                lista.append([temporal[i], palabras[temporal[i]], tipo])
-            except IndexError:
-                pass
-
-    def generar_lis_palabras(config):
+    def generar_lista_de_palabras(config):
         """ Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario"""
+        def shuffle_pal(lista, palabras, cantidad, tipo):
+            '''Toma la lista de palabras completa y la desordena,
+            guardando solo la cantidad de palabras por tipo seleccionadas por el usuario'''
+
+            temporal = list(palabras.keys())
+            random.shuffle(temporal)
+            for i in range(cantidad):
+                try:
+                    lista.append([temporal[i], palabras[temporal[i]], tipo])
+                except IndexError:
+                    pass
+
+        # Generar lista de palabras        
         lista = []
         cant_sustantivos, cant_adjetivos, cant_verbos = [int(i) for i in config.cantidad_de_palabras]
         
@@ -77,10 +79,35 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         random.shuffle(lista)
         return lista
 
-    def generar_matriz(N, lis_palabra):
-        '''Genera una Matriz Cuadrada de orden N'''
+    def generar_matriz(lista_de_palabras, mayusculas):
+        '''Genera una Matriz Cuadrada de orden N.
+        N se define en base a la longitud de las palabras
+        
+        Las palabras se colocan al azar en distintas filas, iniciando en un punto al azar de la columna.
 
-        lista = list(map(lambda x: [x[0], x[2]], lis_palabra)) # hace una lista solo con las palabras y su tipo
+        Retorna una lista de listas y la matríz,
+        Cada lista contiene las coordenadas y tipo de palabra de las palabras colocadas en la matríz
+        La matríz es rellenada con letras al azar, excepto en las coordenadas correspondientes a las palabras,
+        donde se colocan, obviamente, las letras correspondientes a cada palabra'''
+
+        def max_palabra(lista_de_palabras):
+            '''Define la cantidad de casillas de la Matriz.
+            Como mínimo será de la cantidad de palabras a colocar'''
+            max = 0
+            for palabra in lista_de_palabras:
+                if len(palabra[0]) > max:
+                    max = len(palabra[0])
+                    
+            if max < len(lista_de_palabras):
+                max = len(lista_de_palabras)
+
+            # Para que la palabra más larga no quede pegada a los bordes,
+            # se agregan 1 o 2 casillas extra
+            return max + random.randint(1, 2) 
+
+        N = max_palabra(lista_de_palabras)
+
+        lista = list(map(lambda x: [x[0], x[2]], lista_de_palabras)) # hace una lista solo con las palabras y su tipo
         posicionesY = sorted(random.sample(range(0, N), k=len(lista)))
 
         # Diccionario que guarda la posición de las palabras. Clave: Línea, Valor: (Inicio, palabra)
@@ -100,12 +127,13 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
             posiciones[posicionY] = [posicionX, palabra, tipo]
 
-        # Crear la matriz
+        # CREAR LA MATRÍZ
         matriz = []
         lista_claves_palabra = []
 
         for y in range(N):
-            linea = []
+            # Por cada fila en la matríz
+            fila = []
 
             if y in posiciones.keys(): # La línea contiene una palabra
                 inicio = posiciones[y][0]
@@ -114,13 +142,15 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 
                 claves_palabra = []
                 posicion_letra = 0
+                
             else:  # La línea no contiene una palabra
                 # Defino el inicio fuera de la matriz, y así llenará todas las casillas con letras al azar
                 inicio = N
                 palabra = ''
                 
             for x in range(N):
-                if (x < inicio) or (x >= inicio + len(palabra)):
+                # Por cada columna en la fila
+                if (x < inicio) or (x >= inicio + len(palabra)): # Colocar letra al azar antes y después de la palabra
                     letra = chr(random.randint(ord('a'), ord('z')))
                     clave = str(y) + ',' + str(x)
                 else: # Colocar letra de la palabra
@@ -129,7 +159,13 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     clave = str(y) + ',' + str(x)
                     claves_palabra.append(clave)
 
-                linea.append(
+                if mayusculas:
+                    letra = letra.upper()
+                else:
+                    letra = letra.lower()
+
+                # Crear casilla (botón)                
+                fila.append(
                     sg.Submit(  # Propiedades del botón
                         letra,
                         key=clave,
@@ -142,17 +178,22 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                         pad=(0, 0)
                     ),
                 )
-                
-            matriz.append(linea)
-            if palabra != '':
+
+            # Guardar fila
+            matriz.append(fila)
+
+            if palabra != '': # Si hay una palabra en la fila, guarda sus claves y tipo
                 lista_claves_palabra.append([claves_palabra, tipo])
         
         if not config.orientacion:  # Orientación Vertical
             matriz = np.transpose(matriz)
 
-        return lista_claves_palabra, matriz
+        return matriz, lista_claves_palabra
 
-    def ayuda_frame(configu, lis_a):
+    def ayuda_frame(ayudas, tipo_ayudas, lista_de_ayudas):
+        '''Estructura de la columna derecha.
+        Si se configuraron ayudas, muestra el tipo de ayuda seleccionada;
+        sino, la cantidad de palabras restantes por encontrar.'''
         opciones =[
             sg.Submit(
                 'Sustantivos',
@@ -205,7 +246,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         pal_frame = [
             [
                 sg.Listbox(
-                    values=list(map(lambda x:x[0], lis_a)),
+                    values=list(map(lambda x:x[0], lista_de_ayudas)),
                     size=(30, 6)
                 )
             ],
@@ -216,7 +257,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         descri_frame=[
             [
                 sg.Listbox(
-                    values=list(map(lambda x:x[1], lis_a)),
+                    values=list(map(lambda x:x[1], lista_de_ayudas)),
                     size=(30, 6)
                 )
             ],
@@ -224,37 +265,30 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
             confirmar_cancelar,
         ]
 
-        if configu.ayudas is False:
+        if ayudas is False:
             return sin_ayuda
         else:
-            if configu.tipo_ayudas:
+            if tipo_ayudas:
                 return pal_frame
             else:
                 return descri_frame
 
+
+    # INICIO DE LA EJECUCIÓN
     #Comprueba si hay suficientes palabras para la ejecución
     if (config.cantidad_de_palabras != [0.0, 0.0, 0.0]) and (len(config.lista_de_palabras) != 0):
 
-        # VARIABLES IMPORTANTES
-
-        # Matriz
-        lis_palabras = generar_lis_palabras(config)
-        N = max_palabra(lis_palabras)
-
-        # Ayudas
-        lis_ayuda = list(map(lambda x: [x[0], x[1]], lis_palabras))
-
-        # Palabras 
-        lista_claves_palabra, matriz = generar_matriz(N, lis_palabras)
+        # VARIABLES
+        lista_de_palabras = generar_lista_de_palabras(config)
+        lista_de_ayudas = list(map(lambda x: [x[0], x[1]], lista_de_palabras))
+        matriz, lista_claves_palabra = generar_matriz(lista_de_palabras, config.mayusculas)
         cantidad_de_palabras = [int(n) for n in config.cantidad_de_palabras.copy()]
 
-        columna_izquierda = matriz
-        columna_derecha = ayuda_frame(config, lis_ayuda)
-        
+        # Definición de la GUI
         layout = [
             [
-                sg.Column(columna_izquierda),
-                sg.Column(columna_derecha)
+                sg.Column(matriz),
+                sg.Column(ayuda_frame(config.ayudas, config.tipo_ayudas, lista_de_ayudas))
             ],
         ]
 
@@ -281,6 +315,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 presionadas = cancelar_seleccion(presionadas, confirmar)
 
                 if not config.ayudas:
+                    # Actualizar palabras restantes en la sección de ayudas, si no hay ayudas
                     if actual == 'sustantivos':
                         window.Element('cant_sus').Update("Sustantivos a encontrar: " + str(cantidad_de_palabras[0]))
                     if actual == 'adjetivos':
@@ -290,7 +325,6 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
                 # GANASTE
                 # Si no quedan elementos en lista_claves_palabra es que encontraste todas
-
                 if not lista_claves_palabra:
                     sg.PopupOK("!!!!GANASTE!!!!")
                     window.Close()
@@ -319,10 +353,10 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     presionadas.append(event)
                     window.Element(event).Update(button_color=('black', color))
 
-    elif len(config.lista_de_palabras) == 0:
+    elif len(config.lista_de_palabras) == 0: # No hay palabras en la lista de palabras
         sg.PopupOK("Es necesario por lo menos una palabra para jugar")
-    else:
-        sg.PopupOK("Incremente la cantidad de palabras")
+    else: # La configuración de cantidad_de_palabras tiene todos los valores en 0
+        sg.PopupOK("Incremente la cantidad de palabras desde la Configuración")
 
 if __name__ == '__main__':
     import Configuracion.Configuracion as configuracion
