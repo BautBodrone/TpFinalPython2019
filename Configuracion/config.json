@@ -1,21 +1,13 @@
 {
     "sustantivos": {
-        "casa": "descripcion",
-        "perro": "descripcion",
-        "comida": "descripcion",
-        "teclado": "descripcion",
-        "cuaderno": "descripcion"
+        "casa": " Vivienda.Edificaci\u00f3n destinada a vivienda.",
+        "perro": "(Canis lupus familiaris) Variedad dom\u00e9stica del lobo de muchas y diversas razas, compa\u00f1ero del hombre desde tiempos prehist\u00f3ricos."
     },
     "adjetivos": {
-        "alto": "descripcion",
-        "lindo": "descripcion",
-        "chino": "descripcion",
-        "rapido": "descripcion"
+        "alto": "Levantado, elevado sobre la tierra. ["
     },
     "verbos": {
-        "correr": "descripcion",
-        "saltar": "descripcion",
-        "nadar": "descripcion"
+        "correr": "Desplazarse r\u00e1pidamente sobre el suelo mediante el movimiento alternado de las piernas o de las patas."
     },
     "_lista_de_palabras": [
         [
@@ -27,53 +19,21 @@
             "Sustantivo"
         ],
         [
-            "comida",
-            "Sustantivo"
-        ],
-        [
-            "teclado",
-            "Sustantivo"
-        ],
-        [
-            "cuaderno",
-            "Sustantivo"
-        ],
-        [
             "alto",
-            "Adjetivo"
-        ],
-        [
-            "lindo",
-            "Adjetivo"
-        ],
-        [
-            "chino",
-            "Adjetivo"
-        ],
-        [
-            "rapido",
             "Adjetivo"
         ],
         [
             "correr",
             "Verbo"
-        ],
-        [
-            "saltar",
-            "Verbo"
-        ],
-        [
-            "nadar",
-            "Verbo"
         ]
     ],
     "cantidad_de_palabras": [
-        3,
-        3,
-        3
+        2.0,
+        1.0,
+        1.0
     ],
     "ayudas": true,
-    "tipo_ayudas": true,
+    "tipo_ayudas": false,
     "mayusculas": true,
     "orientacion": true,
     "oficina_actual": "oficina2",

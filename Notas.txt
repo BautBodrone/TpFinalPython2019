@@ -1,2 +1,5 @@
 > Reporte se guarda en carpeta principal.
 > Falta escribir el LEEME
+
+JUEGO:
+> Las palabras en las ayudas delatan el orden de las palabras.

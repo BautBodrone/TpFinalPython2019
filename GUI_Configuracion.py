@@ -534,6 +534,7 @@ def abrir_configuracion():
             print('No hacer nada es igual a no guardar los cambios, so...')
 
             if opcion_actual == 'lista_de_palabras':
+                guardado = False
                 lista_de_palabras_borrar_palabras(user_config, values)
 
         if event == 'Guardar':

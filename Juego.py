@@ -7,8 +7,11 @@ import PySimpleGUI as sg
 import random
 import numpy as np
 
-def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
+#Auxiliar
+import Configuracion.Configuracion as configuracion
 
+def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configuracion.obtener_configuracion())
+    
     def confirmar_ganador(cant_p):
         i = 0
         for x in range(len(cant_p)):
@@ -257,10 +260,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         if set(config.cantidad_de_palabras)==[0, 0, 0]:
             sg.PopupOK("Incremente el numero de palabras")
 
-        while not salir(event):
+        while True:
 
-            if confirmar_ganador(cant_pal):
-                sg.PopupOK("!!!!GANASTE!!!!")
+            if event is None:
                 break
 
             if color is None:
@@ -273,6 +275,10 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
             elif event == "confirmar":
                 confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal, config)
                 presionadas = cancelar_seleccion(presionadas)
+                if confirmar_ganador(cant_pal):
+                    sg.PopupOK("!!!!GANASTE!!!!")
+                    window.Close()
+                    break
 
             elif event in ('adjetivos', 'sustantivos', 'verbos'):
                 print('Tipo: ', event)
@@ -300,7 +306,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
             event, values = window.Read()
 
-    elif (len(config._lista_de_palabras) == 0):
+    elif (len(config.lista_de_palabras) == 0):
         sg.PopupOK("Es necesario por lo menos una palabra para jugar")
     else:
         sg.PopupOK("Incremente la cantidad de palabras")
@@ -308,4 +314,4 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
 
 if __name__ == '__main__':
-    ventanajuego()
+    ventanajuego(configuracion.obtener_configuracion())
