@@ -44,9 +44,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
     def cancelar_seleccion(p, correcto=False):
         '''Vacía la lista de casillas presionadas si no hay ninguna palabra confirmada como correcta.
-        Si hay una palabra confirmada, actualiza sus botones para que se bloqueen.
-        En todo caso, retorna una lista vacía.
-        '''
+        Si hay una palabra confirmada, actualiza sus botones para que se bloqueen.'''
         for clave in p:
             if not correcto:
                 window.Element(clave).Update(button_color=('black', 'white'))
@@ -55,7 +53,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         return []
 
     def generar_lista_de_palabras(config):
-        """ Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario"""
+        '''Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario'''
         def shuffle_pal(lista, palabras, cantidad, tipo):
             '''Toma la lista de palabras completa y la desordena,
             guardando solo la cantidad de palabras por tipo seleccionadas por el usuario'''
