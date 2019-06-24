@@ -21,17 +21,19 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         else:
             return False
 
-    def salir(e):
-        return e is None
-
-    def cancelar_seleccion(p):
+    def cancelar_seleccion(p, correcto = False):
         for clave in p:
-            window.Element(clave).Update(button_color=('black', 'white'))
+            if not correcto:
+                window.Element(clave).Update(button_color=('black', 'white'))
+            else:
+                window.Element(clave).Update(disabled=True)
         return []
 
-    def confirmar_seleccion(p, actual, lis, cant_p,configu):
+    def confirmar_seleccion(p, actual, lis, cant_p, configu):
+        correcto = False
         for i in range(len(lis)):
             if (set(p) == set(lis[i][0]))and(actual == lis[i][2]):
+                correcto = True
                 sg.Popup("Correcto")
                 if lis[i][2] == "sustantivos":
                     lis[i][0] = "#"  # borrado logico
@@ -48,6 +50,9 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     cant_p[2] -= 1
                     if configu.ayudas is False:
                         window.Element("cant_verb").Update(value="Verbos a encontrar: " + str(cant_p[2]))
+
+        print(correcto)
+        return correcto
 
     def max_palabra(lis_palabra):
         max = 0
@@ -234,8 +239,10 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
     lis_palabras = generar_lis_palabras(config)
     print("Lis_palabras: ", lis_palabras)
+    
     lis_ayuda = list(map(lambda x: [x[0], x[1]], lis_palabras)) # SE PASA POR LA BOLAS QUE COPIA LA LISTA Y NO LA DIR
     print("Lis_ayuda: ", lis_ayuda)
+    
     num = max_palabra(lis_palabras)
     matriz = generar_matriz(num, lis_palabras)
     columna_izquierda = matriz
@@ -248,33 +255,28 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         ]
     ]
 
+    window = sg.Window('Sopa de letras').Layout(layout)
+
 
     if (config.cantidad_de_palabras != [0.0, 0.0, 0.0]) and (len(config._lista_de_palabras) != 0):
-        window = sg.Window('Sopa de letras').Layout(layout)
-        event, values = window.Read()
-
         presionadas = []
-        color = None
-
-
-        if set(config.cantidad_de_palabras)==[0, 0, 0]:
-            sg.PopupOK("Incremente el numero de palabras")
+        actual = 'sustantivos'
+        color = config.colores[0]
 
         while True:
+            event, values = window.Read()
 
             if event is None:
+                window.Close()
                 break
 
-            if color is None:
-                actual = 'adjetivos'
-                color = config.colores[1]
-
-            if event == 'cancelar':
+            elif event == 'cancelar':
                 presionadas = cancelar_seleccion(presionadas)
 
             elif event == "confirmar":
-                confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal, config)
-                presionadas = cancelar_seleccion(presionadas)
+                confirmar = confirmar_seleccion(presionadas, actual, lis_palabras, cant_pal, config)
+                presionadas = cancelar_seleccion(presionadas, confirmar)
+
                 if confirmar_ganador(cant_pal):
                     sg.PopupOK("!!!!GANASTE!!!!")
                     window.Close()
@@ -301,10 +303,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     window.Element(event).Update(button_color=('black', 'white'))
                 else:
                     presionadas.append(event)
-                    print(presionadas)
                     window.Element(event).Update(button_color=('black', color))
-
-            event, values = window.Read()
 
     elif (len(config.lista_de_palabras) == 0):
         sg.PopupOK("Es necesario por lo menos una palabra para jugar")
