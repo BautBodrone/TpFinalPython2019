@@ -324,7 +324,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 # GANASTE
                 # Si no quedan elementos en lista_claves_palabra es que encontraste todas
                 if not lista_claves_palabra:
-                    sg.PopupOK("!!!!GANASTE!!!!")
+                    sg.PopupOK("!!!!GANASTE!!!!", font=('comic sans', 30, 'bold'))
                     window.Close()
                     break
 
