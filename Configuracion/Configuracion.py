@@ -4,6 +4,7 @@
 # Zambrano Taus, Alejandro
 
 import json
+from os import sep #Mantiene el acceso a archivos generico entre sistemas operativos
 
 class ConfigEncoder(json.JSONEncoder):
     '''Adapta los datos de la clase Configuracion para poder enviarlos a un archivo con formato .json'''
@@ -111,7 +112,7 @@ def obtener_configuracion():
         
         print('Configuración por defecto creada')
         print('Abrir/crear archivo config.json')
-        archivo_configuracion = open('configuracion/config.json', 'w+')
+        archivo_configuracion = open('configuracion' + sep + 'config.json', 'w+')
         
         print('Archivo abierto/creado con éxito')
         print('Serializando configuración y guardarla en config.json')
@@ -124,7 +125,7 @@ def obtener_configuracion():
     try:
         print('\n# ' + '='*30 + ' #\n')
         print('Buscando archivo config.json')
-        archivo_configuracion = open('configuracion/config.json', 'r')
+        archivo_configuracion = open('configuracion' + sep + 'config.json', 'r')
         
         print('Archivo config.json abierto con éxito')
     except:
@@ -190,7 +191,7 @@ def guardar_configuracion(configuracion):
     try:
         print('\n# ' + '='*30 + ' #\n')
         print('Abrir/crear archivo config.json')
-        archivo_configuracion = open('configuracion/config.json', 'w+')
+        archivo_configuracion = open('configuracion' + sep + 'config.json', 'w+')
         
         print('Archivo abierto/creado con éxito')
         print('Serializar configuración y guardarla en config.json')
