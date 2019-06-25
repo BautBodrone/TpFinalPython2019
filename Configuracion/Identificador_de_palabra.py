@@ -1,9 +1,9 @@
 try:
     from pattern.web import Wiktionary
     from pattern.text.es import parse
-except:
-    from pattern3.web import Wiktionary
-    from pattern3.text.es import parse
+except ModuleNotFoundError:
+     from pattern3.web import Wiktionary
+     from pattern3.text.es import parse
 import PySimpleGUI as sg
 from datetime import datetime
 
@@ -12,7 +12,7 @@ def identificador (palabra):
 
     """"Retorno una lista con la palabra y que tipo es para mandarla a la tabla """
 
-    palabra = palabra.lower()##solo encuntra palabras en minuscula
+    palabra = palabra.lower() #solo encuntra palabras en minuscula
     engine = Wiktionary(license=None, throttle=5.0, language="es")
     match = False
     wik = False
