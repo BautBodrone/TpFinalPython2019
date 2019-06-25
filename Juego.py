@@ -185,7 +185,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         
         if not config.orientacion:  # Orientación Vertical
             matriz = np.transpose(matriz)
-
+        print(posiciones)
         return matriz, lista_claves_palabra
 
     def ayuda_frame(ayudas, tipo_ayudas, lista_de_ayudas):

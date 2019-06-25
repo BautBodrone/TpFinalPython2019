@@ -1,10 +1,6 @@
 > Reporte se guarda en carpeta principal.
 > Falta escribir el LEEME
 > Agregar palabras por defecto con definiciones reales
-> Adaptar las aperturas de archivos a linux 
-	> En vez de usar:  "directorio/archivo.ext", 
-	> usar: "directorio" + os.sep + "archivo.ext" 
-		> Importar "from os import sep" y que solo quede como "directorio" + sep + "archivo.ext"
 
 > Falta un reporte en caso de que la palabra no se encuentre en Wikcionario ni en Pattern (aunque en Pattern siempre la da como válida... así que supongo que por eso no se genera)
 
