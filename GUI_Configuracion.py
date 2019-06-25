@@ -191,7 +191,7 @@ def abrir_configuracion():
 
             tipografia_frame = [
                 [
-                    sg.Combo(values=["arial", "helvetica"], key='tipografia')
+                    sg.Combo(values=["arial"], key='tipografia')
                 ]
             ]
 

@@ -73,7 +73,7 @@
         1.0
     ],
     "ayudas": true,
-    "tipo_ayudas": true,
+    "tipo_ayudas": false,
     "mayusculas": true,
     "orientacion": true,
     "oficina_actual": "oficina1",
