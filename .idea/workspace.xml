@@ -173,7 +173,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Main">
+  <component name="RunManager" selected="Python.GUI_Configuracion">
     <configuration name="GUI_Configuracion" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TpFinalPython2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -281,9 +281,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.GUI_Configuracion" />
         <item itemvalue="Python.Main" />
         <item itemvalue="Python.GUI_Configuracion_Test" />
-        <item itemvalue="Python.GUI_Configuracion" />
         <item itemvalue="Python.Promedio_temperatura (1)" />
         <item itemvalue="Python.Promedio_temperatura" />
       </list>

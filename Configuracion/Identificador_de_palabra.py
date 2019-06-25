@@ -1,5 +1,9 @@
-from pattern.web import Wiktionary
-from pattern.text.es import parse
+try:
+    from pattern.web import Wiktionary
+    from pattern.text.es import parse
+except:
+    from pattern3.web import Wiktionary
+    from pattern3.text.es import parse
 import PySimpleGUI as sg
 from datetime import datetime
 
