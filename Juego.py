@@ -115,6 +115,8 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 else:
                     letra = chr(random.randint(ord('a'), ord('z')))
                 clave = str(y) + ',' + str(x)
+                if config.mayusculas is True:
+                    letra = letra.upper()
                 linea.append(
                     sg.Submit(  # Propiedades del botón
                         letra,
