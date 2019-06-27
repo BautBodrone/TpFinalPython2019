@@ -37,17 +37,17 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                     lis[i][0] = "#"  # borrado logico
                     cant_p[0] -= 1
                     if configu.ayudas is False:
-                        window.Element("cant_sus").Update(value="Sustantivos a encontrar: " + str(cant_p[0]))
+                        window.Element("cant_sus").Update(value="Sustantivos a encontrar: " + str(int(cant_p[0])))
                 elif lis[i][2] == "adjetivos":
                     lis[i][0] = "#"
                     cant_p[1] -= 1
                     if configu.ayudas is False:
-                        window.Element("cant_adj").Update(value="Adjetivos a encontrar: " + str(cant_p[1]))
+                        window.Element("cant_adj").Update(value="Adjetivos a encontrar: " + str(int(cant_p[1])))
                 else:
                     lis[i][0] = "#"
                     cant_p[2] -= 1
                     if configu.ayudas is False:
-                        window.Element("cant_verb").Update(value="Verbos a encontrar: " + str(cant_p[2]))
+                        window.Element("cant_verb").Update(value="Verbos a encontrar: " + str(int(cant_p[2])))
             elif correcto is False:
                 correcto = False
         return correcto

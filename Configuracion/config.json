@@ -72,7 +72,7 @@
         1.0,
         1.0
     ],
-    "ayudas": true,
+    "ayudas": false,
     "tipo_ayudas": false,
     "mayusculas": true,
     "orientacion": true,
