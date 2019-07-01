@@ -35,6 +35,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 
         lista = []
 
+        shuffle_pal(lista, config.sustantivos, cantidad_de_palabras[0], "sustantivos")
         shuffle_pal(lista, config.adjetivos, cantidad_de_palabras[1], "adjetivos")
         shuffle_pal(lista, config.verbos, cantidad_de_palabras[2], "verbos")
 
