@@ -7,6 +7,9 @@ from luma.core.render import canvas
 from luma.core.virtual import viewport
 from luma.core.legacy import text, show_message
 from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
+import PySimpleGUI as sg
+from datetime import date
+import json
 
 
 class Matriz:
@@ -24,7 +27,6 @@ class Sonido:
         self._canal = canal
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self._canal, GPIO.IN)
-        # Desactivo las warnings por tener más de un circuito en la GPIO
         GPIO.setwarnings(False)
         GPIO.add_event_detect(self._canal, GPIO.RISING)
 
@@ -41,23 +43,27 @@ class Temperatura:
         self._data_pin = pin
 
     def datos_sensor(self):
-        humedad, temperatura = Adafruit_DHT.read_retry(self.
-        _sensor, self._data_pin)
+        humedad, temperatura = Adafruit_DHT.read_retry(self._sensor, self._data_pin)
         return {'temperatura': temperatura, 'humedad': humedad}
 
 
 temp = Temperatura()
 datos = temp.datos_sensor()
-starttime=time.time()
+starttime = time.time()
 sonido = Sonido()
 serial = spi(port=0, device=0, gpio=noop())
-device = max7219(serial, width, height, cascaded, rotate)
+device = max7219(serial, 8, 8, 2)
 matriz = Matriz(numero_matrices=2, ancho=16)
+oficina = sg.PopupGetText('Datos Oficina', 'Ingrese el numero/nombre de la oficina: ')
 
-
-while True:
-    print('Temperatura = {0:0.1f°}C Humedad = {1:0.1f} %'.format
-          (datos['temperatura'], datos['humedad']))
-    time.sleep(60.0 - ((time.time() - starttime) % 60.0))
-    sonido.evento_detectado(matriz.mostrar_mensaje(temp.datos_sensor()), delay=0.3)
-
+while text != None:
+    arch = open("dato-oficinas.json", "w+")
+    dato_arch = json.load(arch)
+    # es necesario que guarda cada un minuto
+    datos["fecha"] = date.today().strftime("%d/%m/%Y")
+    try:
+        dato_arch[oficina].append(datos)
+    except KeyError:
+        dato_arch[oficina] = [datos]
+    sonido.evento_detectado(matriz.mostrar_mensaje(str('Temperatura = {}C Humedad = {} %'.format
+                                                       (datos['temperatura'], datos['humedad'])), delay=0.3))
