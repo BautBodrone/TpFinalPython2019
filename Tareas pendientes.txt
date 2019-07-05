@@ -1,19 +1,19 @@
 GENERAL [
     Escribir Informe
-    Hacer presentaci髇
-    Escribir L蒃ME
+    Hacer presentaci贸n
+    Escribir L脡EME
 ]
 
 Configuracion [
     GUI_Configuracion.py [
-        Actualizar a la 鷏tima versi髇 de PySimpleGUI [
+        Actualizar a la 煤ltima versi贸n de PySimpleGUI [
             Crear Update para todas las opciones.
-            Crear Funci髇 para hacer visible solo la opci髇 seleccionada.
+            Crear Funci贸n para hacer visible solo la opci贸n seleccionada.
         ]
     ]
 
     configuracion.py [
-        Crear m閠odo que genere palabras por defecto [
+        Crear m茅todo que genere palabras por defecto [
             Debe usar Identificador_de_palabras.py
         ]
     ]
@@ -23,11 +23,11 @@ Configuracion [
 
 Juego [
     Modificar todo para que se pueda ganar y perder [
-        Confirmar selecci髇 [
+        Confirmar selecci贸n [
             Ahora debe confirmar todas las palabras
         ]
 
-        Cancelar selecci髇 [
+        Cancelar selecci贸n [
             Debe bloquear siempre las casillas seleccionadas
         ]
 
@@ -35,12 +35,12 @@ Juego [
             Guardar todas las casillas seleccinadas [
                 Guardar keys y tipo
             ]
-            Al finalizar, confirmar selecci髇 de todas las palabras [
+            Al finalizar, confirmar selecci贸n de todas las palabras [
                 Definir
             ]
 
             Ganar [
-                Condici髇 [
+                Condici贸n [
                     Acertar las casillas de todas las palabras
                     Acertar los tipos de todas las palabras
                 ]
@@ -50,6 +50,7 @@ Juego [
             Perder [
                 Mostrar ventana que marque los errores.
             ]
+          Actualizar todos los DOCSTRING
         ]
     ]
 
