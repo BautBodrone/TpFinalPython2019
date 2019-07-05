@@ -50,8 +50,9 @@ Juego [
             Perder [
                 Mostrar ventana que marque los errores.
             ]
-          Actualizar todos los DOCSTRING
         ]
+
+        Actualizar todos los DOCSTRING
     ]
 
     
