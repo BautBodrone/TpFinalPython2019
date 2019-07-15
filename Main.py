@@ -35,14 +35,14 @@ def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = Non
 
 
 # DEFINIR TEMA
-datos_configuracion = Configuracion.obtener_configuracion()
-temaactual = Promedio.promedio(datos_configuracion.oficina_actual)
+temaactual = Promedio.promedio(Configuracion.obtener_configuracion().oficina_actual)
 tema(temaactual[0], temaactual[1], temaactual[2], temaactual[3])
 
 # DEFINIR INTERFAZ GRÁFICA
 layout = [
     [
-        sg.Text(" SOPA DE LETRAS", font=(str(datos_configuracion.tipografia) + ' 58'), justification="center")  # hay espacio por no centrarce
+        sg.Text("SOPA DE LETRAS", font=(str(Configuracion.obtener_configuracion().tipografia) + ' 58'),
+                justification="center", key="titulo")  # hay espacio por no centrarce
     ],
     [
         sg.Image(filename="Grid.png", size=(800, 400))
@@ -72,9 +72,11 @@ while True:
     if event == "config":
         window.Disappear()
         gui_configuracion.abrir_configuracion()
+        window.FindElement("titulo").Update(font=str(Configuracion.obtener_configuracion().tipografia) + ' 58')
+        temaactual = Promedio.promedio(Configuracion.obtener_configuracion().oficina_actual)
         window.Reappear()
-        
+
     if event == "jugar":
         window.Disappear()
-        juego.ventanajuego(datos_configuracion)
+        juego.ventanajuego(Configuracion.obtener_configuracion())
         window.Reappear()
