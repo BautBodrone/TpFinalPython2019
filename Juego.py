@@ -198,7 +198,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         ]
 
         if config.ayudas is False:
-            ayuda_frame = sg.Frame('Palabras restantes',sin_ayuda)
+            ayuda_frame = sg.Frame('Palabras restantes', sin_ayuda)
         else:
             if config.tipo_ayudas:
                 ayuda_frame = sg.Column(ayuda_palabras)
@@ -213,22 +213,25 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 sg.Submit(
                     'Sustantivos',
                     key='sustantivos',
-                    button_color=('black', config.colores[0])
+                    button_color=('black', config.colores[0]),
+                    size=(9, 1)
                 ),
                 sg.Submit(
                     'Adjetivos',
                     key='adjetivos',
-                    button_color=('black', config.colores[1])
+                    button_color=('black', config.colores[1]),
+                    size=(9, 1)
                 ),
                 sg.Submit(
                     'Verbos',
                     key='verbos',
-                    button_color=('black', config.colores[2])
+                    button_color=('black', config.colores[2]),
+                    size=(9, 1)
                 ),
             ],
             [
-                sg.Submit("Seleccionar Palabra", key="confirmar"),
-                sg.Submit('Cancelar Palabra', key='cancelar')
+                sg.Submit("Seleccionar Palabra", key="confirmar", size=(16, 1)),
+                sg.Submit('Cancelar Palabra', key='cancelar', size=(13, 1))
             ],
         ]
 
@@ -300,6 +303,7 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
         presionadas = []
         actual = 'sustantivos'
         color = config.colores[0]
+        intentos = 3
 
         if set(config.cantidad_de_palabras) == [0, 0, 0]:
             sg.PopupOK("Incremente el numero de palabras")
@@ -315,7 +319,13 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 presionadas = cancelar_seleccion(presionadas, confirmar)
 
                 if confirmar is False:
-                    sg.PopupAutoClose("Intente de nuevo", auto_close_duration=1)
+                    if intentos == 0:
+                        sg.PopupAutoClose("Perdiste", auto_close_duration=2)
+                        window.Close()
+                        break
+                    else:
+                        sg.PopupAutoClose("Quedan "+str(intentos)+" Intentos", auto_close_duration=2)
+                        intentos -= 1
                 else:
 
                     # Actualizar ayudas

@@ -33,33 +33,33 @@ def tema(bg_primario, text_primario, bg_secundario = None, text_secundario = Non
     )
     return tema
 
+
 # DEFINIR TEMA
-temaactual = Promedio.promedio(Configuracion.obtener_configuracion().oficina_actual)
+datos_configuracion = Configuracion.obtener_configuracion()
+temaactual = Promedio.promedio(datos_configuracion.oficina_actual)
 tema(temaactual[0], temaactual[1], temaactual[2], temaactual[3])
 
 # DEFINIR INTERFAZ GRÁFICA
 layout = [
     [
-        sg.Text("SOPA DE LETRAS", font=('comic sans ms', '58', 'bold'))
+        sg.Text(" SOPA DE LETRAS", font=(str(datos_configuracion.tipografia) + ' 58'), justification="center")  # hay espacio por no centrarce
     ],
     [
-        sg.T('')
-    ],
+        sg.Image(filename="Grid.png", size=(800, 400))
+     ],
     [
-        sg.Button("JUGAR", font=('arial', '20', 'bold'), key="jugar"),
-    ],
-    [
-        sg.Button("CONFIGURACION", font=('arial', '20', 'bold'), key="config"),
-    ],
-    [
-        sg.Button("SALIR", font=('arial', '20', 'bold'), key="salir")
+        sg.Button("JUGAR", font=('arial', '20', 'bold'), size=(15, 1), key="jugar"),
+
+        sg.Button("CONFIGURACION", font=('arial', '20', 'bold'), size=(15, 1), key="config"),
+
+        sg.Button("SALIR", font=('arial', '20', 'bold'), size=(15, 1), key="salir")
     ]
 ]
 
 window = sg.Window(#Propiedades
                     "Título",
                     resizable=False,
-                    size=(800,600)                    
+                    size=(800, 600)
                 ).Layout(layout)
                 
 # BUCLE DE EJECUCIÓN DEL MENÚ PRINCIPAL
@@ -76,5 +76,5 @@ while True:
         
     if event == "jugar":
         window.Disappear()
-        juego.ventanajuego(Configuracion.obtener_configuracion())
+        juego.ventanajuego(datos_configuracion)
         window.Reappear()

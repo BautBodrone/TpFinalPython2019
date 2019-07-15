@@ -42,7 +42,7 @@ def abrir_configuracion():
                         headings=encabezado,
                         key='lista_de_palabras_seleccionada',
                         justification='center',
-
+                        size=(2, 7)
                     )
                 ],
                 [
@@ -149,24 +149,24 @@ def abrir_configuracion():
             ]
             return columna_ayudas
 
-        def diseño_del_juego(botones_por_defecto, colores, orientacion, mayusculas, tipografia):
+        def diseño_del_juego(botones_por_defecto, colores, orientacion, mayusculas, tipografias, tipografia):
             '''En la columna derecha, permite la visualización, y modificación de
             los colores de cada tipo de palabra, la orientación de las palabras,
             si estarán en mayúsculas o minúsculas, y la tipografía del reporte'''
             colores_frame = [
                 [
                     sg.ColorChooserButton(
-                        "Sustantivos", size=(14, 1), key='color_sustantivos', button_color=('white', colores[0])
+                        "Sustantivos", size=(12, 1), key='color_sustantivos', button_color=('white', colores[0])
                     ),
                 ],
                 [
                     sg.ColorChooserButton(
-                        "Adjetivos", size=(14, 1), key='color_adjetivos', button_color=('white', colores[1])
+                        "Adjetivos", size=(12, 1), key='color_adjetivos', button_color=('white', colores[1])
                     ),
                 ],
                 [
                     sg.ColorChooserButton(
-                        "Verbos", size=(14, 1), key='color_verbos', button_color=('white', colores[2])
+                        "Verbos", size=(12, 1), key='color_verbos', button_color=('white', colores[2])
                     )
                 ],
             ]
@@ -191,13 +191,13 @@ def abrir_configuracion():
 
             tipografia_frame = [
                 [
-                    sg.Combo(values=["arial","helvetica"], key='tipografia')
+                    sg.Combo(values=tipografias, default_value=tipografia, key='tipografia')
                 ]
             ]
 
             orientacion_maymin_column = [
                 [
-                    sg.Frame("Seleccionar orientación", orientacion_frame),
+                    sg.Frame("Seleccionar orientación ", orientacion_frame),
                 ],
                 [
                     sg.Frame("Mayusculas/Minusculas", maymin_frame)
@@ -280,7 +280,8 @@ def abrir_configuracion():
                 configuracion.colores,
                 configuracion.orientacion,
                 configuracion.mayusculas,
-                'Arial 10'
+                configuracion.tipografias,
+                configuracion.tipografia
             )
         elif opcion == 'oficinas':
             retorno = oficinas(configuracion.oficina_actual)
@@ -424,7 +425,7 @@ def abrir_configuracion():
         Opción seleccionada por defecto: Lista de palabras'''       
         layout = [
             [  # Título
-                sg.Text("Sopa de Letras", font="arial 40"),
+                sg.Text("Sopa de Letras", font=str(user_config.tipografia) + " 40"),
             ],
             [
                 sg.T(''),
@@ -494,6 +495,7 @@ def abrir_configuracion():
             if opcion_actual == 'diseño_del_juego':
                 user_config.orientacion = values['orientacion_horizontal']
                 user_config.mayusculas = values['mayusculas']
+                user_config.tipografia = values["tipografia"]
                 #Colores             
                 if not values['color_sustantivos'] == '':
                     user_config.colores[0] = values['color_sustantivos']
@@ -525,6 +527,7 @@ def abrir_configuracion():
                     user_config.colores[2] = default_config.colores[2]
                     user_config.orientacion = default_config.orientacion
                     user_config.mayusculas = default_config.mayusculas
+                    user_config.tipografia = default_config.tipografia
 
                 sg.PopupOK('Valores por defecto reestablecidos.')
 

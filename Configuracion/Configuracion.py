@@ -41,7 +41,9 @@ class Configuracion:
             orientacion = True,
             colores = ['#FF0000','#00FF00','#0000FF'],
             oficina_actual = 'oficina1',
-            oficinas = ["oficina1", "oficina2"]
+            oficinas = ["oficina1", "oficina2"],
+            tipografias = ["Verdana", "Helvetica", "Comic", "Times", "Fixedsys "],
+            tipografia = "arial"
         ):
         self.sustantivos = sustantivos
         self.adjetivos = adjetivos
@@ -55,6 +57,8 @@ class Configuracion:
         self.oficina_actual = oficina_actual
         self.oficinas = oficinas
         self.colores = colores
+        self.tipografias = tipografias
+        self.tipografia = tipografia
 
     @property
     def lista_de_palabras(self):
@@ -152,7 +156,8 @@ def obtener_configuracion():
                 orientacion=c["orientacion"],
                 colores=c['colores'],
                 oficinas = c['oficinas'],
-                oficina_actual = c['oficina_actual']
+                oficina_actual = c['oficina_actual'],
+                tipografia = c["tipografia"]
             )
             
             print('Objeto Configuración creado con éxito')

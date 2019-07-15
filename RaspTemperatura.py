@@ -17,13 +17,12 @@ class Temperatura:
 
 
 layout = [
-        sg.Button("Guardar Temperatura", font=('arial', '20', 'bold'), key="guardar"),
-        sg.Button("Slir", font=('arial', '20', 'bold'), key="salir")
+        sg.Button("Terminar lectura", font=('arial', '20', 'bold'), key="salir")
 ]
 
 
 temp = Temperatura()
-temporizador = 60
+temporizador = 60*1000  # cantidad de segundo * milisegundo
 oficina = sg.PopupGetText('Datos Oficina', 'Ingrese el numero/nombre de la oficina: ')
 
 try:
@@ -37,16 +36,16 @@ except FileExistsError:
 with open("dato-oficinas.json", "r") as arch:
     dato_arch = json.load(arch)
 with open("dato-oficinas.json", "w+") as arch:
-
     if oficina is not None:
-        window = sg.Window("").Layout(layout)
+        window = sg.Window("Oficina "+str(oficina)).Layout(layout)
         while True:
-            event, values = window.Read()
+            event, values = window.Read(timeout=temporizador)
             datos = temp.datos_sensor()
             dato_arch = json.load(arch)
             try:
                 dato_arch[oficina].append(datos)
             except KeyError:
                 dato_arch[oficina] = [datos]
-            time.sleep(temporizador)
+            if event is None or event == "salir":
+                break
 

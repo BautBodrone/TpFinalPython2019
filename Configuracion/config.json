@@ -1,37 +1,57 @@
 {
     "sustantivos": {
-        "perro": "(Canis lupus familiaris) Variedad dom\u00e9stica del lobo de muchas y diversas razas, compa\u00f1ero del hombre desde tiempos prehist\u00f3ricos.",
-        "gato": " Zoolog\u00eda.(Felis silvestris catus o F. catus) Animal carn\u00edvoro de la familia de los felinos, domesticado como animal de compa\u00f1\u00eda desde al menos el 3500 adC.",
-        "casa": " Vivienda.Edificaci\u00f3n destinada a vivienda."
+        "casa": "descripcion",
+        "perro": "descripcion",
+        "comida": "descripcion",
+        "teclado": "descripcion",
+        "cuaderno": "descripcion"
     },
     "adjetivos": {
-        "lindo": "Que es agradable a la vista o al \u00e1nimo, con un toque de ternura. [",
-        "alto": "Levantado, elevado sobre la tierra. ["
+        "alto": "descripcion",
+        "lindo": "descripcion",
+        "chino": "descripcion",
+        "rapido": "descripcion"
     },
     "verbos": {
-        "correr": "Desplazarse r\u00e1pidamente sobre el suelo mediante el movimiento alternado de las piernas o de las patas.",
-        "nadar": "Desplazarse en el agua u otro l\u00edquido por los propios medios, impuls\u00e1ndose por desplazamiento del medio fluido.",
-        "saltar": "Impulsarse o lanzarse al aire."
+        "correr": "descripcion",
+        "saltar": "descripcion",
+        "nadar": "descripcion"
     },
     "_lista_de_palabras": [
+        [
+            "casa",
+            "Sustantivo"
+        ],
         [
             "perro",
             "Sustantivo"
         ],
         [
-            "gato",
+            "comida",
             "Sustantivo"
         ],
         [
-            "casa",
+            "teclado",
             "Sustantivo"
+        ],
+        [
+            "cuaderno",
+            "Sustantivo"
+        ],
+        [
+            "alto",
+            "Adjetivo"
         ],
         [
             "lindo",
             "Adjetivo"
         ],
         [
-            "alto",
+            "chino",
+            "Adjetivo"
+        ],
+        [
+            "rapido",
             "Adjetivo"
         ],
         [
@@ -39,21 +59,21 @@
             "Verbo"
         ],
         [
-            "nadar",
+            "saltar",
             "Verbo"
         ],
         [
-            "saltar",
+            "nadar",
             "Verbo"
         ]
     ],
     "cantidad_de_palabras": [
-        2.0,
-        2.0,
-        2.0
+        3,
+        3,
+        3
     ],
-    "ayudas": false,
-    "tipo_ayudas": false,
+    "ayudas": true,
+    "tipo_ayudas": true,
     "mayusculas": true,
     "orientacion": true,
     "oficina_actual": "oficina1",
@@ -62,8 +82,16 @@
         "oficina2"
     ],
     "colores": [
-        "#ef5256",
-        "#8dd170",
-        "#a857ea"
-    ]
+        "#FF0000",
+        "#00FF00",
+        "#0000FF"
+    ],
+    "tipografias": [
+        "Verdana",
+        "Helvetica",
+        "Comic",
+        "Times",
+        "Fixedsys "
+    ],
+    "tipografia": "Verdana"
 }
