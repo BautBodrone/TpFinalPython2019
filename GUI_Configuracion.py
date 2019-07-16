@@ -7,6 +7,7 @@ import json
 import PySimpleGUI as sg
 import Configuracion.Configuracion as Configuracion
 import Configuracion.Identificador_de_palabra as Identificador
+import Main as main
 
 def abrir_configuracion():
     '''Función principal, abre y ejecuta todas las funciones para la GUI de la ventana de configuración.'''
@@ -469,6 +470,7 @@ def abrir_configuracion():
             if not guardado:
                 guardado = PopUp_guardar_y_salir(user_config)
             window.Close()
+            main.abrirMain()
             break
 
         # Seleccionar opción
@@ -506,7 +508,6 @@ def abrir_configuracion():
                     
             if opcion_actual == "oficinas":
                 user_config.oficina_actual = values["oficina"]
-                sg.PopupOK('Para ver los cambios debe reiniciar la aplicación')
 
         # Reestablecer a los valores por defecto.
         if event == 'boton_por_defecto':
@@ -549,6 +550,7 @@ def abrir_configuracion():
                 sg.PopupOK('Un error ocurrió mientras intentábamos guardar la configuración. No se guardaron los cambios')
 
         window.Close()
+
 
 if __name__ == '__main__':
     abrir_configuracion()
