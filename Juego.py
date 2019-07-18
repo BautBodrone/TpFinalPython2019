@@ -15,136 +15,23 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
     '''
 
 
-    def generar_lista_de_palabras(config, cantidad_de_palabras):
-        '''Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario
-
-        Retorna una lista con las palabras a usar en el juego, su descripción y tipo
+    def shuffle_pal(lista_de_palabas, palabras, cantidad_de_palabras, tipo):
+        '''Toma la lista de palabras de un tipo de palabras y la desordena,
+        guardando solo la cantidad de palabras por tipo seleccionadas por el usuario
         '''
-
-        def shuffle_pal(lista_de_palabas, palabras, cantidad_de_palabras, tipo):
-            '''Toma la lista de palabras de un tipo de palabras y la desordena,
-            guardando solo la cantidad de palabras por tipo seleccionadas por el usuario
-            '''
-            temporal = list(palabras.keys())
-            random.shuffle(temporal)
-            for i in range(cantidad_de_palabras):
-                try:
-                    lista_de_palabas.append([temporal[i], palabras[temporal[i]], tipo])
-                except IndexError:
-                    pass
-                
-        lista = []
-
-        shuffle_pal(lista, config.sustantivos, cantidad_de_palabras[0], "sustantivos")
-        shuffle_pal(lista, config.adjetivos, cantidad_de_palabras[1], "adjetivos")
-        shuffle_pal(lista, config.verbos, cantidad_de_palabras[2], "verbos")
-
-        random.shuffle(lista)
-        return lista
-        
-
-    def max_palabra(lista_de_palabas):
-        '''Define la cantidad de casillas de la Matriz.
-        Como mínimo será de la cantidad de palabras a colocar
-        '''
-        
-        max = 0
-        for i in lista_de_palabas:
-            if len(i[0]) > max:
-                max = len(i[0])
-        if max < len(lista_de_palabas):
-            max = len(lista_de_palabas)
-        return max
-    
-    def generar_matriz(lista_de_palabras, config):
-        '''Genera una Matriz Cuadrada de orden N.
-        N se define en base a la longitud de las palabras (en la función max_palabra())
-        
-        Las palabras se colocan al azar en distintas filas, iniciando en un punto al azar de la columna.
-
-        Modifica
-        Lista de palabras. Originalmente, la lista de palabras contiene [palabra, descripción, tipo],
-        al salir de esta función, contiene [claves_palabra, palabra, descripción, tipo], donde
-        claves_palabra es una lista de las coordenadas de las letras de la palabra.
-
-        Retorna,
-        La matriz, la grilla de juego.
-        La matriz es una lista de listas, rellenada con letras al azar,
-        excepto en las coordenadas correspondientes a las palabras,
-        donde se colocan, obviamente, las letras correspondientes a cada palabra
-        '''
-
-        # Variables principales
-        N = max_palabra(lista_de_palabas) + random.randint(1, 2)  # para que la palabra mas grande no quede siempre pegada a los bordes      
-        filas_con_palabras = sorted(random.sample(range(0, N), k=len(lista_de_palabras)))
-        matriz = []
-
-        # Inicializar variables
-        indice_palabra_actual = 0
-        for y in range(N):
-            # Por cada fila en la matriz
-            fila = []
-            
-            if y in filas_con_palabras: #Si hay una palabra en la fila
-                # Obtener palabra
-                datos_palabra = lista_de_palabras[indice_palabra_actual]
-                palabra = datos_palabra[0]
-
-                inicio = random.randrange(0, N-len(datos_palabra[0]))
-                claves_palabra = []
-                letra_actual = 0
-            else: # Si no hay una palabra en la fila
-                inicio = N
-                palabra = ''
-
-            for x in range(N):
-                # Por cada columna en la fila
-                clave = str(y) + ',' + str(x)
-
-                if (x <= inicio) or (x > inicio + len(palabra)): # Coloco letra al azar
-                    letra = letra = chr(random.randint(ord('a'), ord('z')))
-                    
-                else: # Coloco letra correspondiente a la palabra
-                    letra = palabra[letra_actual]
-                    letra_actual += 1
-                    claves_palabra.append(clave)                    
-                
-                if config.mayusculas:
-                    letra = letra.upper()
-
-                # Crear casilla (botón)   
-                fila.append(
-                    sg.Submit(  # Propiedades del botón
-                        letra,
-                        key=clave,
-                        disabled=False,
-
-                        # Diseño
-                        font='Courier 10',
-                        size=(4, 2) if N <= 12 else (2, 1),
-                        button_color=('black', 'white'),
-                        pad=(0, 0)
-                    ),
-                )
-            # Guardar fila
-            matriz.append(fila)
-
-            if palabra != '':
-                lista_de_palabras[indice_palabra_actual] = [
-                    # el conenido de datos_palabra es [palabra, descripcion, tipo]
-                    claves_palabra, datos_palabra[0], datos_palabra[1], datos_palabra[2]
-                ]
-                indice_palabra_actual += 1
-
-        if config.orientacion is False:  # vertical
-            matriz = np.transpose(matriz)
-
-        return matriz
+        temporal = list(palabras.keys())
+        random.shuffle(temporal)
+        for i in range(cantidad_de_palabras):
+            try:
+                lista_de_palabas.append([temporal[i], palabras[temporal[i]], tipo])
+            except IndexError:
+                pass
 
     def columna_derecha(config, cantidad_de_palabras, lista_de_ayudas):
         '''Estructura de la columna derecha.
         Si se configuraron ayudas, muestra el tipo de ayuda seleccionada;
-        sino, la cantidad de palabras restantes por encontrar.'''
+        sino, la cantidad de palabras restantes por encontrar.
+        '''
 
         sin_ayuda = [
             [
@@ -237,29 +124,6 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
         return columna_derecha
 
-    def confirmar_seleccion(p, actual, lista_de_palabas, cantidad_de_palabras, config, correcto=False):
-        '''Confirma si las casillas seleccionadas corresponden a una palabra en la lista de palabras.
-
-        Retorna si la palabra seleccionada es correcta o no.
-        '''     
-        for i in range(len(lista_de_palabas)):
-            correcto = (set(p) == set(lista_de_palabas[i][0])) and (actual == lista_de_palabas[i][3])
-            print(correcto)
-            if correcto:
-                break
-
-        if correcto:          
-            if lista_de_palabas[i][3] == "sustantivos":
-                cantidad_de_palabras[0] -= 1
-            elif lista_de_palabas[i][3] == "adjetivos":
-                cantidad_de_palabras[1] -= 1
-            else:
-                cantidad_de_palabras[2] -= 1
-
-            lista_de_palabas.remove(lista_de_palabas[i]) # Borrar palabra de la lista
-                    
-        return correcto
-
     def cancelar_seleccion(p, correcto=False):
         '''Vacía la lista de casillas presionadas si no hay ninguna palabra confirmada como correcta.
 
@@ -280,14 +144,114 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
 
         # VARIABLES
         cantidad_de_palabras = [int(cant) for cant in config.cantidad_de_palabras.copy()]
-        lista_de_palabas = generar_lista_de_palabras(config, cantidad_de_palabras)
+
+        '''Genera lista de con palabras aleatorias dependiendo del limite dado por el usuario
+        Retorna una lista con las palabras a usar en el juego, su descripción y tipo
+        '''
+        lista_de_palabas = []
+        shuffle_pal(lista_de_palabas, config.sustantivos, cantidad_de_palabras[0], "sustantivos")
+        shuffle_pal(lista_de_palabas, config.adjetivos, cantidad_de_palabras[1], "adjetivos")
+        shuffle_pal(lista_de_palabas, config.verbos, cantidad_de_palabras[2], "verbos")
+        random.shuffle(lista_de_palabas)
+
         lista_de_ayudas = list(map(lambda x: [x[0], x[1]], lista_de_palabas))
         random.shuffle(lista_de_ayudas)
 
         # DEFINICIÓN DE LA INTERFAZ GRÁFICA
 
         # generar_matriz modifica lista_de_palabras
-        matriz = generar_matriz(lista_de_palabas, config)
+        # Variables principales
+
+        '''Define la cantidad de casillas de la Matriz.
+        Como mínimo será de la cantidad de palabras a colocar
+        '''
+        max = 0
+        for i in lista_de_palabas:
+            if len(i[0]) > max:
+                max = len(i[0])
+        if max < len(lista_de_palabas):
+            max = len(lista_de_palabas)
+        N = max + random.randint(1, 2)  # para que la palabra mas grande no quede siempre pegada a los bordes
+
+        filas_con_palabras = sorted(random.sample(range(0, N), k=len(lista_de_palabas)))
+        matriz = []
+
+        '''Genera una Matriz Cuadrada de orden N.
+        N se define en base a la longitud de las palabras (en la función max_palabra())
+
+        Las palabras se colocan al azar en distintas filas, iniciando en un punto al azar de la columna.
+
+        Modifica
+        Lista de palabras. Originalmente, la lista de palabras contiene [palabra, descripción, tipo],
+        al salir de esta función, contiene [claves_palabra, palabra, descripción, tipo], donde
+        claves_palabra es una lista de las coordenadas de las letras de la palabra.
+
+        Retorna,
+        La matriz, la grilla de juego.
+        La matriz es una lista de listas, rellenada con letras al azar,
+        excepto en las coordenadas correspondientes a las palabras,
+        donde se colocan, obviamente, las letras correspondientes a cada palabra
+        '''
+
+        # Inicializar variables
+        indice_palabra_actual = 0
+        for y in range(N):
+            # Por cada fila en la matriz
+            fila = []
+
+            if y in filas_con_palabras:  # Si hay una palabra en la fila
+                # Obtener palabra
+                datos_palabra = lista_de_palabas[indice_palabra_actual]
+                palabra = datos_palabra[0]
+
+                inicio = random.randrange(0, N - len(datos_palabra[0]))
+                claves_palabra = []
+                letra_actual = 0
+            else:  # Si no hay una palabra en la fila
+                inicio = N
+                palabra = ''
+
+            for x in range(N):
+                # Por cada columna en la fila
+                clave = str(y) + ',' + str(x)
+
+                if (x <= inicio) or (x > inicio + len(palabra)):  # Coloco letra al azar
+                    letra = letra = chr(random.randint(ord('a'), ord('z')))
+
+                else:  # Coloco letra correspondiente a la palabra
+                    letra = palabra[letra_actual]
+                    letra_actual += 1
+                    claves_palabra.append(clave)
+
+                if config.mayusculas:
+                    letra = letra.upper()
+
+                # Crear casilla (botón)
+                fila.append(
+                    sg.Submit(  # Propiedades del botón
+                        letra,
+                        key=clave,
+                        disabled=False,
+
+                        # Diseño
+                        font='Courier 10',
+                        size=(4, 2) if N <= 12 else (2, 1),
+                        button_color=('black', 'white'),
+                        pad=(0, 0)
+                    ),
+                )
+            # Guardar fila
+            matriz.append(fila)
+
+            if palabra != '':
+                lista_de_palabas[indice_palabra_actual] = [
+                    # el conenido de datos_palabra es [palabra, descripcion, tipo]
+                    claves_palabra, datos_palabra[0], datos_palabra[1], datos_palabra[2]
+                ]
+                indice_palabra_actual += 1
+
+        if config.orientacion is False:  # vertical
+            matriz = np.transpose(matriz)
         
         layout = [
             [
@@ -315,7 +279,25 @@ def ventanajuego(config):  # en main juego.ventanajuego(configuracion.Configurac
                 break
 
             elif event == "confirmar":
-                confirmar = confirmar_seleccion(presionadas, actual, lista_de_palabas, cantidad_de_palabras, config)
+                '''Confirma si las casillas seleccionadas corresponden a una palabra en la lista de palabras.
+                    Retorna si la palabra seleccionada es correcta o no.'''
+
+                for i in range(len(lista_de_palabas)):
+                    correcto = (set(presionadas) == set(lista_de_palabas[i][0])) and (actual == lista_de_palabas[i][3])
+                    print(correcto)
+                    if correcto:
+                        break
+
+                if correcto:
+                    if lista_de_palabas[i][3] == "sustantivos":
+                        cantidad_de_palabras[0] -= 1
+                    elif lista_de_palabas[i][3] == "adjetivos":
+                        cantidad_de_palabras[1] -= 1
+                    else:
+                        cantidad_de_palabras[2] -= 1
+
+                    lista_de_palabas.remove(lista_de_palabas[i])  # Borrar palabra de la lista
+                confirmar = correcto
                 presionadas = cancelar_seleccion(presionadas, confirmar)
 
                 if confirmar is False:

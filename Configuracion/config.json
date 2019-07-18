@@ -73,15 +73,15 @@
         ]
     ],
     "cantidad_de_palabras": [
-        3.0,
+        2.0,
         1.0,
         1.0
     ],
     "ayudas": true,
-    "tipo_ayudas": false,
+    "tipo_ayudas": true,
     "mayusculas": false,
-    "orientacion": false,
-    "oficina_actual": "oficina2",
+    "orientacion": true,
+    "oficina_actual": "oficina1",
     "oficinas": [
         "oficina1",
         "oficina2"
