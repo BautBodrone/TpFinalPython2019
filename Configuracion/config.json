@@ -4,7 +4,8 @@
         "perro": "descripcion",
         "comida": "descripcion",
         "teclado": "descripcion",
-        "cuaderno": "descripcion"
+        "cuaderno": "descripcion",
+        "coso": "Persona cuyo nombre se desconoce, se ha olvidado o se decide omitir, despectivamente o no."
     },
     "adjetivos": {
         "alto": "descripcion",
@@ -39,6 +40,10 @@
             "Sustantivo"
         ],
         [
+            "coso",
+            "Sustantivo"
+        ],
+        [
             "alto",
             "Adjetivo"
         ],
@@ -68,15 +73,15 @@
         ]
     ],
     "cantidad_de_palabras": [
-        3,
-        3,
-        3
+        3.0,
+        1.0,
+        1.0
     ],
     "ayudas": true,
-    "tipo_ayudas": true,
-    "mayusculas": true,
-    "orientacion": true,
-    "oficina_actual": "oficina1",
+    "tipo_ayudas": false,
+    "mayusculas": false,
+    "orientacion": false,
+    "oficina_actual": "oficina2",
     "oficinas": [
         "oficina1",
         "oficina2"
@@ -93,5 +98,5 @@
         "Times",
         "Fixedsys "
     ],
-    "tipografia": "Verdana"
+    "tipografia": "Fixedsys "
 }

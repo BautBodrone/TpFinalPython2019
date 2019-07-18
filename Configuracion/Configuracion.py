@@ -34,7 +34,7 @@ class Configuracion:
                 "saltar": "descripcion",
                 "nadar": "descripcion"
             },
-            cantidad_de_palabras = (3,3,3),
+            cantidad_de_palabras = [3, 3, 3],
             ayudas = True,
             tipo_ayudas = True,
             mayusculas = True,
@@ -116,7 +116,7 @@ def obtener_configuracion():
         
         print('Configuración por defecto creada')
         print('Abrir/crear archivo config.json')
-        archivo_configuracion = open('configuracion' + sep + 'config.json', 'w+')
+        archivo_configuracion = open('Configuracion' + sep + 'config.json', 'w+')
         
         print('Archivo abierto/creado con éxito')
         print('Serializando configuración y guardarla en config.json')
@@ -129,7 +129,7 @@ def obtener_configuracion():
     try:
         print('\n# ' + '='*30 + ' #\n')
         print('Buscando archivo config.json')
-        archivo_configuracion = open('configuracion' + sep + 'config.json', 'r')
+        archivo_configuracion = open('Configuracion' + sep + 'config.json', 'r')
         
         print('Archivo config.json abierto con éxito')
     except:
@@ -196,7 +196,7 @@ def guardar_configuracion(configuracion):
     try:
         print('\n# ' + '='*30 + ' #\n')
         print('Abrir/crear archivo config.json')
-        archivo_configuracion = open('configuracion' + sep + 'config.json', 'w+')
+        archivo_configuracion = open('Configuracion' + sep + 'config.json', 'w+')
         
         print('Archivo abierto/creado con éxito')
         print('Serializar configuración y guardarla en config.json')
