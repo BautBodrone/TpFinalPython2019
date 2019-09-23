@@ -1,5 +1,11 @@
-import json
+# AUTORES:
+# Bodrone, Bautista
+# Galati Martínez, Juan Cruz
+# Zambrano Taus, Alejandro
+#
+# GPL-3.0-or-later
 
+import json
 
 def promedio (n_oficina):
 

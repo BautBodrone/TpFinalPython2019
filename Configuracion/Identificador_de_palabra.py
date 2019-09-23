@@ -1,3 +1,10 @@
+# AUTORES:
+# Bodrone, Bautista
+# Galati Martínez, Juan Cruz
+# Zambrano Taus, Alejandro
+#
+# GPL-3.0-or-later
+
 try:
     from pattern.web import Wiktionary
     from pattern.text.es import parse

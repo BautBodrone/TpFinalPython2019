@@ -2,6 +2,8 @@
 # Bodrone, Bautista
 # Galati Martínez, Juan Cruz
 # Zambrano Taus, Alejandro
+#
+# GPL-3.0-or-later
 
 import json
 from os import sep #Mantiene el acceso a archivos generico entre sistemas operativos

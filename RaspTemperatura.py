@@ -1,3 +1,10 @@
+# AUTORES:
+# Bodrone, Bautista
+# Galati Martínez, Juan Cruz
+# Zambrano Taus, Alejandro
+#
+# GPL-3.0-or-later
+
 import time
 import Adafruit_DHT
 import PySimpleGUI as sg

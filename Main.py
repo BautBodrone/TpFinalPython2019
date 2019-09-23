@@ -2,6 +2,8 @@
 # Bodrone, Bautista
 # Galati Martínez, Juan Cruz
 # Zambrano Taus, Alejandro
+#
+# GPL-3.0-or-later
 
 import PySimpleGUI as sg
 import GUI_Configuracion as gui_configuracion
@@ -59,7 +61,7 @@ def abrirMain():
     ]
 
     window = sg.Window(#Propiedades
-                        "Título",
+                        "Sopa de Letras",
                         resizable=False,
                         size=(800, 600)
                     ).Layout(layout)

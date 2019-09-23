@@ -1,4 +1,47 @@
-# AUTORES:
-# Bodrone, Bautista
-# Galati Martínez, Juan Cruz
-# Zambrano Taus, Alejandro
+==================== AUTORES ====================
+> Bodrone, Bautista
+> Galati Martínez, Juan Cruz
+> Zambrano Taus, Alejandro
+
+================== DESCRIPCIÓN ==================
+Juego de Sopa de Letras desarrollado en Python 3.6.8 usando los módulos PySimpleGUI y Pattern.
+
+=================== REQUISITOS ==================
+Para ejecutarse correctamente, se deben cumplir los siguientes requisitos:
+
+Ejecutar en Python 3.6.8
+
+Poseer instaladas las librerías:
+> Sopa de Letras:
+  > PySimpleGUI
+  > Pattern
+  > json
+  > numpy
+  > os
+  > datetime
+
+> Sensores:
+  > PySimpleGUI
+  > time
+  > Adafruit_DHT
+  > RPi
+  > luma
+  > datetime
+
+
+====================== USO ======================
+Asegúrese de cumplir los requisitos.
+
+Para iniciar el programa de Sopa de Letras abrir el archivo Main.py
+Puede iniciar a jugar directamente presionando el botón Jugar, donde se usará una lista de palabras y configuración por defecto.
+
+El juego finaliza al encontrar todas las palabras escondidas en la Sopa de Letras (ganar) o al equivocarse 3 veces (perder).
+
+Para añadir o borrar palabras, y cualquier otra configuración necesaria, ingrese al Menú de Configuración.
+
+Para una información más detallada, revise la Guía de Usuario.
+
+==================== LICENCIA ===================
+Licencia GPL-3.0-or-later, detallada en el archivo Licencia.txt
+
+
